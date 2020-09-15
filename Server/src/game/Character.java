@@ -20,10 +20,10 @@ public class Character {
     protected int mSeed;
     protected int mX;
     protected int mY;
-    protected int mDirection;
+    protected Type.Direction mDirection;
     protected int mMoveSpeed;
     protected int mTeam;
-    protected int mCharacterType;
+    protected Type.Character mCharacterType;
     protected int mDamage;
     protected int mMagicDamage;
     protected int mDefense;
@@ -86,7 +86,7 @@ public class Character {
         return mY;
     }
 
-    public int getDirection() {
+    public Type.Direction getDirection() {
         return mDirection;
     }
 
@@ -98,7 +98,7 @@ public class Character {
         return mTeam;
     }
 
-    public int getCharacterType() {
+    public Type.Character getCharacterType() {
         return mCharacterType;
     }
 
@@ -220,21 +220,21 @@ public class Character {
     }
 
     // 점프
-    protected void jump(int type, int value) {
+    protected void jump(Type.Direction type, int value) {
         switch (type) {
-            case Type.Direction.DOWN:
+            case DOWN:
                 mY += value;
                 break;
 
-            case Type.Direction.LEFT:
+            case LEFT:
                 mX -= value;
                 break;
 
-            case Type.Direction.RIGHT:
+            case RIGHT:
                 mX += value;
                 break;
 
-            case Type.Direction.UP:
+            case UP:
                 mY -= value;
                 break;
 

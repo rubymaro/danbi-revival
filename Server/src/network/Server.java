@@ -6,29 +6,31 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import database.DataBase;
 import database.GameData;
 import game.*;
-import setting.Setting;
+import config.Config;
 
 public class Server {
-	private int mPort;
-	private final Logger logger = Logger.getLogger(Server.class.getName());
+	private static final Logger logger = Logger.getLogger(Server.class.getName());
+
+	private final int mPort;
 	
-    public static void main(String[] args) throws Exception {
-		String strPort;
-		if (args.length > 0) {
-			strPort = args[0];
-		} else {
-			strPort = Setting.load().getProperty("Server.port");
-		}
-		new Server(Integer.parseInt(strPort)).run();
+    public static void main(final String[] args) throws InterruptedException {
+		new Server(args).run();
     }
 	
-	public Server(int port) {
-		mPort = port;
+	public Server(final String[] args) {
+		if (args.length > 0) {
+			mPort = Integer.parseInt(args[0]);
+		} else {
+			mPort = Integer.parseInt(Config.getInstance().getProperty("Server.port"));
+		}
+
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 			for (User u : User.getAll().values()) {
@@ -39,9 +41,10 @@ public class Server {
 		});
 	}
 	
-	public void run() throws Exception {
+	public void run() throws InterruptedException {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
+
         try {
             ServerBootstrap bootStrap = new ServerBootstrap()
             	.group(bossGroup, workerGroup)
@@ -51,10 +54,12 @@ public class Server {
             	.childOption(ChannelOption.SO_KEEPALIVE, true);
             
             logger.info("서버를 시작합니다. (" + mPort + ")");
+
             ChannelFuture f = bootStrap.bind(mPort).sync();
-            DataBase.connect("jdbc:mysql://" + Setting.load().getProperty("Database.host") + "/" + Setting.load().getProperty("Database.database") + "?characterEncoding=utf8"
-			     , Setting.load().getProperty("Database.username")
-			     , Setting.load().getProperty("Database.password"));
+			final Properties properties = Config.getInstance();
+            DataBase.connect(String.format("jdbc:mysql://%s/%s?characterEncoding=utf8", properties.getProperty("Database.host"), properties.getProperty("Database.database")),
+			     properties.getProperty("Database.username"),
+			     properties.getProperty("Database.password"));
 			GameData.loadSettings();
             Map.loadMap();
 
@@ -69,7 +74,11 @@ public class Server {
 			}
 
             f.channel().closeFuture().sync();
-        } finally {
+        } catch (SQLException throwables) {
+			throwables.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
 

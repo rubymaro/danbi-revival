@@ -1,25 +1,24 @@
 package database;
 
-import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import setting.Setting;
+import config.Config;
+
+import java.nio.charset.StandardCharsets;
 
 public class Crypto {
-    private static String key = Setting.load().getProperty("Database.password");
+    private static final String key = Config.getInstance().getProperty("Database.password");
 
-    public static String encrypt(String text) {
+    public static String encrypt(final String text) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             byte[] keyBytes = new byte[16];
-            byte[] b = key.getBytes("UTF-8");
-            int len = b.length;
-            if (len > keyBytes.length)
-                len = keyBytes.length;
+            byte[] b = key.getBytes(StandardCharsets.UTF_8);
+            final int len = Math.max(b.length, keyBytes.length);
 
             System.arraycopy(b, 0, keyBytes, 0, len);
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
@@ -27,7 +26,7 @@ public class Crypto {
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 
             BASE64Encoder encoder = new BASE64Encoder();
-            byte[] results = cipher.doFinal(text.getBytes("UTF-8"));
+            byte[] results = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
 
             return encoder.encode(results);
         } catch (Exception e) {

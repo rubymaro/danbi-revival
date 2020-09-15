@@ -7,37 +7,165 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47a6a513-8090-4ad8-9cdb-bab7ddc71bee" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/config.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/config.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/main.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/main.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/chat_box.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/chat_box.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/click_menu.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/click_menu.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/community.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/community.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/dialog.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/dialog.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/inventory.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/inventory.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/login.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/login.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/message.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/message.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/option.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/option.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/quest.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/quest.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/register.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/register.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/server.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/server.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/set_whisper_nickname.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/set_whisper_nickname.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/shop.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/shop.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/skill.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/skill.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/status.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/status.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/trade.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/form/trade.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/hud.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/hud.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/item_info.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/item_info.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/skill_info.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/mui/skill_info.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/network.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/network/network.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/packet.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/network/packet.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/login.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/scene/login.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/map.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/scene/map.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/server.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/scene/server.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Graphics/Icons/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/Graphics/Icons/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Actors.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Actors.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Animations.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Animations.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Armors.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Armors.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Classes.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Classes.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Enemies.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Enemies.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Items.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Items.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Map001.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Map001.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/MapInfos.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/MapInfos.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Scripts-extract.rxdata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Scripts.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Scripts.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Skills.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Skills.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/States.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/States.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/System.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/System.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Tilesets.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Tilesets.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Troops.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Troops.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/Weapons.rxdata" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/Weapons.rxdata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/config.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/character.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/character_sprite.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/chatting_balloon.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/cool_time.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/damage.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/enemy.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/event.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/game.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/map.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/map_sprite.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/net_player.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/npc.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/object.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/player.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/resolution.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/rpg.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/screen.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/slot.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/system.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/game/timer.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/input/ime.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/input/key.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/input/mouse.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/main.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/button.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/chat_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/check_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/console.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/control.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/cursor.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/flash_message.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/click_menu.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/community.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/dialog.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/inventory.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/login.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/message.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/option.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/quest.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/register.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/server.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/set_whisper_nickname.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/shop.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/skill.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/status.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/form/trade.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/func.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/h_scroll.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/hud.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/item_info.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/label.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/list_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/math.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/mui.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/picture_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/radio_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/skill_info.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/tab_page.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/temp.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/text_box.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/mui/v_scroll.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/header.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/json.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/network.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/packet.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/socket.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/audio.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/bitmap.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/color.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/rect.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/sprite.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/rgss/viewport.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/login.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/logo.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/map.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/server.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/scene/title.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/file.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/filetest.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/game-window.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/graphics.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/kernel.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/regedit.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/rpg-path.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/string.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/system/win32api.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VL-Gothic-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VL-PGothic-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/Changelog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/LICENSE.en" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/LICENSE_E.mplus" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/LICENSE_J.mplus" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/README.sazanami" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Fonts/VLGothic/README_J.mplus" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Game.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Game.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Game.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Game.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/GameData/item.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/GameData/npc/1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/GameData/skill.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/IME.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/License.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/Microsoft.VC80.DebugCRT.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/NoInput.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/RTP.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/StarInput.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/Wheel.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/XPA_Tilemap.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Library/msvcr80d.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/RGSS301.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/User.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/JSON.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/JSON.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Jackson_JSON.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Jackson_JSON.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/MySQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/MySQL.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Netty_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Netty_4.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting/Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/Crypto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Crypto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Guild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Guild.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Npc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Npc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Party.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Initializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Initializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/CTSHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/CTSHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/JsonDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/JsonDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/JsonEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/JsonEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/Packet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/STCHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/STCHeader.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,9 +173,6 @@
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="Server" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -69,42 +194,15 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectId" id="1PiUc0YoDDy0EruizaRXxYUClzy" />
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Android Lint</id>
-          </State>
-          <State>
-            <id>CSS</id>
-          </State>
-          <State>
-            <id>Code style issues</id>
-          </State>
-          <State>
-            <id>Code style issuesCSS</id>
-          </State>
-          <State>
-            <id>GeneralJavaScript</id>
-          </State>
-          <State>
-            <id>JavaScript</id>
-          </State>
-          <State>
-            <id>Plugin DevKit</id>
-          </State>
-        </expanded-state>
-      </profile-state>
-    </entry>
-  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
@@ -131,40 +229,37 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="getter&#9;PSI&#9;JAVA://com.sun.javafx.fxml.builder.ProxyBuilder.Getter" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Library/MySQL/docs" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="config" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
-    <configuration default="true" type="AndroidRunConfigurationType">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -178,8 +273,6 @@
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
       <option name="DEBUGGER_TYPE" value="Java" />
       <Java />
       <Profilers>
@@ -193,20 +286,19 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType">
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
       <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="CLASS_NAME" value="" />
       <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
       <option name="DEBUGGER_TYPE" value="Java" />
       <Java />
       <Profilers>
@@ -217,12 +309,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Danbi Server" type="Application" factoryName="Application">
@@ -257,7 +343,7 @@
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <option name="filePath" />
       <option name="vmParameters" />
       <option name="alternativeJrePath" />
@@ -315,6 +401,7 @@
       <projects_view />
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration" cleanupOnStartRun="true">
     <configuration>$USER_HOME$/.subversion</configuration>
     <supportedVersion>125</supportedVersion>
@@ -416,13 +503,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -470,6 +556,80 @@
       <option name="VERSION" />
     </GetOptions>
   </component>
+  <component name="WindowStateProjectService">
+    <state x="586" y="198" key="#Inspections" timestamp="1600157385215">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="586" y="198" key="#Inspections/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157385215" />
+    <state x="440" y="94" key="#Project_Structure" timestamp="1600131189982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600131189982" />
+    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1600154045261">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600154045261" />
+    <state x="701" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600133920430">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="701" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600133920430" />
+    <state x="743" y="388" width="433" height="269" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600133936632">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="743" y="388" width="433" height="269" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600133936632" />
+    <state x="756" y="401" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1600133886919">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="756" y="401" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600133886919" />
+    <state x="827" y="410" key="FileChooserDialogImpl" timestamp="1600131731548">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="827" y="410" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600131731548" />
+    <state width="1877" height="171" key="GridCell.Tab.0.bottom" timestamp="1600157527993">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="171" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157527993" />
+    <state width="1877" height="171" key="GridCell.Tab.0.center" timestamp="1600157527992">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="171" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157527992" />
+    <state width="1877" height="171" key="GridCell.Tab.0.left" timestamp="1600157527992">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="171" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157527992" />
+    <state width="1877" height="171" key="GridCell.Tab.0.right" timestamp="1600157527993">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="171" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157527993" />
+    <state width="1877" height="258" key="GridCell.Tab.1.bottom" timestamp="1600134897325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="258" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600134897325" />
+    <state width="1877" height="258" key="GridCell.Tab.1.center" timestamp="1600134897325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="258" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600134897325" />
+    <state width="1877" height="258" key="GridCell.Tab.1.left" timestamp="1600134897325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="258" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600134897325" />
+    <state width="1877" height="258" key="GridCell.Tab.1.right" timestamp="1600134897325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="258" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600134897325" />
+    <state x="396" y="116" key="SettingsEditor" timestamp="1600131735623">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="396" y="116" key="SettingsEditor/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600131735623" />
+    <state x="980" y="129" width="587" height="801" key="find.popup" timestamp="1600157474873">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="980" y="129" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600157474873" />
+    <state x="342" y="140" key="new project wizard" timestamp="1600131395329">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="140" key="new project wizard/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1600131395328" />
+  </component>
   <component name="XDebuggerManager">
     <watches-manager>
       <configuration name="Application">
@@ -481,95 +641,5 @@
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>Server:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>Server</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Jackson JSON</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

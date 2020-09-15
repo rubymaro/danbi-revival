@@ -1,5 +1,6 @@
 package network;
 import database.Crypto;
+import database.Type;
 import game.Map;
 import game.User;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,206 +18,290 @@ import database.DataBase;
 import database.GameData;
 
 public final class Handler extends ChannelInboundHandlerAdapter {
+    private static final Logger logger = Logger.getLogger(Handler.class.getName());
 	public static boolean isRunning = true;
-    private static Logger logger = Logger.getLogger(Handler.class.getName());
     
     @Override
-	public void channelRead (ChannelHandlerContext ctx, Object msg) {
-		JSONObject packet = (JSONObject) msg;
-		switch ((int) packet.get("header")) {
-	    	case CTSHeader.LOGIN:
+	public void channelRead (final ChannelHandlerContext ctx, final Object msg) {
+		final User userOrNull = User.get(ctx);
+    	JSONObject packet = (JSONObject) msg;
+		CTSHeader ctsHeader = CTSHeader.fromInt(Integer.parseInt((String) packet.get("header")));
+		switch (ctsHeader) {
+			case LOGIN:
 	    		login(ctx, packet);
 				break;
 
-	    	case CTSHeader.REGISTER:
+	    	case REGISTER:
 	    		register(ctx, packet);
 				break;
 
-			case CTSHeader.MOVE_CHARACTER:
-				User.get(ctx).move((int) packet.get("type"));
+			case MOVE_CHARACTER:
+				assert userOrNull != null;
+				userOrNull.move(Type.Direction.fromInt((int) packet.get("type")));
 				break;
 
-			case CTSHeader.TURN_CHARACTER:
-				User.get(ctx).turn((int) packet.get("type"));
+			case TURN_CHARACTER:
+				assert userOrNull != null;
+				userOrNull.turn(Type.Direction.fromInt((int) packet.get("type")));
+
 				break;
 
-	    	case CTSHeader.REMOVE_EQUIP_ITEM:
-				User.get(ctx).equipItem((int) packet.get("type"), 0);
+	    	case REMOVE_EQUIP_ITEM:
+				assert userOrNull != null;
+				userOrNull.equipItem(Type.Item.fromInt((int) packet.get("type")), 0);
+
 				break;
 
-	    	case CTSHeader.USE_STAT_POINT:
-				User.get(ctx).useStatPoint((int) packet.get("type"));
+	    	case USE_STAT_POINT:
+				assert userOrNull != null;
+				userOrNull.useStatPoint(Type.Status.fromInt((int) packet.get("type")));
+
 				break;
 
-			case CTSHeader.ACTION:
-				User.get(ctx).action();
+			case ACTION:
+				assert userOrNull != null;
+				userOrNull.action();
+
 				break;
 
-			case CTSHeader.USE_ITEM:
-				User.get(ctx).useItemByIndex((int) packet.get("index"), (int) packet.get("amount"));
+			case USE_ITEM:
+				assert userOrNull != null;
+				userOrNull.useItemByIndex((int) packet.get("index"), (int) packet.get("amount"));
+
 				break;
 
-			case CTSHeader.USE_SKILL:
-				User.get(ctx).useSkill((int) packet.get("no"));
+			case USE_SKILL:
+				assert userOrNull != null;
+				userOrNull.useSkill((int) packet.get("no"));
+
 				break;
 
-			case CTSHeader.DROP_ITEM:
-				User.get(ctx).dropItemByIndex((int) packet.get("index"), (int) packet.get("amount"));
+			case DROP_ITEM:
+				assert userOrNull != null;
+				userOrNull.dropItemByIndex((int) packet.get("index"), (int) packet.get("amount"));
+
 				break;
 
-			case CTSHeader.DROP_GOLD:
-				User.get(ctx).dropGold((int) packet.get("amount"));
+			case DROP_GOLD:
+				assert userOrNull != null;
+				userOrNull.dropGold((int) packet.get("amount"));
+
 				break;
 
-			case CTSHeader.PICK_ITEM:
-				User.get(ctx).pickItem();
+			case PICK_ITEM:
+				assert userOrNull != null;
+				userOrNull.pickItem();
+
 				break;
 
-			case CTSHeader.CHAT_NORMAL:
-				User.get(ctx).chatNormal((String) packet.get("message"));
+			case CHAT_NORMAL:
+				assert userOrNull != null;
+				userOrNull.chatNormal((String) packet.get("message"));
+
 				break;
 
-			case CTSHeader.CHAT_WHISPER:
-				User.get(ctx).chatWhisper((String) packet.get("to"), (String) packet.get("message"));
+			case CHAT_WHISPER:
+				assert userOrNull != null;
+				userOrNull.chatWhisper((String) packet.get("to"), (String) packet.get("message"));
+
 				break;
 
-			case CTSHeader.CHAT_PARTY:
-				User.get(ctx).chatParty((String) packet.get("message"));
+			case CHAT_PARTY:
+				assert userOrNull != null;
+				userOrNull.chatParty((String) packet.get("message"));
+
 				break;
 
-			case CTSHeader.CHAT_GUILD:
-				User.get(ctx).chatGuild((String) packet.get("message"));
+			case CHAT_GUILD:
+				assert userOrNull != null;
+				userOrNull.chatGuild((String) packet.get("message"));
+
 				break;
 
-			case CTSHeader.CHAT_ALL:
-				User.get(ctx).chatAll((String) packet.get("message"));
+			case CHAT_ALL:
+				assert userOrNull != null;
+				userOrNull.chatAll((String) packet.get("message"));
+
 				break;
 
-            case CTSHeader.CHAT_BALLOON_START:
-                User.get(ctx).startShowingBalloon();
+            case CHAT_BALLOON_START:
+				assert userOrNull != null;
+				userOrNull.startShowingBalloon();
+
                 break;
 
-	    	case CTSHeader.OPEN_REGISTER_WINDOW:
+	    	case OPEN_REGISTER_WINDOW:
 				ctx.writeAndFlush(Packet.openRegisterWindow());
 				break;
 
-	    	case CTSHeader.CHANGE_ITEM_INDEX:
-				User.get(ctx).changeItemIndex((int) packet.get("index1"), (int) packet.get("index2"));
+	    	case CHANGE_ITEM_INDEX:
+				assert userOrNull != null;
+				userOrNull.changeItemIndex((int) packet.get("index1"), (int) packet.get("index2"));
+
 				break;
 
-			case CTSHeader.REQUEST_TRADE:
-				User.get(ctx).requestTrade((int) packet.get("partner"));
+			case REQUEST_TRADE:
+				assert userOrNull != null;
+				userOrNull.requestTrade((int) packet.get("partner"));
+
 				break;
 
-			case CTSHeader.RESPONSE_TRADE:
-				User.get(ctx).responseTrade((int) packet.get("type"), (int) packet.get("partner"));
+			case RESPONSE_TRADE:
+				assert userOrNull != null;
+				userOrNull.responseTrade((int) packet.get("type"), (int) packet.get("partner"));
+
 				break;
 
-			case CTSHeader.LOAD_TRADE_ITEM:
-				User.get(ctx).loadTradeItem((int) packet.get("index"), (int) packet.get("amount"), (int) packet.get("tradeIndex"));
+			case LOAD_TRADE_ITEM:
+				assert userOrNull != null;
+				userOrNull.loadTradeItem((int) packet.get("index"), (int) packet.get("amount"), (int) packet.get("tradeIndex"));
+
 				break;
 
-			case CTSHeader.DROP_TRADE_ITEM:
-				User.get(ctx).dropTradeItem((int) packet.get("index"));
+			case DROP_TRADE_ITEM:
+				assert userOrNull != null;
+				userOrNull.dropTradeItem((int) packet.get("index"));
+
 				break;
 
-			case CTSHeader.CHANGE_TRADE_GOLD:
-				User.get(ctx).changeTradeGold((int) packet.get("amount"));
+			case CHANGE_TRADE_GOLD:
+				assert userOrNull != null;
+				userOrNull.changeTradeGold((int) packet.get("amount"));
+
 				break;
 
-			case CTSHeader.FINISH_TRADE:
-				User.get(ctx).acceptTrade();
+			case FINISH_TRADE:
+				assert userOrNull != null;
+				userOrNull.acceptTrade();
+
 				break;
 
-			case CTSHeader.CANCEL_TRADE:
-				User.get(ctx).cancelTrade();
+			case CANCEL_TRADE:
+				assert userOrNull != null;
+				userOrNull.cancelTrade();
+
 				break;
 
-			case CTSHeader.SELECT_MESSAGE:
-				User.get(ctx).updateMessage((int) packet.get("select"));
+			case SELECT_MESSAGE:
+				assert userOrNull != null;
+				userOrNull.updateMessage((int) packet.get("select"));
+
 				break;
 
-			case CTSHeader.CREATE_PARTY:
-				User.get(ctx).createParty();
+			case CREATE_PARTY:
+				assert userOrNull != null;
+				userOrNull.createParty();
+
 				break;
 
-			case CTSHeader.INVITE_PARTY:
-				User.get(ctx).inviteParty((int) packet.get("other"));
+			case INVITE_PARTY:
+				assert userOrNull != null;
+				userOrNull.inviteParty((int) packet.get("other"));
+
 				break;
 
-			case CTSHeader.RESPONSE_PARTY:
-				User.get(ctx).responseParty((int) packet.get("type"), (int) packet.get("partyNo"));
+			case RESPONSE_PARTY:
+				assert userOrNull != null;
+				userOrNull.responseParty((int) packet.get("type"), (int) packet.get("partyNo"));
+
 				break;
 
-			case CTSHeader.QUIT_PARTY:
-				User.get(ctx).quitParty();
+			case QUIT_PARTY:
+				assert userOrNull != null;
+				userOrNull.quitParty();
+
 				break;
 
-			case CTSHeader.KICK_PARTY:
-				User.get(ctx).kickParty((int) packet.get("member"));
+			case KICK_PARTY:
+				assert userOrNull != null;
+				userOrNull.kickParty((int) packet.get("member"));
+
 				break;
 
-			case CTSHeader.BREAK_UP_PARTY:
-				User.get(ctx).breakUpParty();
+			case BREAK_UP_PARTY:
+				assert userOrNull != null;
+				userOrNull.breakUpParty();
+
 				break;
 
-			case CTSHeader.CREATE_GUILD:
-				User.get(ctx).createGuild((String) packet.get("name"));
+			case CREATE_GUILD:
+				assert userOrNull != null;
+				userOrNull.createGuild((String) packet.get("name"));
+
 				break;
 
-			case CTSHeader.INVITE_GUILD:
-				User.get(ctx).inviteGuild((int) packet.get("other"));
+			case INVITE_GUILD:
+				assert userOrNull != null;
+				userOrNull.inviteGuild((int) packet.get("other"));
+
 				break;
 
-			case CTSHeader.RESPONSE_GUILD:
-				User.get(ctx).responseGuild((int) packet.get("type"), (int) packet.get("guildNo"));
+			case RESPONSE_GUILD:
+				assert userOrNull != null;
+				userOrNull.responseGuild((int) packet.get("type"), (int) packet.get("guildNo"));
+
 				break;
 
-			case CTSHeader.QUIT_GUILD:
-				User.get(ctx).quitGuild();
+			case QUIT_GUILD:
+				assert userOrNull != null;
+				userOrNull.quitGuild();
+
 				break;
 
-			case CTSHeader.KICK_GUILD:
-				User.get(ctx).kickGuild((int) packet.get("member"));
+			case KICK_GUILD:
+				assert userOrNull != null;
+				userOrNull.kickGuild((int) packet.get("member"));
+
 				break;
 
-			case CTSHeader.BREAK_UP_GUILD:
-				User.get(ctx).breakUpGuild();
+			case BREAK_UP_GUILD:
+				assert userOrNull != null;
+				userOrNull.breakUpGuild();
+
 				break;
 
-			case CTSHeader.BUY_SHOP_ITEM:
-				User.get(ctx).buyShopItem((int) packet.get("shopNo"), (int) packet.get("index"), (int) packet.get("amount"));
+			case BUY_SHOP_ITEM:
+				assert userOrNull != null;
+				userOrNull.buyShopItem((int) packet.get("shopNo"), (int) packet.get("index"), (int) packet.get("amount"));
+
 				break;
 
-			case CTSHeader.SET_SLOT:
-				User.get(ctx).setSlot((int) packet.get("index"), (int) packet.get("item_index"));
+			case SET_SLOT:
+				assert userOrNull != null;
+				userOrNull.setSlot((int) packet.get("index"), (int) packet.get("item_index"));
+
 				break;
 
-			case CTSHeader.DEL_SLOT:
-				User.get(ctx).delSlot((int) packet.get("index"));
+			case DEL_SLOT:
+				assert userOrNull != null;
+				userOrNull.delSlot((int) packet.get("index"));
+
 				break;
+
+			default:
+				assert(false) : "Invalid CTSHeader";
+				logger.warning("Invalid CTSHeader");
     	}
     }
 
 	// 로그인
     private void login(ChannelHandlerContext ctx, JSONObject packet) {
-		// 아이디와 비밀번호를 읽어온다
-    	String readID = (String) packet.get("id");
-    	String readPass = (String) packet.get("pass");
+    	String id = packet.get("id").toString().trim();
+    	String password = packet.get("pass").toString().trim();
     	
-    	if (readID.equals("") || readPass.equals("")) {
+    	if (id.equals("") || password.equals("")) {
 			return;
 		}
 		try {
 			// 아이디로 검색
-			ResultSet rs = DataBase.executeQuery("SELECT * FROM `user` WHERE `id` = '" + readID + "';");
+			ResultSet rs = DataBase.executeQuery("SELECT * FROM `user` WHERE `id` = '" + id + "';");
 
 			// 아이디가 있을 경우
 	    	if (rs.next()) {
 				// 비밀번호를 암호화
-				readPass = Crypto.encrypt(readPass);
+				password = Crypto.encrypt(password);
 				// 비밀번호가 같다면
-	    		if (readPass.equals(rs.getString("pass"))) {
+	    		if (password.equals(rs.getString("pass"))) {
 					// 먼저 접속중인 계정이 있다면
 					if (User.get(rs.getInt("no")) != null)
 						return;
@@ -255,7 +340,7 @@ public final class Handler extends ChannelInboundHandlerAdapter {
 			return;
 		}
 		// 직업 리스트에 없는 직업일 경우
-		if (!GameData.registersHashtable.containsKey(readNo)) {
+		if (!GameData.getRegisters().containsKey(readNo)) {
 			return;
 		}
 		try {
@@ -283,8 +368,8 @@ public final class Handler extends ChannelInboundHandlerAdapter {
 		// 비밀번호를 암호화
 		readPass = Crypto.encrypt(readPass);
 		// 직업 정보 불러오기
-    	GameData.Register r = GameData.registersHashtable.get(readNo);
-		GameData.Job j = GameData.jobsHashtable.get(r.getJob());
+    	GameData.Register r = GameData.getRegisters().get(readNo);
+		GameData.Job j = GameData.getJobs().get(r.getJob());
 		// 데이터베이스에 넣자
     	DataBase.insertUser(readID, readPass, readName, readMail, r.getImage(), r.getJob(), r.getMap(), r.getX(), r.getY(), r.getLevel(), j.getHp());
     	ctx.writeAndFlush(Packet.registerMessage(0));
@@ -302,7 +387,7 @@ public final class Handler extends ChannelInboundHandlerAdapter {
     }
     
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		ctx.fireExceptionCaught(cause);
 	}
 }

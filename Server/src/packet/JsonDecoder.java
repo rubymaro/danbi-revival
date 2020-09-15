@@ -10,13 +10,11 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonDecoder extends StringDecoder {
 	@Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
     	if (msg.readableBytes() < 4) {
             return;
     	}
@@ -35,13 +33,9 @@ public class JsonDecoder extends StringDecoder {
         ObjectMapper mapper = new ObjectMapper();
         Throwable t;
         try {
-                return mapper.readValue(buf, JSONObject.class);
-        } catch (JsonParseException e) {
-                t = e;
-        } catch (JsonMappingException e) {
-                t = e;
+            return mapper.readValue(buf, JSONObject.class);
         } catch (IOException e) {
-                t = e;
+            t = e;
         }
         throw new CorruptedFrameException("Error deserializing json: " + t.getMessage());
     }

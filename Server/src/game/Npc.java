@@ -1,14 +1,11 @@
 package game;
 
 import database.GameData;
-import java.util.logging.Logger;
 
 public class Npc extends Character {
-    private String mFunctionName;
+    private final String mFunctionName;
 
-    private static Logger logger = Logger.getLogger(Npc.class.getName());
-
-    public Npc(GameData.NPC npc) {
+    public Npc(final GameData.NPC npc) {
         mNo = npc.getNo();
         mName = npc.getName();
         mImage = npc.getImage();

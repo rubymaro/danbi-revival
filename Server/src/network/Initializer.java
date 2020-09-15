@@ -10,7 +10,7 @@ import packet.JsonEncoder;
 
 public class Initializer extends ChannelInitializer<SocketChannel> {
 	@Override
-	protected void initChannel(SocketChannel channel) throws Exception {
+	protected void initChannel(SocketChannel channel) {
 		// TODO Auto-generated method stub
 		ChannelPipeline pipeline = channel.pipeline();
 		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(4096, Delimiters.lineDelimiter()));

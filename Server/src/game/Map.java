@@ -7,24 +7,22 @@ import java.util.Hashtable;
 import java.util.logging.Logger;
 
 public class Map {
+	private static final Logger logger = Logger.getLogger(Map.class.getName());
+	private static final Hashtable<Integer, Map> maps = new Hashtable<>();
+
 	private int mNo;
 	private String mName;
 	private int mWidth;
 	private int mHeight;
 	private int[] mData;
-	private Hashtable<Integer, Field> mFieldsHashtable = new Hashtable<Integer, Field>();
+	private final Hashtable<Integer, Field> mFieldsHashtable = new Hashtable<>();
 
-	private static Hashtable<Integer, Map> maps = new Hashtable<Integer, Map>();
-	private static Logger logger = Logger.getLogger(Map.class.getName());
-
-	// 생성자
 	public Map(String fileName) {
 		if (loadMapData(fileName)) {
 			maps.put(mNo, this);
 		}
 	}
 
-	// 필드를 넣음
 	public boolean addField(int seed) {
 		if (mFieldsHashtable.containsKey(seed)) {
 			return false;
@@ -33,25 +31,24 @@ public class Map {
 		return true;
 	}
 
-	// 필드를 얻음
 	public Field getField(int seed) {
 		return mFieldsHashtable.get(seed);
 	}
 
-	// 맵을 얻음
 	public static Map getMap(int no) {
 		return maps.get(no);
 	}
 
-	// 모든 맵을 얻음
 	public static Hashtable<Integer, Map> getAll() {
 		return maps;
 	}
 
-	// 모든 맵을 로드
 	public static void loadMap() {
 		File curDir = new File("Map");
-		File listFiles[] = curDir.listFiles();
+		File[] listFiles = curDir.listFiles();
+
+		assert listFiles != null;
+
 		if (listFiles.length > 0) {
 			for (File file : listFiles) {
 				String name = file.getName();
@@ -67,7 +64,6 @@ public class Map {
 		logger.info("맵 " + maps.size() + "개 로드 완료.");
 	}
 
-	// 맵 데이터 로드
 	private boolean loadMapData(String fileName) {
 		try {
 			FileReader fr = new FileReader(fileName);
@@ -94,17 +90,11 @@ public class Map {
 	}
 
 	public boolean isPassable(int x, int y) {
-		if (!isValid(x, y)) {
-			return false;
-		}
-		if (mData[mWidth * y + x] == 1) {
-			return false;
-		}
-		return true;
+		return isValid(x, y) && mData[mWidth * y + x] != 1;
 	}
 	
 	private boolean isValid(int x, int y) {
-		return x >= 0 && y >= 0 && x < mWidth && y < mHeight;
+		return x >= 0 && x < mWidth && y >= 0 && y < mHeight;
 	}
 
 	public void update() {

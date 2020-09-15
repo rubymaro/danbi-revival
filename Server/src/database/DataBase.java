@@ -6,14 +6,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class DataBase {
-	private static Connection connection = null;
-	private static Logger logger = Logger.getLogger(DataBase.class.getName());
-	
-	public static void connect(String host, String id, String pass) throws Exception {
+	private static final Logger logger = Logger.getLogger(DataBase.class.getName());
+	private static Connection connection;
+
+	public static void connect(final String host, final String id, final String pass) throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			connection = DriverManager.getConnection(host, id, pass);
@@ -24,36 +23,50 @@ public class DataBase {
 	}
 	
 	// Select
-	public static ResultSet executeQuery(String query) throws SQLException {
-		return connection.createStatement().executeQuery(query);//statement.executeQuery(query);
+	public static ResultSet executeQuery(final String query) throws SQLException {
+		return connection.createStatement().executeQuery(query);
 	}
 	
 	// Insert
-	public static int executeUpdate(String query) throws SQLException {
-		return connection.createStatement().executeUpdate(query);//statement.executeUpdate(query);
+	@SuppressWarnings("UnusedReturnValue")
+	public static int executeUpdate(final String query) throws SQLException {
+		return connection.createStatement().executeUpdate(query);
 	}
 	
-	public static void insertUser(String id, String pass, String name, String mail, String image, int job,
-								int map, int x, int y, int level, int hp)  {
+	public static void insertUser(final String id,
+								  final String pass,
+								  final String name,
+								  final String mail,
+								  final String image,
+								  final int job,
+								  final int map,
+								  final int x,
+								  final int y,
+								  final int level,
+								  final int hp)  {
 		try {
-			connection.createStatement().executeUpdate("INSERT `user` SET " +
-					"`id` = '" + id + "', " +
-					"`pass` = '" + pass + "', " +
-					"`name` = '" + name + "', " +
-					"`mail` = '" + mail + "', " +
-					"`image` = '" + image + "', " +
-					"`job` = '" + job + "', " +
-					"`map` = '" + map + "', " +
-					"`x` = '" + x + "', " +
-					"`y` = '" + y + "', " +
-					"`level` = '" + level + "', " +
-					"`hp` = '" + hp + "';");
+			StringBuilder sb;
+			sb = new StringBuilder(1024);
+			sb.append("INSERT `user` SET ")
+					.append(queryFormat("id", id)).append(',')
+					.append(queryFormat("pass", pass)).append(',')
+					.append(queryFormat("name", name)).append(',')
+					.append(queryFormat("mail", mail)).append(',')
+					.append(queryFormat("image", image)).append(',')
+					.append(queryFormat("job", job)).append(',')
+					.append(queryFormat("map", map)).append(',')
+					.append(queryFormat("x", x)).append(',')
+					.append(queryFormat("y", y)).append(',')
+					.append(queryFormat("level", level)).append(',')
+					.append(queryFormat("hp", hp)).append(';');
+
+			connection.createStatement().executeUpdate(sb.toString());
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void insertEquip(int userNo) {
+	public static void insertEquip(final int userNo) {
 		try {
 			connection.createStatement().executeUpdate("INSERT INTO `equip` (`user_no`) VALUES ('" + userNo + "');");
 		} catch (SQLException e) {
@@ -61,55 +74,63 @@ public class DataBase {
 		}
 	}
 
-	public static void insertItem(GameData.Item item) {
+	public static void insertItem(final GameData.Item item) {
 		try {
-			connection.createStatement().executeUpdate("INSERT `item` SET " +
-					"`user_no` = '" + item.getUserNo() + "', " +
-					"`item_no` = '" + item.getNo() + "', " +
-					"`amount` = '" + item.getAmount() + "', " +
-					"`index` = '" + item.getIndex() + "', " +
-					"`damage` = '" + item.getDamage() + "', " +
-					"`magic_damage` = '" + item.getMagicDamage() + "', " +
-					"`defense` = '" + item.getDefense() + "', " +
-					"`magic_defense` = '" + item.getMagicDefense() + "', " +
-					"`str` = '" + item.getStr() + "', " +
-					"`dex` = '" + item.getDex() + "', " +
-					"`agi` = '" + item.getAgi() + "', " +
-					"`hp` = '" + item.getHp() + "', " +
-					"`mp` = '" + item.getMp() + "', " +
-					"`critical` = '" + item.getCritical() + "', " +
-					"`avoid` = '" + item.getAvoid() + "', " +
-					"`hit` = '" + item.getHit() + "', " +
-					"`reinforce` = '" + item.getReinforce() + "', " +
-					"`trade` = '" + (item.isTradeable() ? 1 : 0) + "', " +
-					"`equipped` = '" + (item.isEquipped() ? 1 : 0) + "';");
+			StringBuilder sb;
+			sb = new StringBuilder(1024);
+			sb.append("INSERT `item` SET ")
+					.append(queryFormat("user_no", item.getUserNo())).append(',')
+					.append(queryFormat("item_no", item.getNo())).append(',')
+					.append(queryFormat("amount", item.getAmount())).append(',')
+					.append(queryFormat("index", item.getIndex())).append(',')
+					.append(queryFormat("damage", item.getDamage())).append(',')
+					.append(queryFormat("magic_damage", item.getMagicDamage())).append(',')
+					.append(queryFormat("defense", item.getDefense())).append(',')
+					.append(queryFormat("magic_defense", item.getMagicDefense())).append(',')
+					.append(queryFormat("str", item.getStr())).append(',')
+					.append(queryFormat("dex", item.getDex())).append(',')
+					.append(queryFormat("agi", item.getAgi())).append(',')
+					.append(queryFormat("hp", item.getHp())).append(',')
+					.append(queryFormat("mp", item.getMp())).append(',')
+					.append(queryFormat("critical", item.getCritical())).append(',')
+					.append(queryFormat("avoid", item.getAvoid())).append(',')
+					.append(queryFormat("hit", item.getHit())).append(',')
+					.append(queryFormat("reinforce", item.getReinforce())).append(',')
+					.append(queryFormat("trade", item.isTradeable() ? 1 : 0)).append(',')
+					.append(queryFormat("equipped", item.isEquipped() ? 1 : 0)).append(';');
+
+			connection.createStatement().executeUpdate(sb.toString());
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void insertSkill(GameData.Skill skill) {
+	public static void insertSkill(final GameData.Skill skill) {
 		try {
-			connection.createStatement().executeUpdate("INSERT `skill` SET " +
-					"`user_no` = '" + skill.getUserNo() + "', " +
-					"`skill_no` = '" + skill.getNo() + "', " +
-					"`rank` = '" + skill.getRank() + "';");
+
+			String sb = "INSERT `skill` SET " +
+					queryFormat("user_no", skill.getUserNo()) + ',' +
+					queryFormat("skill_no", skill.getNo()) + ',' +
+					queryFormat("rank", skill.getRank()) + ';';
+			connection.createStatement().executeUpdate(sb);
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void insertGuild(int masterNo, String guildName) {
+	public static void insertGuild(final int masterNo, final String guildName) {
 		try {
-			connection.createStatement().executeUpdate("INSERT `guild` SET " +
-					"`master` = '" + masterNo + "', " +
-					"`guild_name` = '" + guildName + "';");
+
+			String sb = "INSERT `guild` SET " +
+					queryFormat("master", masterNo) + ',' +
+					queryFormat("guild_name", guildName) + ';';
+			connection.createStatement().executeUpdate(sb);
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void insertGuildMember(int guildNo, int userNo) {
+	public static void insertGuildMember(final int guildNo, final int userNo) {
 		try {
 			connection.createStatement().executeUpdate(
 					"INSERT INTO `guild_member` (`guild_no`, `user_no`) VALUES ('" + guildNo + "', '" + userNo + "');");
@@ -118,63 +139,67 @@ public class DataBase {
 		}
 	}
 
-	public static void updateUser(User user) {
+	public static void updateUser(final User user) {
 		try {
-			connection.createStatement().executeUpdate("UPDATE `user` SET " +
-					"`title` = '" + user.getTitle() + "', " +
-					"`guild` = '" + user.getGuild() + "', " +
-					"`image` = '" + user.getImage() + "', " +
-					"`job` = '" + user.getJob() + "', " +
-					"`str` = '" + user.getPureStr() + "', " +
-					"`dex` = '" + user.getPureDex() + "', " +
-					"`agi` = '" + user.getPureAgi() + "', " +
-					"`title` = '" + user.getTitle() + "', " +
-					"`hp` = '" + user.getHp() + "', " +
-					"`mp` = '" + user.getMp() + "', " +
-					"`level` = '" + user.getLevel() + "', " +
-					"`exp` = '" + user.getExp() + "', " +
-					"`gold` = '" + user.getGold() + "', " +
-					"`map` = '" + user.getMap() + "', " +
-					"`x` = '" + user.getX() + "', " +
-					"`y` = '" + user.getY() + "', " +
-					"`direction` = '" + user.getDirection() + "', " +
-					"`speed` = '" + user.getMoveSpeed() + "', " +
-					"`stat_point` = '" + user.getStatPoint() + "', " +
-					"`skill_point` = '" + user.getSkillPoint() + "' " +
-					"WHERE `no` = '" + user.getNo() + "';");
 
+			String sb = "UPDATE `user` SET " +
+					queryFormat("title", user.getTitle()) + ',' +
+					queryFormat("guild", user.getGuild()) + ',' +
+					queryFormat("image", user.getImage()) + ',' +
+					queryFormat("job", user.getJob()) + ',' +
+					queryFormat("str", user.getPureStr()) + ',' +
+					queryFormat("dex", user.getPureDex()) + ',' +
+					queryFormat("agi", user.getPureAgi()) + ',' +
+					queryFormat("hp", user.getHp()) + ',' +
+					queryFormat("mp", user.getMp()) + ',' +
+					queryFormat("level", user.getLevel()) + ',' +
+					queryFormat("exp", user.getExp()) + ',' +
+					queryFormat("gold", user.getGold()) + ',' +
+					queryFormat("map", user.getMap()) + ',' +
+					queryFormat("x", user.getX()) + ',' +
+					queryFormat("y", user.getY()) + ',' +
+					queryFormat("direction", user.getDirection()) + ',' +
+					queryFormat("speed", user.getMoveSpeed()) + ',' +
+					queryFormat("stat_point", user.getStatPoint()) + ',' +
+					queryFormat("skill_point", user.getSkillPoint()) + ',' +
+					"WHERE " + queryFormat("no", user.getNo()) + ';';
+			connection.createStatement().executeUpdate(sb);
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void updateGuildExit(int userNo) {
+	public static void updateGuildExit(final int userNo) {
 		try {
-			connection.createStatement().executeUpdate("UPDATE `user` SET " +
-					"`guild` = '0' WHERE `no` = '" + userNo + "';");
 
+			String sb = "UPDATE `user` SET " +
+					queryFormat("guild", 0) +
+					" WHERE " + queryFormat("no", userNo) + ';';
+			connection.createStatement().executeUpdate(sb);
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 	
-	public static void updateEquip(User user) {
+	public static void updateEquip(final User user) {
 		try {
-			connection.createStatement().executeUpdate("UPDATE `equip` SET " +
-					"`weapon` = '" + user.getWeapon() + "', " +
-					"`shield` = '" + user.getShield() + "', " +
-					"`helmet` = '" + user.getHelmet() + "', " +
-					"`armor` = '" + user.getArmor() + "', " +
-					"`cape` = '" + user.getCape() + "', " +
-					"`shoes` = '" + user.getShoes() + "', " +
-					"`accessory` = '" + user.getAccessory() + "' " +
-					"WHERE `user_no` = '" + user.getNo() + "';");
+
+			String sb = "UPDATE `equip` SET " +
+					queryFormat("weapon", user.getWeapon()) + ',' +
+					queryFormat("shield", user.getShield()) + ',' +
+					queryFormat("helmet", user.getHelmet()) + ',' +
+					queryFormat("armor", user.getArmor()) + ',' +
+					queryFormat("cape", user.getCape()) + ',' +
+					queryFormat("shoes", user.getShoes()) + ',' +
+					queryFormat("accessory", user.getAccessory()) + ',' +
+					" WHERE " + queryFormat("user_no", user.getNo()) + ';';
+			connection.createStatement().executeUpdate(sb);
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
 	}
 
-	public static void deleteItem(int userNo) {
+	public static void deleteItem(final int userNo) {
 		try {
 			connection.createStatement().executeUpdate("DELETE FROM `item` WHERE `user_no` = '" + userNo + "';");
 		} catch (SQLException e) {
@@ -182,7 +207,7 @@ public class DataBase {
 		}
 	}
 
-	public static void deleteSkill(int userNo) {
+	public static void deleteSkill(final int userNo) {
 		try {
 			connection.createStatement().executeUpdate("DELETE FROM `skill` WHERE `user_no` = '" + userNo + "';");
 		} catch (SQLException e) {
@@ -190,7 +215,7 @@ public class DataBase {
 		}
 	}
 
-	public static void deleteGuild(int masterNo) {
+	public static void deleteGuild(final int masterNo) {
 		try {
 			connection.createStatement().executeUpdate("DELETE FROM `guild` WHERE `master` = '" + masterNo + "';");
 		} catch (SQLException e) {
@@ -198,7 +223,7 @@ public class DataBase {
 		}
 	}
 
-	public static void deleteGuildMember(int guildNo, int userNo) {
+	public static void deleteGuildMember(final int guildNo, final int userNo) {
 		try {
 			connection.createStatement().executeUpdate(
 					"DELETE FROM `guild_member` WHERE `guild_no` = '" + guildNo + "' AND `user_no` ='" + userNo + "';");
@@ -207,7 +232,7 @@ public class DataBase {
 		}
 	}
 
-	public static void setSlot(User user, int slotIndex, int index) {
+	public static void setSlot(final User user, final int slotIndex, final int index) {
 		try {
 			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `slot` WHERE `no` = '" + user.getNo() + "';");
 			if (!rs.next()) {
@@ -232,7 +257,7 @@ public class DataBase {
 		}
 	}
 
-	public static void delSlot(User user, int slotIndex) {
+	public static void delSlot(final User user, final int slotIndex) {
 		try {
 			ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM `slot` WHERE `no` = '" + user.getNo() + "';");
 			if (!rs.next()) {
@@ -250,5 +275,9 @@ public class DataBase {
 		} catch (SQLException e) {
 			logger.warning(e.toString());
 		}
+	}
+
+	private static String queryFormat(final String field, final Object value) {
+		return String.format("`%s` = '%s'", field, value.toString());
 	}
 }

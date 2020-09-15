@@ -10,17 +10,16 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 public class Guild {
-    private int mMaster;
-    private String mName;
-    private Vector<Integer> mMembersVector;
+    private static final Logger logger = Logger.getLogger(Guild.class.getName());
+    private static final Hashtable<Integer, Guild> guilds = new Hashtable<>();
 
-    private static Hashtable<Integer, Guild> guildsHashtable = new Hashtable<>();
-    private static Logger logger = Logger.getLogger(Guild.class.getName());
+    private final int mMaster;
+    private final String mName;
+    private final Vector<Integer> mMembersVector = new Vector<>();
 
     public Guild(int master, String name) {
         mMaster = master;
         mName = name;
-        mMembersVector = new Vector<>();
         join(master);
         DataBase.insertGuild(master, name);
     }
@@ -28,7 +27,6 @@ public class Guild {
     public Guild(int master, String name, boolean loading) {
         mMaster = master;
         mName = name;
-        mMembersVector = new Vector<>();
         if (!loading) {
             join(master);
         }
@@ -57,25 +55,25 @@ public class Guild {
                 guild.mMembersVector.addElement(memberRs.getInt("no"));
             }
             memberRs.close();
-            guildsHashtable.put(masterNo, guild);
+            guilds.put(masterNo, guild);
         }
         rs.close();
         logger.info("길드 정보 로드 완료.");
     }
 
     public static boolean add(int masterNo, String name) {
-        if (guildsHashtable.containsKey(masterNo)) {
+        if (guilds.containsKey(masterNo)) {
             return false;
         }
-        guildsHashtable.put(masterNo, new Guild(masterNo, name));
+        guilds.put(masterNo, new Guild(masterNo, name));
         return true;
     }
 
     public static Guild get(int masterNo) {
-        if (!guildsHashtable.containsKey(masterNo)) {
+        if (!guilds.containsKey(masterNo)) {
             return null;
         }
-        return guildsHashtable.get(masterNo);
+        return guilds.get(masterNo);
     }
 
     public boolean join(int userNo) {
@@ -122,8 +120,6 @@ public class Guild {
             guildMember.setGuild(0);
         }
         mMembersVector.clear();
-        if (guildsHashtable.containsKey(mMaster)) {
-            guildsHashtable.remove(mMaster);
-        }
+        guilds.remove(mMaster);
     }
 }

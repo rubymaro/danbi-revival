@@ -5,14 +5,13 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 public class Party {
-    private int mMaster;
-    private Vector<Integer> mMembersVector;
-
-    private static Hashtable<Integer, Party> partiesHashtable = new Hashtable<>();
+    private final static Hashtable<Integer, Party> parties = new Hashtable<>();
+    
+    private final int mMaster;
+    private final Vector<Integer> mMembersVector = new Vector<>();
 
     public Party(int masterNo) {
         mMaster = masterNo;
-        mMembersVector = new Vector<>();
         join(mMaster);
     }
 
@@ -52,8 +51,7 @@ public class Party {
             partyMember.setPartyNo(0);
         }
         mMembersVector.clear();
-        if (partiesHashtable.containsKey(mMaster))
-            partiesHashtable.remove(mMaster);
+        parties.remove(mMaster);
     }
 
     public Vector<Integer> getMembers() {
@@ -61,17 +59,17 @@ public class Party {
     }
 
     public static boolean add(int masterNo) {
-        if (partiesHashtable.containsKey(masterNo)) {
+        if (parties.containsKey(masterNo)) {
             return false;
         }
-        partiesHashtable.put(masterNo, new Party(masterNo));
+        parties.put(masterNo, new Party(masterNo));
         return true;
     }
 
     public static Party get(int masterNo) {
-        if (!partiesHashtable.containsKey(masterNo)) {
+        if (!parties.containsKey(masterNo)) {
             return null;
         }
-        return partiesHashtable.get(masterNo);
+        return parties.get(masterNo);
     }
 }

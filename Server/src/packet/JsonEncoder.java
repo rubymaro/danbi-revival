@@ -10,19 +10,15 @@ import io.netty.util.CharsetUtil;
 import java.io.IOException;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("unchecked")
 public class JsonEncoder extends MessageToMessageEncoder {
 	@Override
-	protected void encode(ChannelHandlerContext ctx, Object msg, List out) throws Exception {
+	protected void encode(ChannelHandlerContext ctx, Object msg, List out) {
         String json = serialize(msg);
         byte[] data = json.getBytes(CharsetUtil.UTF_8);
-        int dataLength = data.length;
         ByteBuf buf = Unpooled.buffer();
-        //buf.writeInt(dataLength);
         buf.writeBytes(data);
         out.add(buf);
 	}
@@ -32,12 +28,8 @@ public class JsonEncoder extends MessageToMessageEncoder {
         Throwable t;
         try {
             return mapper.writeValueAsString(msg);
-        } catch (JsonGenerationException e) {
-                t = e;
-        } catch (JsonMappingException e) {
-                t = e;
         } catch (IOException e) {
-                t = e;
+            t = e;
         }
         throw new CorruptedFrameException("Error while serializing message: " + t.getMessage());
     }

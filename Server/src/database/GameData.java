@@ -10,44 +10,80 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 public class GameData extends DataBase {
-	public static Hashtable<Integer, Job> jobsHashtable = new Hashtable<>();
-	public static Hashtable<Integer, Register> registersHashtable = new Hashtable<>();
-	public static Hashtable<Integer, ItemData> itemsHashtable = new Hashtable<>();
-	public static Hashtable<Integer, SkillData> skillsHashtable = new Hashtable<>();
-	public static Hashtable<Integer, Troop> troopsHashtable = new Hashtable<>();
-	public static Hashtable<Integer, NPC> npcsHashtable = new Hashtable<>();
-	public static Hashtable<Integer, Shop> shopsHashtable = new Hashtable<>();
-	public static Vector<Reward> rewardsVector = new Vector<>();
-	public static Vector<Portal> portalsVector = new Vector<>();
+	private static final Logger logger = Logger.getLogger(GameData.class.getName());
 
-	private static Logger logger = Logger.getLogger(GameData.class.getName());
+	private static final Hashtable<Integer, Job> jobs = new Hashtable<>();
+	private static final Hashtable<Integer, Register> registers = new Hashtable<>();
+	private static final Hashtable<Integer, ItemData> items = new Hashtable<>();
+	private static final Hashtable<Integer, SkillData> skills = new Hashtable<>();
+	private static final Hashtable<Integer, Troop> troops = new Hashtable<>();
+	private static final Hashtable<Integer, NPC> npcs = new Hashtable<>();
+	private static final Hashtable<Integer, Shop> shops = new Hashtable<>();
+	private static final Vector<Reward> rewardsVector = new Vector<>();
+	private static final Vector<Portal> portalsVector = new Vector<>();
+
+	public static Hashtable<Integer, Job> getJobs() {
+		return jobs;
+	}
+
+	public static Hashtable<Integer, Register> getRegisters() {
+		return registers;
+	}
+
+	public static Hashtable<Integer, ItemData> getItems() {
+		return items;
+	}
+
+	public static Hashtable<Integer, SkillData> getSkills() {
+		return skills;
+	}
+
+	public static Hashtable<Integer, Troop> getTroops() {
+		return troops;
+	}
+
+	public static Hashtable<Integer, NPC> getNpcs() {
+		return npcs;
+	}
+
+	public static Hashtable<Integer, Shop> getShops() {
+		return shops;
+	}
+
+	public static Vector<Reward> getRewards() {
+		return rewardsVector;
+	}
+
+	public static Vector<Portal> getPortals() {
+		return portalsVector;
+	}
 
 	public static void loadSettings() throws SQLException {
 		ResultSet rs;
 
 		rs = executeQuery("SELECT * FROM `setting_job`;");
 		while (rs.next())
-			jobsHashtable.put(rs.getInt("no"), new Job(rs));
+			getJobs().put(rs.getInt("no"), new Job(rs));
 		logger.info("직업 정보 로드 완료.");
 		
 		rs = executeQuery("SELECT * FROM `setting_register`;");
 		while (rs.next())
-			registersHashtable.put(rs.getInt("no"), new Register(rs));
+			registers.put(rs.getInt("no"), new Register(rs));
 		logger.info("가입 정보 로드 완료.");
 
 		rs = executeQuery("SELECT * FROM `setting_item`;");
 		while (rs.next())
-			itemsHashtable.put(rs.getInt("no"), new ItemData(rs));
+			items.put(rs.getInt("no"), new ItemData(rs));
 		logger.info("아이템 정보 로드 완료.");
 
 		rs = executeQuery("SELECT * FROM `setting_skill`;");
 		while (rs.next())
-			skillsHashtable.put(rs.getInt("no"), new SkillData(rs));
+			skills.put(rs.getInt("no"), new SkillData(rs));
 		logger.info("스킬 정보 로드 완료.");
 
 		rs = executeQuery("SELECT * FROM `setting_npc`;");
 		while (rs.next())
-			npcsHashtable.put(rs.getInt("no"), new NPC(rs));
+			npcs.put(rs.getInt("no"), new NPC(rs));
 		logger.info("NPC 정보 로드 완료.");
 
 		rs = executeQuery("SELECT * FROM `setting_reward`;");
@@ -57,7 +93,7 @@ public class GameData extends DataBase {
 
 		rs = executeQuery("SELECT * FROM `setting_troop`;");
 		while (rs.next())
-			troopsHashtable.put(rs.getInt("no"), new Troop(rs));
+			troops.put(rs.getInt("no"), new Troop(rs));
 		logger.info("에너미 정보 로드 완료.");
 
 		ArrayList<ShopItem> shopItemsList = new ArrayList<>();
@@ -67,9 +103,10 @@ public class GameData extends DataBase {
 
 		for (ShopItem shopItem : shopItemsList) {
 			int shopNo = shopItem.getNo();
-			if (!shopsHashtable.containsKey(shopNo))
-				shopsHashtable.put(shopNo, new Shop(shopNo));
-			shopsHashtable.get(shopNo).addItem(shopItem.getItemNo());
+			if (!shops.containsKey(shopNo)) {
+				shops.put(shopNo, new Shop(shopNo));
+			}
+			shops.get(shopNo).addItem(shopItem.getItemNo());
 		}
 		logger.info("상점 정보 로드 완료.");
 
@@ -84,13 +121,13 @@ public class GameData extends DataBase {
 	}
 
 	public static class Job {
-		private int mNo;
-		private String mName;
-		private int mHp;
-		private int mMp;
-		private int mStr;
-		private int mDex;
-		private int mAgi;
+		private final int mNo;
+		private final String mName;
+		private final int mHp;
+		private final int mMp;
+		private final int mStr;
+		private final int mDex;
+		private final int mAgi;
 		
 		public Job(ResultSet rs) throws SQLException {
 			mNo = rs.getInt("no");
@@ -186,7 +223,7 @@ public class GameData extends DataBase {
 		private String mImage;
 		private int mJob;
 		private int mLimitLevel;
-		private int mType;
+		private Type.Item mType;
 		private int mPrice;
 		private int mDamage;
 		private int mMagicDamage;
@@ -214,7 +251,7 @@ public class GameData extends DataBase {
 				mImage = rs.getString("image");
 				mJob = rs.getInt("job");
 				mLimitLevel = rs.getInt("limit_level");
-				mType = rs.getInt("type");
+				mType = Type.Item.fromInt(rs.getInt("type"));
 				mPrice = rs.getInt("price");
 				mDamage = rs.getInt("damage");
 				mMagicDamage = rs.getInt("magic_damage");
@@ -262,7 +299,7 @@ public class GameData extends DataBase {
 			return mLimitLevel;
 		}
 		
-		public int getType() {
+		public Type.Item getType() {
 			return mType;
 		}
 		
@@ -359,7 +396,7 @@ public class GameData extends DataBase {
 		public Item(int userNo, int itemNo, int amount, int index, int trade) {
 			mUserNo = userNo;
 			mItemNo = itemNo;
-			mAmount = amount > GameData.itemsHashtable.get(mItemNo).getMaxLoad() ? GameData.itemsHashtable.get(mItemNo).getMaxLoad() : amount;
+			mAmount = Math.min(amount, GameData.items.get(mItemNo).getMaxLoad());
 			mIndex = index;
 			mDamage = 0;
 			mMagicDamage = 0;
@@ -509,8 +546,8 @@ public class GameData extends DataBase {
 		}
 		
 		public void addAmount(int value) {
-			if (mAmount + value > GameData.itemsHashtable.get(mItemNo).getMaxLoad()) {
-				mAmount = GameData.itemsHashtable.get(mItemNo).getMaxLoad();
+			if (mAmount + value > GameData.items.get(mItemNo).getMaxLoad()) {
+				mAmount = GameData.items.get(mItemNo).getMaxLoad();
 			} else if (mAmount + value < 0) {
 				mAmount = 0;
 			} else {
@@ -617,9 +654,9 @@ public class GameData extends DataBase {
 	}
 
 	public static class Skill {
-		private int mUserNo;
-		private int mSkillNo;
-		private int mRank;
+		private final int mUserNo;
+		private final int mSkillNo;
+		private final int mRank;
 
 		public Skill(int userNo, int skillNo) {
 			mUserNo = userNo;
@@ -644,7 +681,7 @@ public class GameData extends DataBase {
 		private String mName;
 		private int mNum;
 		private String mImage;
-		private int mType;
+		private Type.Enemy mType;
 		private int mTeam;
 		private int mRange;
 		private int mHp;
@@ -662,7 +699,7 @@ public class GameData extends DataBase {
 		private int mMap;
 		private int mX;
 		private int mY;
-		private int mDirection;
+		private Type.Direction mDirection;
 		private int mRegen;
 		private int mLevel;
 		private int mGold;
@@ -677,7 +714,7 @@ public class GameData extends DataBase {
 				mName = rs.getString("name");
 				mNum = rs.getInt("num");
 				mImage = rs.getString("image");
-				mType = rs.getInt("type");
+				mType = Type.Enemy.fromInt(rs.getInt("type"));
 				mTeam = rs.getInt("team");
 				mRange = rs.getInt("range");
 				mHp = rs.getInt("hp");
@@ -695,7 +732,7 @@ public class GameData extends DataBase {
 				mMap = rs.getInt("map");
 				mX = rs.getInt("x");
 				mY = rs.getInt("y");
-				mDirection = rs.getInt("direction");
+				mDirection = Type.Direction.fromInt(rs.getInt("direction"));
 				mRegen = rs.getInt("regen");
 				mLevel = rs.getInt("level");
 				mExp = rs.getInt("exp");
@@ -725,7 +762,7 @@ public class GameData extends DataBase {
 			return mImage;
 		}
 
-		public int getType() {
+		public Type.Enemy getType() {
 			return mType;
 		}
 
@@ -793,7 +830,7 @@ public class GameData extends DataBase {
 			return mY;
 		}
 
-		public int getDirection() {
+		public Type.Direction getDirection() {
 			return mDirection;
 		}
 
@@ -871,7 +908,7 @@ public class GameData extends DataBase {
 		private int mMap;
 		private int mX;
 		private int mY;
-		private int mDirection;
+		private Type.Direction mDirection;
 		private String mFunctionName;
 
 		public NPC(ResultSet rs) {
@@ -882,7 +919,7 @@ public class GameData extends DataBase {
 				mMap = rs.getInt("map");
 				mX = rs.getInt("x");
 				mY = rs.getInt("y");
-				mDirection = rs.getInt("direction");
+				mDirection = Type.Direction.fromInt(rs.getInt("direction"));
 				mFunctionName = rs.getString("function");
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -913,7 +950,7 @@ public class GameData extends DataBase {
 			return mY;
 		}
 
-		public int getDirection() {
+		public Type.Direction getDirection() {
 			return mDirection;
 		}
 
@@ -923,12 +960,11 @@ public class GameData extends DataBase {
 	}
 
 	public static class Shop {
-		private int mNo;
-		private Hashtable<Integer, ItemData> mGoodsHashtable;
+		private final int mNo;
+		private final Hashtable<Integer, ItemData> mGoods = new Hashtable<>();
 
 		public Shop(int no) {
 			mNo = no;
-			mGoodsHashtable = new Hashtable<>();
 		}
 
 		public int getNo() {
@@ -936,18 +972,18 @@ public class GameData extends DataBase {
 		}
 
 		public void addItem(int mItemNo) {
-			mGoodsHashtable.put(mGoodsHashtable.size() + 1, GameData.itemsHashtable.get(mItemNo));
+			mGoods.put(mGoods.size() + 1, GameData.items.get(mItemNo));
 		}
 
 		public ItemData getItem(int index) {
-			if (mGoodsHashtable.containsKey(index)) {
-				return mGoodsHashtable.get(index);
+			if (mGoods.containsKey(index)) {
+				return mGoods.get(index);
 			}
 			return null;
 		}
 
 		public Hashtable<Integer, ItemData> getAllItems() {
-			return mGoodsHashtable;
+			return mGoods;
 		}
 	}
 

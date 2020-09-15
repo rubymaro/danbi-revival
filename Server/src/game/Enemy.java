@@ -9,35 +9,33 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 public class Enemy extends Character {
-    private int mType;
-    private int mRange;
-    private int mMaxHp;
-    private int mMaxMp;
-    private int mAttackAnimation;
-    private int mDamage;
-    private int mMagicDamage;
-    private int mDefense;
-    private int mMagicDefense;
-    private int mCritical;
-    private int mAvoid;
-    private int mHit;
-    private int mAttackSpeed;
-    private int mRegen;
-    private int mReward;
-    private String mFunction;
-    private int mFrequency;
-    private String mDieFunction;
+    private static final Logger logger = Logger.getLogger(Enemy.class.getName());
 
-    private int mOriginalX;
-    private int mOriginalY;
-
+    private final Type.Enemy mType;
+    private final int mRange;
+    private final int mMaxHp;
+    private final int mMaxMp;
+    private final int mAttackAnimation;
+    private final int mDamage;
+    private final int mMagicDamage;
+    private final int mDefense;
+    private final int mMagicDefense;
+    private final int mCritical;
+    private final int mAvoid;
+    private final int mHit;
+    private final int mAttackSpeed;
+    private final int mRegen;
+    private final int mReward;
+    private final String mFunction;
+    private final int mFrequency;
+    private final String mDieFunction;
+    private final int mOriginalX;
+    private final int mOriginalY;
     private boolean mbDead;
     private long mDeadTime;
     private long mLastMoveTime;
     private long mLastAttackTime;
     private Character mTarget;
-
-    private static Logger logger = Logger.getLogger(Enemy.class.getName());
 
     public Enemy(int seed, int no, int x, int y, GameData.Troop troop) {
         mNo = no;
@@ -84,7 +82,7 @@ public class Enemy extends Character {
         mCharacterType = Type.Character.ENEMY;
     }
 
-    public int getType() {
+    public Type.Enemy getType() {
         return mType;
     }
 
@@ -111,7 +109,7 @@ public class Enemy extends Character {
         }
         mHp += value;
         Map.getMap(mMap).getField(mSeed).sendToAll(Packet.updateCharacter(mCharacterType, mNo,
-                new int[]{ Type.Status.HP }, new Integer[]{ mHp }));
+                new int[]{ Type.Status.HP.getValue() }, new Integer[]{ mHp }));
     }
 
     public void loseHp(int value) {
@@ -181,15 +179,15 @@ public class Enemy extends Character {
                 }
                 // 에너미 종류에 따라 분기
                 switch (mType) {
-                    case Type.Enemy.PACIFISM:
+                    case PACIFISM:
                         moveRandom();
                         break;
 
-                    case Type.Enemy.CAUTIOUS:
+                    case CAUTIOUS:
                         moveAway();
                         break;
 
-                    case Type.Enemy.PROTECTIVE:
+                    case PROTECTIVE:
                         if (mHp < mMaxHp) {
                             moveToward();
                         } else {
@@ -197,7 +195,7 @@ public class Enemy extends Character {
                         }
                         break;
 
-                    case Type.Enemy.AGGRESSIVE:
+                    case AGGRESSIVE:
                         moveToward();
                         break;
 
@@ -236,7 +234,7 @@ public class Enemy extends Character {
                 Map.getMap(mMap).getField(mSeed).loadDropGold(mGold, mX, mY);
             }
             // 보상 목록에 있는 아이템을 드랍
-            for (GameData.Reward r : GameData.rewardsVector) {
+            for (GameData.Reward r : GameData.getRewards()) {
                 if (r.getNo() == mReward && r.getPer() > mRandom.nextInt(10000)) {
                     Map.getMap(mMap).getField(mSeed).loadDropItem(r.getItemNo(), r.getNum(), mX, mY);
                 }
@@ -272,17 +270,17 @@ public class Enemy extends Character {
         mLastAttackTime = nowTime + mAttackSpeed + mRandom.nextInt(mAttackSpeed) / 2;
         // 에너미 종류에 따라 분기
         switch (mType) {
-            case Type.Enemy.CAUTIOUS:
+            case CAUTIOUS:
                 distanceAttack();
                 break;
 
-            case Type.Enemy.PROTECTIVE:
+            case PROTECTIVE:
                 if (mHp < mMaxHp) {
                     meleeAttack();
                 }
                 break;
 
-            case Type.Enemy.AGGRESSIVE:
+            case AGGRESSIVE:
                 meleeAttack();
                 break;
 
@@ -292,21 +290,21 @@ public class Enemy extends Character {
 
     // 근접 공격
     private void meleeAttack() {
-        int new_x = mX + (mDirection == 6 ? 1 : mDirection == 4 ? -1 : 0);
-        int new_y = mY + (mDirection == 2 ? 1 : mDirection == 8 ? -1 : 0);
-        if (mTarget.mX == new_x && mTarget.mY == new_y) {
+        int newX = mX + (mDirection == Type.Direction.RIGHT ? 1 : mDirection == Type.Direction.LEFT ? -1 : 0);
+        int newY = mY + (mDirection == Type.Direction.DOWN ? 1 : mDirection == Type.Direction.UP ? -1 : 0);
+        if (mTarget.mX == newX && mTarget.mY == newY) {
             assault(mTarget);
         }
     }
 
     // 원거리 공격
     private void distanceAttack() {
-        int new_x = mX;
-        int new_y = mY;
+        int newX = mX;
+        int newY = mY;
         for (int i = 0; i < mRange; i++) {
-            new_x += (mDirection == 6 ? 1 : mDirection == 4 ? -1 : 0);
-            new_y += (mDirection == 2 ? 1 : mDirection == 8 ? -1 : 0);
-            if (mTarget.mX == new_x && mTarget.mY == new_y) {
+            newX += (mDirection == Type.Direction.RIGHT ? 1 : mDirection == Type.Direction.LEFT ? -1 : 0);
+            newY += (mDirection == Type.Direction.DOWN ? 1 : mDirection == Type.Direction.UP ? -1 : 0);
+            if (mTarget.mX == newX && mTarget.mY == newY) {
                 assault(mTarget);
                 break;
             }
@@ -315,7 +313,7 @@ public class Enemy extends Character {
 
     // 적 공격
     private void assault(Character target) {
-        jump(0, 0);
+        jump(target.mDirection, 0);
         target.animation(mAttackAnimation);
         // 실 데미지를 계산
         int attackDamage = mDamage - target.getDefense();
@@ -373,7 +371,7 @@ public class Enemy extends Character {
 
     // 모든 적을 검색
     private Vector<Character> findEnemies() {
-        Vector<Character> enemiesVector = new Vector<Character>();
+        Vector<Character> enemiesVector = new Vector<>();
         // 팀이 다른 경우 적 목록에 넣음
         for (User user : Map.getMap(mMap).getField(mSeed).getUsers()) {
             if (user.getTeam() != mTeam) {
@@ -452,26 +450,26 @@ public class Enemy extends Character {
     private void moveRandom() {
         int d = mRandom.nextInt(4);
         d = (d + 1) * 2;
-        switch (d) {
-            case Type.Direction.UP:
+        switch (Type.Direction.fromInt(d)) {
+            case UP:
                 if (!super.moveUp()) {
                     moveUp();
                 }
                 break;
 
-            case Type.Direction.DOWN:
+            case DOWN:
                 if (!super.moveDown()) {
                     moveDown();
                 }
                 break;
 
-            case Type.Direction.LEFT:
+            case LEFT:
                 if (!super.moveLeft()) {
                     moveLeft();
                 }
                 break;
 
-            case Type.Direction.RIGHT:
+            case RIGHT:
                 if (!super.moveRight()) {
                     moveRight();
                 }
