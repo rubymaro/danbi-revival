@@ -36,12 +36,6 @@ module MUIManager
     @created_windows.push(window)
   end
 
-  def self.remove_window(window:)
-    index = @created_windows.find_index(window)
-    raise "#{window}는 누락된 window 입니다." if nil == index
-    @created_windows[index] = @created_windows.pop
-  end
-
   def self.get_window_cache(key)
     return @window_caches[key]
   end
@@ -81,7 +75,7 @@ module MUIManager
         max_control_z = -1
         over_control_or_nil = nil
         for control in window.controls
-          if control.visible
+          if control.is_visible
             if max_control_z < control.z && control.point_in_sprite?(x: Input.mouse_x, y: Input.mouse_y)
               max_control_z = control.z
               over_control_or_nil = control
@@ -95,7 +89,7 @@ module MUIManager
         end
       else
         for control in window.controls
-          if control.visible && control.state_mouse_over
+          if control.is_visible && control.state_mouse_over
             control.state_mouse_over = false
             control.on_mouse_out(x: Input.mouse_x, y: Input.mouse_y)
           end
@@ -114,5 +108,15 @@ module MUIManager
     end
 
     @last_focused_window_or_nil.update_events if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.showing?
+
+    @created_windows.delete_if do |window|
+      if window.has_disposing_request
+        window.on_disposing
+        true
+      end
+    end
+    if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.has_disposing_request
+      @last_focused_window_or_nil = nil
+    end
   end
 end

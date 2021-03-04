@@ -69,6 +69,30 @@ module MUI
       @@skin_caches[:one_image][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
       @@skin_caches[:one_image][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
       @@skin_caches[:one_image][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
+
+      # closing button
+      src = RPG::Cache.mui("window.png")
+      grid = BitmapGrid.new(row_count: State::Length, column_count: 1,
+        offset_x: 100, offset_y: 0,
+        rects: [
+          Rect.new(0, 0, 12, 10),
+          Rect.new(0, 10, 12, 10),
+          Rect.new(0, 10, 12, 10),
+          Rect.new(0, 0, 12, 10),
+        ]
+      )
+      grid_per_button = BitmapGrid.new(row_count: 1, column_count: 1,
+        offset_x: 0, offset_y: 0,
+        rects: [
+          Rect.new(0, 0, 12, 10),
+        ]
+      )
+      bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
+      @@skin_caches[:x_button] ||= Array.new(State::Length)
+      @@skin_caches[:x_button][State::NORMAL] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::NORMAL][0]))
+      @@skin_caches[:x_button][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
+      @@skin_caches[:x_button][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
+      @@skin_caches[:x_button][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
     end
     
     class << self

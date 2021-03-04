@@ -14,7 +14,8 @@ module MUI
     attr_reader :z
     attr_reader :width
     attr_reader :height
-    attr_reader :visible
+    attr_reader :is_visible
+    attr_reader :is_enabled
 
     attr_accessor :state_mouse_over
 
@@ -33,7 +34,8 @@ module MUI
       @z = 0
       @width = width
       @height = height
-      @visible = true
+      @is_visible = true
+      @is_enabled = true
 
       @state_mouse_over = false
 
@@ -52,7 +54,7 @@ module MUI
       @sprite.x = @x
       @sprite.y = @y
       @sprite.z = @z
-      @sprite.visible = @visible
+      @sprite.visible = @is_visible
     end
 
     def x=(integer)
@@ -70,9 +72,9 @@ module MUI
       @sprite.z = @z if nil != @sprite
     end
 
-    def visible=(bool)
-      @visible = bool
-      @sprite.visible = @visible if nil != @sprite
+    def is_visible=(bool)
+      @is_visible = bool
+      @sprite.visible = @is_visible if nil != @sprite
       @state_mouse_over = false
     end
 
@@ -100,7 +102,9 @@ module MUI
 
     def dispose
       @sprite.bitmap.dispose
-      @sprite.dispose
+      @sprite.bitmap = nil
+      @sprite.dispose 
+      @sprite = nil
     end
 
     def on_got_focus

@@ -5,8 +5,8 @@ module MUI
     end
 
   public
-    def initialize(x:, y:, width:, height:, skin_key:)
-      super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 1, piece_column_count: 1)
+    def initialize(x:, y:, width:, height:, skin_key:, has_close_button: true, disposable: true)
+      super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 1, piece_column_count: 1, has_close_button: has_close_button, disposable: disposable)
       resize
       adjust_position
       create_bitmap
@@ -41,10 +41,8 @@ module MUI
       @viewport_frame.rect.y = @y
       @viewport_content.rect.x = @x
       @viewport_content.rect.y = @y
-    end
-
-    def title_height
-      return @skin.bitmap_pieces[PieceIndices::SINGLE][PieceIndices::SINGLE].height
+      @button_close.x = frame_width - @button_close.width
+      @button_close.y = 0
     end
   end
 end

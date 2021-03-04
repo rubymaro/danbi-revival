@@ -64,8 +64,7 @@ module MUI
         offset_x: 0, offset_y: 0,
         rects: [
           Rect.new(0, 0, src.width, src.height)
-          ]
-        )
+        ])
       @@skin_caches[:default_single] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
     end
 
@@ -84,9 +83,11 @@ module MUI
     attr_reader :width
     attr_reader :height
     attr_reader :controls
+    attr_reader :disposable
+    attr_reader :has_disposing_request
 
   public
-    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:)
+    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:, has_close_button:, disposable:)
       @x = x
       @y = y
       @width = width
@@ -110,6 +111,35 @@ module MUI
       on_got_focus
 
       MUIManager.add_window(window: self)
+
+      @has_disposing_request = false
+      @disposable = disposable
+      @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
+      @button_close.handler_mouse_down = if @disposable
+        ->(button, x, y) do
+          case button
+          when Input::MOUSELEFT
+            dispose
+          when Input::MOUSEMIDDLE
+          when Input::MOUSERIGHT
+          else
+            raise "invalid mouse button"
+          end
+        end
+      else
+        ->(button, x, y) do
+          case button
+          when Input::MOUSELEFT
+            hide
+          when Input::MOUSEMIDDLE
+          when Input::MOUSERIGHT
+          else
+            raise "invalid mouse button"
+          end
+        end
+      end
+      add_to_frame(control: @button_close)
+      @button_close.is_visible = has_close_button
     end
 
     def z=(integer)
@@ -159,11 +189,8 @@ module MUI
     end
 
     def dispose
-      @sprite_frame.bitmap.dispose
-      @sprite_frame.dispose
-      @viewport_frame.dispose
-      @viewport_content.dispose
-      MUIManager.remove_window(self)
+      raise "#{self.class}는 dispose 할 수 없는 Window 입니다. hide를 사용하세요." if !@disposable
+      @has_disposing_request = true
     end
 
     def update
@@ -201,6 +228,20 @@ module MUI
         @sprite_frame.bitmap = nil
       end
       @sprite_frame.bitmap = Bitmap.new(@viewport_frame.rect.width, @viewport_frame.rect.height)
+    end
+
+    def on_disposing
+      for control in @controls
+        control.dispose
+      end
+      @sprite_frame.bitmap.dispose
+      @sprite_frame.bitmap = nil
+      @sprite_frame.dispose
+      @sprite_frame = nil
+      @viewport_frame.dispose
+      @viewport_frame = nil
+      @viewport_content.dispose
+      @viewport_content = nil
     end
 
     def on_got_focus
@@ -252,6 +293,8 @@ module MUI
         adjust_position
       when Input::MOUSEMIDDLE
       when Input::MOUSERIGHT
+      else
+        raise "invalid mouse button"
       end
     end
 
@@ -285,7 +328,7 @@ module MUI
       selected_or_nil = nil
       max_z = -1
       for control in @controls
-        if control.visible && max_z < control.z && control.point_in_sprite?(x: mouse_x, y: mouse_y)
+        if control.is_visible && max_z < control.z && control.point_in_sprite?(x: mouse_x, y: mouse_y)
           max_z = control.z
           selected_or_nil = control
         end

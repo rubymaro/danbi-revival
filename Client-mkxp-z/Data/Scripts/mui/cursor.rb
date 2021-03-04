@@ -5,11 +5,7 @@ module MUI
       @viewport.z = (1 << 30) - 1
       @sprite = Sprite.new(@viewport)
       @sprite.bitmap = RPG::Cache.icon(Config::FILENAME_CURSOR_ICON)
-
-      #a = MiniFFI.new("C:/dev/GitHub/danbi-revival/Client-mkxp-z/user32.dll", 'ShowCursor', 'l', 'l')
-      #a.call
       Graphics.show_cursor = false
-      
     end
 
     def self.update
@@ -18,4 +14,3 @@ module MUI
     end
   end
 end
-

@@ -9,8 +9,8 @@ module MUI
     end
 
   public
-    def initialize(x:, y:, width:, height:, skin_key: :default_4x3)
-      super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 4, piece_column_count: 3)
+    def initialize(x:, y:, width:, height:, skin_key: :default_4x3, has_close_button: true, disposable: true)
+      super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 4, piece_column_count: 3, has_close_button: has_close_button, disposable: disposable)
 
       resize
       adjust_position
@@ -77,6 +77,8 @@ module MUI
       @viewport_frame.rect.y = @y
       @viewport_content.rect.x = @x + relative_content_x
       @viewport_content.rect.y = @y + relative_content_y
+      @button_close.x = frame_width - @button_close.width - @skin.bitmap_pieces[PieceIndices::TITLE][PieceIndices::RIGHT].width
+      @button_close.y = (title_height - @button_close.height).abs / 2
     end
 
     def title_height
