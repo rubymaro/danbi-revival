@@ -80,6 +80,11 @@ module MUI
       @state_mouse_over = false
     end
 
+    def is_enabled=(bool)
+      @is_enabled = bool
+      @state_mouse_over = false
+    end
+
     def real_x
       return @x + @sprite.viewport.rect.x
     end

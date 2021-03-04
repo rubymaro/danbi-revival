@@ -113,6 +113,15 @@ module MUI
       super(x: x, y: y, width: width, height: height)
     end
 
+    def is_enabled=(bool)
+      super(bool)
+      if bool
+        @sprite.src_rect.y = @height * State::NORMAL
+      else
+        @sprite.src_rect.y = @height * State::DISABLED
+      end
+    end
+
     def resize(width:, height:)
       is_resized = super(width: width, height: height)
       if is_resized
@@ -144,31 +153,41 @@ module MUI
     end
 
     def on_mouse_over(x:, y:)
-      @sprite.src_rect.y = @height * State::MOUSE_OVER
+      if @is_enabled
+        @sprite.src_rect.y = @height * State::MOUSE_OVER
+      end
       super(x: x, y: y)
     end
 
     def on_mouse_out(x:, y:)
-      @sprite.src_rect.y = @height * State::NORMAL
+      if @is_enabled
+        @sprite.src_rect.y = @height * State::NORMAL
+      end
       super(x: x, y: y)
     end
 
     def on_mouse_down(button:, x:, y:)
-      @sprite.src_rect.y = @height * State::PRESSED if Input::MOUSELEFT == button
-      super(button: button, x: x, y: y)
+      if @is_enabled
+        @sprite.src_rect.y = @height * State::PRESSED if Input::MOUSELEFT == button
+        super(button: button, x: x, y: y)
+      end
     end
 
     def on_mouse_up(button:, x:, y:)
-      if is_point_in_sprite?(x: x, y: y)
-        @sprite.src_rect.y = @height * State::MOUSE_OVER if Input::MOUSELEFT == button
-        super(button: button, x: x, y: y)
-      else
-        @sprite.src_rect.y = @height * State::NORMAL
+      if @is_enabled
+        if is_point_in_sprite?(x: x, y: y)
+          @sprite.src_rect.y = @height * State::MOUSE_OVER if Input::MOUSELEFT == button
+          super(button: button, x: x, y: y)
+        else
+          @sprite.src_rect.y = @height * State::NORMAL
+        end
       end
     end
 
     def on_mouse_dragging(button:, dx:, dy:)
-      super(button: button, dx: dx, dy: dy)
+      if @is_enabled
+        super(button: button, dx: dx, dy: dy)
+      end
     end
 
   protected
