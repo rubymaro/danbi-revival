@@ -88,7 +88,7 @@ module MUI
       return @y + @sprite.viewport.rect.y
     end
 
-    def point_in_sprite?(x:, y:)
+    def is_point_in_sprite?(x:, y:)
       rx = real_x
       ry = real_y
       return x >= rx && x < rx + @width && y >= ry && y < ry + @height

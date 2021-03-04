@@ -159,7 +159,7 @@ module MUI
     end
 
     def on_mouse_up(button:, x:, y:)
-      if point_in_sprite?(x: x, y: y)
+      if is_point_in_sprite?(x: x, y: y)
         @sprite.src_rect.y = @height * State::MOUSE_OVER if Input::MOUSELEFT == button
         super(button: button, x: x, y: y)
       else

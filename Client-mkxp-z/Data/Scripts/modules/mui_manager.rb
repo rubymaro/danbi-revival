@@ -55,7 +55,7 @@ module MUIManager
       max_window_z = -1
       focused_window_or_nil = nil
       for window in @created_windows
-        if window.showing? && max_window_z < window.z && window.point_in_frame?(x: Input.mouse_x, y: Input.mouse_y)
+        if window.is_showing? && max_window_z < window.z && window.point_in_frame?(x: Input.mouse_x, y: Input.mouse_y)
           max_window_z = window.z
           focused_window_or_nil = window
         end
@@ -70,13 +70,13 @@ module MUIManager
     max_window_z = -1
     over_control_or_nil = nil
     for window in @created_windows
-      if window.showing? && max_window_z < window.z && window.point_in_frame?(x: Input.mouse_x, y: Input.mouse_y)
+      if window.is_showing? && max_window_z < window.z && window.point_in_frame?(x: Input.mouse_x, y: Input.mouse_y)
         max_window_z = window.z
         max_control_z = -1
         over_control_or_nil = nil
         for control in window.controls
           if control.is_visible
-            if max_control_z < control.z && control.point_in_sprite?(x: Input.mouse_x, y: Input.mouse_y)
+            if max_control_z < control.z && control.is_point_in_sprite?(x: Input.mouse_x, y: Input.mouse_y)
               max_control_z = control.z
               over_control_or_nil = control
             else
@@ -102,12 +102,12 @@ module MUIManager
     end
 
     for window in @created_windows
-      if window.showing?
+      if window.is_showing?
         window.update
       end
     end
 
-    @last_focused_window_or_nil.update_events if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.showing?
+    @last_focused_window_or_nil.update_events if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.is_showing?
 
     @created_windows.delete_if do |window|
       if window.has_disposing_request

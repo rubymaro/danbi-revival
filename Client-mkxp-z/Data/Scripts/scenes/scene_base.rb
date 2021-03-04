@@ -12,7 +12,7 @@ module Scene
     def main
       start
       post_start
-      update until scene_changing?
+      update until is_scene_changing?
       pre_terminate
       terminate
     end
@@ -31,7 +31,7 @@ module Scene
     #--------------------------------------------------------------------------
     # * Determine if Scene Is Changing
     #--------------------------------------------------------------------------
-    def scene_changing?
+    def is_scene_changing?
       SceneManager.scene != self
     end
     #--------------------------------------------------------------------------

@@ -83,11 +83,10 @@ module MUI
     attr_reader :width
     attr_reader :height
     attr_reader :controls
-    attr_reader :disposable
     attr_reader :has_disposing_request
 
   public
-    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:, has_close_button:, disposable:)
+    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:)
       @x = x
       @y = y
       @width = nil
@@ -116,9 +115,8 @@ module MUI
       MUIManager.add_window(window: self)
 
       @has_disposing_request = false
-      @disposable = disposable
       @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
-      @button_close.handler_mouse_down = if @disposable
+      @button_close.handler_mouse_down = if is_disposable?
         ->(button, x, y) do
           case button
           when Input::MOUSELEFT
@@ -142,7 +140,7 @@ module MUI
         end
       end
       add_to_frame(control: @button_close)
-      @button_close.is_visible = has_close_button
+      @button_close.is_visible = has_close_button?
     end
 
     def create_bitmap_frame
@@ -176,11 +174,19 @@ module MUI
       @height = height
       @viewport_content.rect.width = @width
       @viewport_content.rect.height = @height
-      
+
       return true
     end
 
-    def showing?
+    def has_close_button?
+      return true
+    end
+
+    def is_disposable?
+      return true
+    end
+
+    def is_showing?
       return @viewport_frame.visible && @viewport_content.visible
     end
 
@@ -213,7 +219,7 @@ module MUI
     end
 
     def dispose
-      raise "#{self.class} 는 disposable 속성이 없는 Window 입니다. hide를 사용하세요." if !@disposable
+      raise "#{self.class} 는 disposable 속성이 없는 Window 입니다. hide를 사용하세요." if !is_disposable?
       @has_disposing_request = true
     end
 
@@ -351,7 +357,7 @@ module MUI
       selected_or_nil = nil
       max_z = -1
       for control in @controls
-        if control.is_visible && max_z < control.z && control.point_in_sprite?(x: mouse_x, y: mouse_y)
+        if control.is_visible && max_z < control.z && control.is_point_in_sprite?(x: mouse_x, y: mouse_y)
           max_z = control.z
           selected_or_nil = control
         end
