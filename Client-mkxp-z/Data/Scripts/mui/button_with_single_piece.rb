@@ -9,14 +9,7 @@ module MUI
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 1, piece_column_count: 1)
     end
 
-    def resize(width:, height:)
-      return if @width == width && @height == height
-      
-      super(width: width, height: height)
-      render
-    end
-
-  private
+  protected
     def render
       for i in 0...State::Length
         y = @height * i

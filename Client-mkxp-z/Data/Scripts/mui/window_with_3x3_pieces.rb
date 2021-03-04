@@ -1,21 +1,17 @@
 module MUI
   class WindowWith3x3Pieces < WindowBase
     module PieceIndices
-      LEFT = 0; MIDDLE = 1; RIGHT = 2
+      LEFT = 0; HORIZONTAL_CENTER = 1; RIGHT = 2
       UPPER = 0
-      CENTER = 1
+      VERTICAL_CENTER = 1
       LOWER = 2
     end
 
   public
     def initialize(x:, y:, width:, height:, skin_key: :default_3x3, has_close_button: true, disposable: true)
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 3, piece_column_count: 3, has_close_button: has_close_button, disposable: disposable)
-
-      resize
+      resize(width: width, height: height)
       adjust_position
-      create_bitmap
-      render_frame
-      hide
     end
 
     def frame_width
@@ -26,16 +22,30 @@ module MUI
       return @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::LEFT].height + @height + @skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::LEFT].height
     end
 
+    def resize(width:, height:)
+      is_resized = super(width: width, height: height)
+      if is_resized
+        @viewport_frame.rect.width = frame_width
+        @viewport_frame.rect.height = frame_height
+        create_bitmap_frame
+        render_frame
+        @button_close.x = frame_width - @button_close.width - @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT].width
+        @button_close.y = (title_height - @button_close.height).abs / 2
+      end
+      
+      return is_resized
+    end
+
   protected
     def render_frame
       upper_left   = @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::LEFT]
-      upper_mid    = @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::MIDDLE]
+      upper_mid    = @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::HORIZONTAL_CENTER]
       upper_right  = @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT]
-      center_left  = @skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::LEFT]
-      center_mid   = @skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::MIDDLE]
-      center_right = @skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::RIGHT]
+      center_left  = @skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::LEFT]
+      center_mid   = @skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::HORIZONTAL_CENTER]
+      center_right = @skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::RIGHT]
       lower_left   = @skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::LEFT]
-      lower_mid    = @skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::MIDDLE]
+      lower_mid    = @skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::HORIZONTAL_CENTER]
       lower_right  = @skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::RIGHT]
 
       bitmap = @sprite_frame.bitmap
@@ -54,22 +64,6 @@ module MUI
       bitmap.blt(0, y, lower_left, lower_left.rect)
       bitmap.stretch_blt(Rect.new(lower_left.width, y, @width, lower_mid.height), lower_mid, lower_mid.rect)
       bitmap.blt(lower_left.width + @width, y, lower_right, lower_right.rect)
-    end
-
-    def resize
-      @viewport_frame.rect.width = frame_width
-      @viewport_frame.rect.height = frame_height
-      @viewport_content.rect.width = @width
-      @viewport_content.rect.height = @height
-      @button_close.x = frame_width - @button_close.width - @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT].width
-      @button_close.y = (title_height - @button_close.height).abs / 2
-    end
-
-    def adjust_position
-      @viewport_frame.rect.x = @x
-      @viewport_frame.rect.y = @y
-      @viewport_content.rect.x = @x + relative_content_x
-      @viewport_content.rect.y = @y + relative_content_y
     end
 
     def title_height

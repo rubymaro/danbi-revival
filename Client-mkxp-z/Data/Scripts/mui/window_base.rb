@@ -90,8 +90,9 @@ module MUI
     def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:, has_close_button:, disposable:)
       @x = x
       @y = y
-      @width = width
-      @height = height
+      @width = nil
+      @height = nil
+
       raise "등록되지 않은 skin_key(#{skin_key}) 입니다." if !@@skin_caches.key?(skin_key)
       @skin = @@skin_caches[skin_key]
       raise "해당 skin_key `#{skin_key}'은 #{self}과 호환되지 않습니다." if @skin.piece_row_count != piece_row_count || @skin.piece_column_count != piece_column_count
@@ -102,7 +103,9 @@ module MUI
       @controls = []
 
       @viewport_frame = Viewport.new(0, 0, 0, 0)
+      @viewport_frame.visible = false
       @viewport_content = Viewport.new(0, 0, 0, 0)
+      @viewport_content.visible = false
       @sprite_frame = Sprite.new(@viewport_frame)
 
       @bound_control_or_nil = nil
@@ -142,18 +145,48 @@ module MUI
       @button_close.is_visible = has_close_button
     end
 
+    def create_bitmap_frame
+      if nil != @sprite_frame.bitmap && !@sprite_frame.bitmap.disposed?
+        @sprite_frame.bitmap.dispose
+        @sprite_frame.bitmap = nil
+      end
+      @sprite_frame.bitmap = Bitmap.new(@viewport_frame.rect.width, @viewport_frame.rect.height)
+    end
+    
+    def x=(integer)
+      @x = integer
+      adjust_position
+    end
+
+    def y=(integer)
+      @y = integer
+      adjust_position
+    end
+
     def z=(integer)
       @z = integer
       @viewport_frame.z = @z
       @viewport_content.z = @z
     end
 
-    def frame_width
-      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
+    def resize(width:, height:)
+      return false if @width == width && @height == height
+
+      @width = width
+      @height = height
+      @viewport_content.rect.width = @width
+      @viewport_content.rect.height = @height
+      
+      return true
     end
 
-    def frame_height
-      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
+    def showing?
+      return @viewport_frame.visible && @viewport_content.visible
+    end
+
+    def point_in_frame?(x:, y:)
+      return x >= @viewport_frame.rect.x && x < @viewport_frame.rect.x + @viewport_frame.rect.width &&
+        y >= @viewport_frame.rect.y && y < @viewport_frame.rect.y + @viewport_frame.rect.height
     end
 
     def add_to_frame(control:)
@@ -179,17 +212,8 @@ module MUI
       on_lost_focus
     end
 
-    def showing?
-      return @viewport_frame.visible && @viewport_content.visible
-    end
-
-    def point_in_frame?(x:, y:)
-      return x >= @viewport_frame.rect.x && x < @viewport_frame.rect.x + @viewport_frame.rect.width &&
-        y >= @viewport_frame.rect.y && y < @viewport_frame.rect.y + @viewport_frame.rect.height
-    end
-
     def dispose
-      raise "#{self.class}는 dispose 할 수 없는 Window 입니다. hide를 사용하세요." if !@disposable
+      raise "#{self.class} 는 disposable 속성이 없는 Window 입니다. hide를 사용하세요." if !@disposable
       @has_disposing_request = true
     end
 
@@ -222,14 +246,6 @@ module MUI
       @mouse_button_flags = new_mouse_button_flags
     end
  
-    def create_bitmap
-      if nil != @sprite_frame.bitmap && !@sprite_frame.bitmap.disposed?
-        @sprite_frame.bitmap.dispose
-        @sprite_frame.bitmap = nil
-      end
-      @sprite_frame.bitmap = Bitmap.new(@viewport_frame.rect.width, @viewport_frame.rect.height)
-    end
-
     def on_disposing
       for control in @controls
         control.dispose
@@ -298,16 +314,23 @@ module MUI
       end
     end
 
+    def frame_width
+      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
+    end
+
+    def frame_height
+      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
+    end
+
   protected
-    def render_frame
-      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
-    end
-
-    def resize
-      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
-    end
-
     def adjust_position
+      @viewport_frame.rect.x = @x
+      @viewport_frame.rect.y = @y
+      @viewport_content.rect.x = @x + relative_content_x
+      @viewport_content.rect.y = @y + relative_content_y
+    end
+
+    def render_frame
       raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
     end
 

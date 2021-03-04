@@ -36,11 +36,7 @@ module MUI
       @height = height
       @is_visible = true
       @is_enabled = true
-
       @state_mouse_over = false
-
-      @bitmap = nil
-
       @is_added = false
     end
 
@@ -50,7 +46,6 @@ module MUI
       
       @parent_window = window
       @sprite = Sprite.new(viewport)
-      @sprite.bitmap = @bitmap
       @sprite.x = @x
       @sprite.y = @y
       @sprite.z = @z
@@ -72,14 +67,17 @@ module MUI
       @sprite.z = @z if nil != @sprite
     end
 
+    def resize(width:, height:)
+      return false if @width == width && @height == height
+      @width = width
+      @height = height
+      return true
+    end
+
     def is_visible=(bool)
       @is_visible = bool
       @sprite.visible = @is_visible if nil != @sprite
       @state_mouse_over = false
-    end
-
-    def point_in_sprite?(x:, y:)
-      return x >= real_x && x < real_x + @width && y >= real_y && y < real_y + @height
     end
 
     def real_x
@@ -90,14 +88,10 @@ module MUI
       return @y + @sprite.viewport.rect.y
     end
 
-    def resize(width:, height:)
-      return if @width == width && @height == height
-
-      @width = width
-      @height = height
-      @bitmap.dispose if !@bitmap.disposed?
-      @bitmap = Bitmap.new(@width, @height)
-      @sprite.bitmap = @bitmap
+    def point_in_sprite?(x:, y:)
+      rx = real_x
+      ry = real_y
+      return x >= rx && x < rx + @width && y >= ry && y < ry + @height
     end
 
     def dispose
@@ -105,6 +99,7 @@ module MUI
       @sprite.bitmap = nil
       @sprite.dispose 
       @sprite = nil
+      @bitmap = nil
     end
 
     def on_got_focus
@@ -133,6 +128,11 @@ module MUI
 
     def on_mouse_dragging(button:, dx:, dy:)
       @handler_mouse_dragging.call(button, dx, dy) if nil != @handler_mouse_dragging
+    end
+
+  protected
+    def render
+      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
     end
   end
 end

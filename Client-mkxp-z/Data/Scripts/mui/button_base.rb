@@ -111,22 +111,28 @@ module MUI
       raise "해당 skin_key `#{skin_key}'은 #{self}과 호환되지 않습니다." if @skins[0].piece_row_count != piece_row_count || @skins[0].piece_column_count != piece_column_count
       
       super(x: x, y: y, width: width, height: height)
-      @bitmap = Bitmap.new(width, height * State::Length)
     end
 
     def resize(width:, height:)
-      @width = width
-      @height = height
-      @bitmap.dispose if !@bitmap.disposed?
-      @bitmap = Bitmap.new(@width, @height * State::Length)
-      @sprite.bitmap = @bitmap
+      is_resized = super(width: width, height: height)
+      if is_resized
+        @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
+        @bitmap = nil
+        @bitmap = Bitmap.new(@width, @height * State::Length)
+        render
+        @sprite.bitmap = @bitmap
+        @sprite.src_rect.set(0, 0, @width, @height)
+      end
+
+      return is_resized
     end
 
     def on_creating(window:, viewport:)
       super(window: window, viewport: viewport)
-
-      render
-      @sprite.src_rect.set(0, 0, @width, @height)
+      width = @width
+      height = @height
+      @width = -1 # for calling resize successfully
+      resize(width: width, height: height)
     end
 
     def on_got_focus
@@ -138,26 +144,26 @@ module MUI
     end
 
     def on_mouse_over(x:, y:)
-      @sprite.src_rect.set(0, @height * State::MOUSE_OVER, @width, @height)
+      @sprite.src_rect.y = @height * State::MOUSE_OVER
       super(x: x, y: y)
     end
 
     def on_mouse_out(x:, y:)
-      @sprite.src_rect.set(0, @height * State::NORMAL, @width, @height)
+      @sprite.src_rect.y = @height * State::NORMAL
       super(x: x, y: y)
     end
 
     def on_mouse_down(button:, x:, y:)
-      @sprite.src_rect.set(0, @height * State::PRESSED, @width, @height) if Input::MOUSELEFT == button
+      @sprite.src_rect.y = @height * State::PRESSED if Input::MOUSELEFT == button
       super(button: button, x: x, y: y)
     end
 
     def on_mouse_up(button:, x:, y:)
       if point_in_sprite?(x: x, y: y)
-        @sprite.src_rect.set(0, @height * State::MOUSE_OVER, @width, @height) if Input::MOUSELEFT == button
+        @sprite.src_rect.y = @height * State::MOUSE_OVER if Input::MOUSELEFT == button
         super(button: button, x: x, y: y)
       else
-        @sprite.src_rect.set(0, @height * State::NORMAL, @width, @height)
+        @sprite.src_rect.y = @height * State::NORMAL
       end
     end
 
@@ -165,7 +171,7 @@ module MUI
       super(button: button, dx: dx, dy: dy)
     end
 
-  private
+  protected
     def render
       raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
     end

@@ -1,9 +1,9 @@
 module MUI
   class ButtonWith3x3Pieces < ButtonBase
     module PieceIndices
-      LEFT = 0; MIDDLE = 1; RIGHT = 2
+      LEFT = 0; HORIZONTAL_CENTER = 1; RIGHT = 2
       UPPER = 0
-      CENTER = 1
+      VERTICAL_CENTER = 1
       LOWER = 2
     end
 
@@ -12,25 +12,18 @@ module MUI
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 3, piece_column_count: 3)
     end
 
-    def resize(width:, height:)
-      return if @width == width && @height == height
-      
-      super(width: width, height: height)
-      render
-    end
-
-  private
+  protected
     def render
       for i in 0...State::Length
         skin = @skins[i]
         upper_left   = skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::LEFT]
-        upper_mid    = skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::MIDDLE]
+        upper_mid    = skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::HORIZONTAL_CENTER]
         upper_right  = skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT]
-        center_left  = skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::LEFT]
-        center_mid   = skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::MIDDLE]
-        center_right = skin.bitmap_pieces[PieceIndices::CENTER][PieceIndices::RIGHT]
+        center_left  = skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::LEFT]
+        center_mid   = skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::HORIZONTAL_CENTER]
+        center_right = skin.bitmap_pieces[PieceIndices::VERTICAL_CENTER][PieceIndices::RIGHT]
         lower_left   = skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::LEFT]
-        lower_mid    = skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::MIDDLE]
+        lower_mid    = skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::HORIZONTAL_CENTER]
         lower_right  = skin.bitmap_pieces[PieceIndices::LOWER][PieceIndices::RIGHT]
 
         # upper

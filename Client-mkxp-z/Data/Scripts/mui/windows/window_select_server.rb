@@ -10,13 +10,14 @@ module MUI
       @button = ButtonWith3x3Pieces.new(x: 20, y: 100, width: 100, height: 32)
       @button.z = 2
       @button.handler_mouse_down = ->(button, x, y) do
-        #p "mouse down"
+        @button.resize(width: @button.width + 10, height: @button.height)
+        resize(width: @width, height: @height + 5)
       end
       @button.handler_got_focus = ->() do
-        p "got focus"
+        #p "got focus"
       end
       @button.handler_lost_focus = ->() do
-        p "lost focus"
+        #p "lost focus"
       end
       add_to_content(control: @button)
     end

@@ -7,13 +7,25 @@ module MUI
   public
     def initialize(x:, y:, width:, height:, skin_key:, has_close_button: true, disposable: true)
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 1, piece_column_count: 1, has_close_button: has_close_button, disposable: disposable)
-      resize
+      resize(width: width, height: height)
       adjust_position
-      create_bitmap
-      render_frame
-      hide
     end
 
+    def resize(width:, height:)
+      is_resized = super(width: width, height: height)
+      if is_resized
+        @viewport_frame.rect.width = frame_width
+        @viewport_frame.rect.height = frame_height
+        create_bitmap_frame
+        render_frame
+        close_button_offset = (title_height - @button_close.height).abs / 2
+        @button_close.x = frame_width - @button_close.width - close_button_offset
+        @button_close.y = close_button_offset
+      end
+      
+      return is_resized
+    end
+    
     def frame_width
       return @width
     end
@@ -25,24 +37,19 @@ module MUI
   protected
     def render_frame
       one_image = @skin.bitmap_pieces[PieceIndices::SINGLE][PieceIndices::SINGLE]
-      bitmap = @sprite_frame.bitmap
-      bitmap.stretch_blt(Rect.new(0, 0, @width, @height), one_image, one_image.rect)
+      @sprite_frame.bitmap.stretch_blt(Rect.new(0, 0, @width, @height), one_image, one_image.rect)
     end
 
-    def resize
-      @viewport_frame.rect.width = @width
-      @viewport_frame.rect.height = @height
-      @viewport_content.rect.width = @width
-      @viewport_content.rect.height = @height
+    def title_height
+      return 0
     end
 
-    def adjust_position
-      @viewport_frame.rect.x = @x
-      @viewport_frame.rect.y = @y
-      @viewport_content.rect.x = @x
-      @viewport_content.rect.y = @y
-      @button_close.x = frame_width - @button_close.width
-      @button_close.y = 0
+    def relative_content_x
+      return 0
+    end
+
+    def relative_content_y
+      return 0
     end
   end
 end
