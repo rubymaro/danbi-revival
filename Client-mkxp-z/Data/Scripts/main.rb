@@ -7,6 +7,7 @@
 require 'config.rb'
 require 'preload.rb'
 
+require 'modules/colors.rb'
 require 'modules/rpg_cache.rb'
 require 'modules/data_manager.rb'
 require 'modules/scene_manager.rb'
