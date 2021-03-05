@@ -14,10 +14,6 @@ module MUI
     def resize(width:, height:)
       is_resized = super(width: width, height: height)
       if is_resized
-        @viewport_frame.rect.width = frame_width
-        @viewport_frame.rect.height = frame_height
-        create_bitmap_frame
-        render_frame
         close_button_offset = (title_height - @button_close.height).abs / 2
         @button_close.x = frame_width - @button_close.width - close_button_offset
         @button_close.y = close_button_offset
@@ -41,7 +37,7 @@ module MUI
     end
 
     def title_height
-      return 0
+      return 24
     end
 
     def relative_content_x

@@ -12,9 +12,12 @@ require 'mui/windows/window_select_server.rb'
 require 'mui/windows/window_test.rb'
 
 require 'mui/control.rb'
+
 require 'mui/button_base.rb'
 require 'mui/button_with_3x3_pieces.rb'
 require 'mui/button_with_single_piece.rb'
+
+require 'mui/label.rb'
 
 module MUIManager
   def self.init

@@ -100,6 +100,9 @@ module MUI
       @mouse_x = 0
       @mouse_y = 0
       @controls = []
+      @bound_control_or_nil = nil
+      @focused_control_or_nil = nil
+      @has_disposing_request = false
 
       @viewport_frame = Viewport.new(0, 0, 0, 0)
       @viewport_frame.visible = false
@@ -107,40 +110,39 @@ module MUI
       @viewport_content.visible = false
       @sprite_frame = Sprite.new(@viewport_frame)
 
-      @bound_control_or_nil = nil
-      @focused_control_or_nil = nil
-
       on_got_focus
 
       MUIManager.add_window(window: self)
 
-      @has_disposing_request = false
-      @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
-      @button_close.handler_mouse_down = if is_disposable?
-        ->(button, x, y) do
-          case button
-          when Input::MOUSELEFT
-            dispose
-          when Input::MOUSEMIDDLE
-          when Input::MOUSERIGHT
-          else
-            raise "invalid mouse button"
-          end
-        end
-      else
-        ->(button, x, y) do
-          case button
-          when Input::MOUSELEFT
-            hide
-          when Input::MOUSEMIDDLE
-          when Input::MOUSERIGHT
-          else
-            raise "invalid mouse button"
+      @label_title = Label.new(x: 0, y: 0, width: 1, height: 1)
+      @label_title.font.size = 16
+      @label_title.font.bold = false
+      @label_title.font.color = Colors::GRAY96.dup
+      @label_title.alignment = Label::AlignmentFlags::VERTICAL_CENTER | Label::AlignmentFlags::HORIZONTAL_CENTER
+      if is_draggable?
+        @label_title.handler_mouse_dragging = ->(button, dx, dy) do
+          if Input::MOUSELEFT == button
+            @x += dx
+            @y += dy
+            adjust_position
           end
         end
       end
-      add_to_frame(control: @button_close)
+      add_to_frame(control: @label_title)
+
+      @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
+      @button_close.handler_mouse_down = if is_disposable?
+        ->(button, x, y) do
+          dispose if Input::MOUSELEFT == button
+        end
+      else
+        ->(button, x, y) do
+          hide if Input::MOUSELEFT == button
+        end
+      end
       @button_close.is_visible = has_close_button?
+      @button_close.z = 1
+      add_to_frame(control: @button_close)
     end
 
     def create_bitmap_frame
@@ -174,6 +176,11 @@ module MUI
       @height = height
       @viewport_content.rect.width = @width
       @viewport_content.rect.height = @height
+      @viewport_frame.rect.width = frame_width
+      @viewport_frame.rect.height = frame_height
+      create_bitmap_frame
+      render_frame
+      @label_title.resize(width: frame_width, height: title_height)
 
       return true
     end
@@ -183,6 +190,10 @@ module MUI
     end
 
     def is_disposable?
+      return true
+    end
+
+    def is_draggable?
       return true
     end
 

@@ -25,10 +25,6 @@ module MUI
     def resize(width:, height:)
       is_resized = super(width: width, height: height)
       if is_resized
-        @viewport_frame.rect.width = frame_width
-        @viewport_frame.rect.height = frame_height
-        create_bitmap_frame
-        render_frame
         @button_close.x = frame_width - @button_close.width - @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT].width
         @button_close.y = (title_height - @button_close.height).abs / 2
       end
