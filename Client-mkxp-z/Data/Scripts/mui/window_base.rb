@@ -118,7 +118,7 @@ module MUI
       @label_title.font.size = 16
       @label_title.font.bold = false
       @label_title.font.color = Colors::GRAY96.dup
-      @label_title.alignment = Label::AlignmentFlags::VERTICAL_CENTER | Label::AlignmentFlags::HORIZONTAL_CENTER
+      @label_title.alignment = AlignmentFlags::VERTICAL_CENTER | AlignmentFlags::HORIZONTAL_CENTER
       if is_draggable?
         @label_title.handler_mouse_dragging = ->(button, dx, dy) do
           if Input::MOUSELEFT == button

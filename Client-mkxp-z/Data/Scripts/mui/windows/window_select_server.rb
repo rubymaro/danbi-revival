@@ -28,11 +28,13 @@ module MUI
       end
       add_to_content(control: @button)
 
-      @label = Label.new(x: 200, y: 20, width: 150, height: 32)
+      @label = Label.new(x: 200, y: 20, width: 300, height: 50, is_multiline: true)
+      @label.alignment = AlignmentFlags::VERTICAL_CENTER | AlignmentFlags::HORIZONTAL_CENTER
+      @label.background_color = Colors::WHITE
+      @label.text = "hello\ngdgd abcdefg테스트\nworld"
       @label.z = 5
       add_to_content(control: @label)
-      @label.render
-      
+      @label.resize
     end
 
     def has_close_button?

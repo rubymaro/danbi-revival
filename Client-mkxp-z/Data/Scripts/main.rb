@@ -7,6 +7,9 @@
 require 'config.rb'
 require 'preload.rb'
 
+require 'rgss/bitmap.rb'
+
+require 'modules/alignment_flags.rb'
 require 'modules/colors.rb'
 require 'modules/rpg_cache.rb'
 require 'modules/data_manager.rb'

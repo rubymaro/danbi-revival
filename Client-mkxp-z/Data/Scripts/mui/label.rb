@@ -1,20 +1,16 @@
 module MUI  
   class Label < Control
-    module AlignmentFlags
-      LEFT = 0; HORIZONTAL_CENTER = 1; RIGHT = 2
-      UPPER = 0
-      VERTICAL_CENTER = 4
-      LOWER = 8
-    end
 
     attr_accessor :text
     attr_accessor :alignment
     attr_reader :font
     attr_accessor :background_color
+    attr_reader :is_multiline
 
-    def initialize(x:, y:, width:, height:, text: "#{self.class}")
+    def initialize(x:, y:, width:, height:, text: "#{self.class}", is_multiline: false)
       super(x: x, y: y, width: width, height: height)
       @text = text
+      @is_multiline = is_multiline
       @font = Font.new("NanumGothic")
       @font.color = Colors::BLACK.dup
       @background_color = Colors::TRANSPARENT.dup
@@ -29,19 +25,44 @@ module MUI
       resize(width: width, height: height)
     end
 
-    def resize(width:, height:)
-      is_resized = super(width: width, height: height)
-      if is_resized
+    def resize(**args)
+      width_or_nil = args[:width]
+      height_or_nil = args[:height]
+
+      if nil != width_or_nil && nil != height_or_nil
+        is_resized = super(width: width_or_nil, height: height_or_nil)
+        if is_resized
+          @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
+          @bitmap = nil
+          @out_ranges = []
+          if @is_multiline
+            @bitmap = Bitmap.create(@out_ranges, @text, @font, width_or_nil, height_or_nil)
+          else
+            @bitmap = Bitmap.new(width_or_nil, height_or_nil)
+          end
+        end
+      else
         @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
         @bitmap = nil
-        @bitmap = Bitmap.new(width, height)
-        @bitmap.font = @font
-        render
-        @sprite.bitmap = @bitmap
-        @sprite.src_rect.set(0, 0, @width, @height)
+
+        if @is_multiline
+          @bitmap = Bitmap.create(@out_ranges, @text, @font, width_or_nil, height_or_nil)
+          width_or_nil ||= @bitmap.width
+          height_or_nil ||= @bitmap.height
+        else
+          rect = Bitmap.text_size(@text, @font)
+          width_or_nil ||= rect.width
+          height_or_nil ||= rect.height
+          @bitmap = Bitmap.new(width_or_nil, height_or_nil)
+        end
+
+        super(width: width_or_nil, height: height_or_nil)
       end
 
-      return is_resized
+      @bitmap.font = @font
+      render
+      @sprite.bitmap = @bitmap
+      @sprite.src_rect.set(0, 0, @width, @height)
     end
 
     def horizontal_alignment
@@ -66,20 +87,42 @@ module MUI
     end
 
     def render
-      y = case vertical_alignment
-      when AlignmentFlags::UPPER
-        0
-      when AlignmentFlags::VERTICAL_CENTER
-        (@height - @font.size) / 2
-      when AlignmentFlags::LOWER
-        @height - @font.size
-      else
-        raise "invalid alignment (#{vertical_alignment})"
-      end
+      @bitmap.font = @font
       @bitmap.clear
       @bitmap.fill_rect(0, 0, @width, @height, @background_color)
-      @bitmap.font = @font
-      @bitmap.draw_text(0, y, @width, @font.size, @text, horizontal_alignment)
+
+      if @is_multiline
+        determined_height = @font.size * @out_ranges.length
+        y = case vertical_alignment
+        when AlignmentFlags::UPPER
+          0
+        when AlignmentFlags::VERTICAL_CENTER
+          (@bitmap.height - determined_height) / 2
+        when AlignmentFlags::LOWER
+          @bitmap.height - determined_height
+        else
+          raise "invalid alignment (#{vertical_alignment})"
+        end
+        for range in @out_ranges
+          if y + @font.size > 0 && y < @bitmap.height
+            @bitmap.draw_text(0, y, @bitmap.width, @font.size, @text[range], horizontal_alignment)
+          end
+          y += @font.size
+        end
+
+      else
+        y = case vertical_alignment
+        when AlignmentFlags::UPPER
+          0
+        when AlignmentFlags::VERTICAL_CENTER
+          (@height - @font.size) / 2
+        when AlignmentFlags::LOWER
+          @height - @font.size
+        else
+          raise "invalid alignment (#{vertical_alignment})"
+        end
+        @bitmap.draw_text(0, y, @width, @font.size, @text, horizontal_alignment)
+      end
     end
   end
 end
