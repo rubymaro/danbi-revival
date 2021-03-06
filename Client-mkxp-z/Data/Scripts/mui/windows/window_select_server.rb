@@ -7,18 +7,21 @@ module MUI
 
       @button2 = ButtonWithSinglePiece.new(x: 0, y: 0, width: 175, height: 59, skin_key: :one_image)
       @button2.handler_mouse_up = ->(button, x, y) do
-        @button2.is_enabled = !@button2.is_enabled
+        
       end
       @button2.z = 1
       add_to_content(control: @button2)
 
       @button = ButtonWith3x3Pieces.new(x: 20, y: 100, width: 100, height: 32)
       @button.z = 2
+      @button.text = "click me"
       @button.handler_mouse_up = ->(button, x, y) do
         #@button.resize(width: @button.width + 10, height: @button.height)
         #resize(width: @width, height: @height + 5)
         #@button2.is_enabled = !@button2.is_enabled
-        @label.resize(width: @label.width + 10, height: @label.height)
+        #@label.resize(width: @label.width + 10, height: @label.height)
+        @button.text = "random: #{rand(50)}"
+        @button.resize(width: @button.width + 12, height: @button.height)
       end
       @button.handler_got_focus = ->() do
         #p "got focus"

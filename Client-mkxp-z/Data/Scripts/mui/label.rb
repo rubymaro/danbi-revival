@@ -40,6 +40,8 @@ module MUI
           else
             @bitmap = Bitmap.new(width_or_nil, height_or_nil)
           end
+        else
+          return false
         end
       else
         @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
@@ -63,6 +65,8 @@ module MUI
       render
       @sprite.bitmap = @bitmap
       @sprite.src_rect.set(0, 0, @width, @height)
+
+      return true
     end
 
     def horizontal_alignment

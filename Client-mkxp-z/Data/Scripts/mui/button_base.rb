@@ -105,12 +105,74 @@ module MUI
     end
 
   public
-    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:)
+    attr_accessor :font
+
+    def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:, text: nil)
       raise "등록되지 않은 key(#{key}) 입니다." if !@@skin_caches.key?(skin_key)
       @skins = @@skin_caches[skin_key]
       raise "해당 skin_key `#{skin_key}'은 #{self}과 호환되지 않습니다." if @skins[0].piece_row_count != piece_row_count || @skins[0].piece_column_count != piece_column_count
       
       super(x: x, y: y, width: width, height: height)
+      @text_or_nil = text
+      @font = Font.new
+      @font.size = 15
+    end
+
+    def on_creating(window:, viewport:)
+      super(window: window, viewport: viewport)
+      @sprite_text = Sprite.new(viewport)
+      @sprite_text.x = @x
+      @sprite_text.y = @y
+      @sprite_text.z = @z
+      @sprite_text.visible = @is_visible
+
+      width = @width
+      height = @height
+      @width = -1 # for calling resize successfully
+      resize(width: width, height: height)
+    end
+
+    def x=(integer)
+      super(integer)
+      @sprite_text.x = @x if nil != @sprite_text
+    end
+
+    def y=(integer)
+      super(integer)
+      @sprite_text.y = @y if nil != @sprite_text
+    end
+
+    def z=(integer)
+      super(integer)
+      @sprite_text.z = @z if nil != @sprite_text
+    end
+
+    def resize(width:, height:)
+      button_state_index = @sprite.src_rect.y / @height
+      is_resized = super(width: width, height: height)
+      if is_resized
+        @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
+        @bitmap = nil
+        @bitmap = Bitmap.new(@width, @height * State::Length)
+        render
+        @sprite.bitmap = @bitmap
+        @sprite.src_rect.set(0, button_state_index * @height, @width, @height)
+
+        @bitmap_text_or_nil.dispose if nil != @bitmap_text_or_nil && !@bitmap_text_or_nil.disposed?
+        @bitmap_text_or_nil = nil
+        if nil != @text_or_nil && "" != @text_or_nil
+          @bitmap_text_or_nil = Bitmap.new(@width, @height)
+          render_text
+          @sprite_text.bitmap = @bitmap_text_or_nil
+        end
+      end
+
+      return is_resized
+    end
+
+    def is_visible=(bool)
+      super(bool)
+      @sprite_text.visible = @is_visible if nil != @sprite_text
     end
 
     def is_enabled=(bool)
@@ -122,26 +184,22 @@ module MUI
       end
     end
 
-    def resize(width:, height:)
-      is_resized = super(width: width, height: height)
-      if is_resized
-        @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
-        @bitmap = nil
-        @bitmap = Bitmap.new(@width, @height * State::Length)
-        render
-        @sprite.bitmap = @bitmap
-        @sprite.src_rect.set(0, 0, @width, @height)
-      end
-
-      return is_resized
+    def text
+      return @text_or_nil
     end
 
-    def on_creating(window:, viewport:)
-      super(window: window, viewport: viewport)
-      width = @width
-      height = @height
-      @width = -1 # for calling resize successfully
-      resize(width: width, height: height)
+    def text=(string_or_nil)
+      @text_or_nil = string_or_nil
+      render_text if nil != @bitmap_text_or_nil
+    end
+
+    def dispose
+      super
+      @sprite_text.bitmap.dispose
+      @sprite_text.bitmap = nil
+      @sprite_text.dispose 
+      @sprite_text = nil
+      @bitmap_text_or_nil = nil
     end
 
     def on_got_focus
@@ -191,6 +249,14 @@ module MUI
     end
 
   protected
+    def render_text
+      @bitmap_text_or_nil.font = @font
+      @bitmap_text_or_nil.clear
+      if nil != @text_or_nil && "" != @text_or_nil
+        @bitmap_text_or_nil.draw_text(@bitmap_text_or_nil.rect, @text_or_nil, AlignmentFlags::HORIZONTAL_CENTER)
+      end
+    end
+
     def render
       raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
     end
