@@ -84,6 +84,8 @@ module MUI
     attr_reader :height
     attr_reader :controls
     attr_reader :has_disposing_request
+    attr_reader :viewport_frame
+    attr_reader :viewport_content
 
   public
     def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:)
@@ -128,7 +130,7 @@ module MUI
           end
         end
       end
-      add_to_frame(control: @label_title)
+      @label_title.add_to_window_frame(window: self)
 
       @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
       @button_close.handler_mouse_down = if is_disposable?
@@ -142,7 +144,7 @@ module MUI
       end
       @button_close.is_visible = has_close_button?
       @button_close.z = 1
-      add_to_frame(control: @button_close)
+      @button_close.add_to_window_frame(window: self)
     end
 
     def create_bitmap_frame
@@ -205,17 +207,7 @@ module MUI
       return x >= @viewport_frame.rect.x && x < @viewport_frame.rect.x + @viewport_frame.rect.width &&
         y >= @viewport_frame.rect.y && y < @viewport_frame.rect.y + @viewport_frame.rect.height
     end
-
-    def add_to_frame(control:)
-      control.on_creating(window: self, viewport: @viewport_frame)
-      @controls.push(control)
-    end
-
-    def add_to_content(control:)
-      control.on_creating(window: self, viewport: @viewport_content)
-      @controls.push(control)
-    end
-
+    
     def show
       @viewport_frame.visible = true
       @viewport_content.visible = true
@@ -235,7 +227,11 @@ module MUI
     end
 
     def update
-
+      for control in @controls
+        if control.is_visible
+          control.update
+        end
+      end
     end
 
     def update_events

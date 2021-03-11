@@ -9,6 +9,7 @@ require 'mui/window_with_4x3_pieces.rb'
 require 'mui/window_with_3x3_pieces.rb'
 
 require 'mui/windows/window_select_server.rb'
+require 'mui/windows/window_login.rb'
 require 'mui/windows/window_test.rb'
 
 require 'mui/control.rb'
@@ -18,6 +19,7 @@ require 'mui/button_with_3x3_pieces.rb'
 require 'mui/button_with_single_piece.rb'
 
 require 'mui/label.rb'
+require 'mui/text_box.rb'
 
 module MUIManager
   def self.init
@@ -27,6 +29,7 @@ module MUIManager
     MUI::Cursor.init
     MUI::WindowBase.init
     MUI::ButtonBase.init
+    MUI::TextBox.init
 
     @last_focused_window_or_nil = nil
     @created_windows = []
@@ -104,13 +107,13 @@ module MUIManager
       over_control_or_nil.on_mouse_over(x: Input.mouse_x, y: Input.mouse_y)
     end
 
+    @last_focused_window_or_nil.update_events if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.is_showing?
+
     for window in @created_windows
       if window.is_showing?
         window.update
       end
     end
-
-    @last_focused_window_or_nil.update_events if nil != @last_focused_window_or_nil && @last_focused_window_or_nil.is_showing?
 
     @created_windows.delete_if do |window|
       if window.has_disposing_request

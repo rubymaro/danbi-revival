@@ -16,6 +16,7 @@ module MUI
     attr_reader :height
     attr_reader :is_visible
     attr_reader :is_enabled
+    attr_reader :is_focusing
 
     attr_accessor :state_mouse_over
 
@@ -28,6 +29,7 @@ module MUI
     attr_accessor :handler_mouse_dragging
 
   public
+
     def initialize(x:, y:, width:, height:)
       @x = x
       @y = y
@@ -36,8 +38,19 @@ module MUI
       @height = height
       @is_visible = true
       @is_enabled = true
+      @is_focusing = false
       @state_mouse_over = false
       @is_added = false
+    end
+
+    def add_to_window_frame(window:)
+      on_creating(window: window, viewport: window.viewport_frame)
+      window.controls.push(self)
+    end
+
+    def add_to_window_content(window:)
+      on_creating(window: window, viewport: window.viewport_content)
+      window.controls.push(self)
     end
 
     def on_creating(window:, viewport:)
@@ -99,6 +112,10 @@ module MUI
       return x >= rx && x < rx + @width && y >= ry && y < ry + @height
     end
 
+    def update
+
+    end
+
     def dispose
       @sprite.bitmap.dispose
       @sprite.bitmap = nil
@@ -108,10 +125,12 @@ module MUI
     end
 
     def on_got_focus
+      @is_focusing = true
       @handler_got_focus.call if nil != @handler_got_focus
     end
 
     def on_lost_focus
+      @is_focusing = false
       @handler_lost_focus.call if nil != @handler_lost_focus
     end
 

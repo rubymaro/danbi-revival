@@ -9,16 +9,17 @@ module Scene
       Graphics.freeze
       create_background
       play_title_music
-      @window = MUIManager.get_window_cache(:select_server)
-      @window.show
-      @window2 = MUI::Window_Test.new(x: 200, y: 200, width: 400, height: 300, skin_key: :default_single)
-      @window2.show
+      @window_select_server = MUIManager.get_window_cache(:select_server)
+      @window_select_server.show
+      @window_login = MUI::Window_Login.new(x: 200, y: 200, width: 400, height: 300, skin_key: :default_single)
+      @window_login.show
     end
     #--------------------------------------------------------------------------
     # * Create Background
     #--------------------------------------------------------------------------
     def create_background
       @sprite = Sprite.new
+      @sprite.opacity = 16
       @sprite.bitmap = RPG::Cache.title($data_system.title_name)
     end
     #--------------------------------------------------------------------------

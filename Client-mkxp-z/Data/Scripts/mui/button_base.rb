@@ -1,7 +1,7 @@
 module MUI
   class ButtonBase < Control
     module State
-      NORMAL = 0
+      DEFAULT = 0
       MOUSE_OVER = 1
       PRESSED = 2
       DISABLED = 3
@@ -41,7 +41,7 @@ module MUI
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
       @@skin_caches[:default_3x3] ||= Array.new(State::Length)
-      @@skin_caches[:default_3x3][State::NORMAL] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::NORMAL][0]))
+      @@skin_caches[:default_3x3][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
       @@skin_caches[:default_3x3][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
       @@skin_caches[:default_3x3][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
       @@skin_caches[:default_3x3][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
@@ -65,7 +65,7 @@ module MUI
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
       @@skin_caches[:one_image] ||= Array.new(State::Length)
-      @@skin_caches[:one_image][State::NORMAL] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::NORMAL][0]))
+      @@skin_caches[:one_image][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
       @@skin_caches[:one_image][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
       @@skin_caches[:one_image][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
       @@skin_caches[:one_image][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
@@ -89,7 +89,7 @@ module MUI
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
       @@skin_caches[:x_button] ||= Array.new(State::Length)
-      @@skin_caches[:x_button][State::NORMAL] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::NORMAL][0]))
+      @@skin_caches[:x_button][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
       @@skin_caches[:x_button][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
       @@skin_caches[:x_button][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
       @@skin_caches[:x_button][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
@@ -148,7 +148,7 @@ module MUI
     end
 
     def resize(width:, height:)
-      button_state_index = @sprite.src_rect.y / @height
+      button_state_index = @sprite.src_rect.y / @height rescue 0
       is_resized = super(width: width, height: height)
       if is_resized
         @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
@@ -178,7 +178,7 @@ module MUI
     def is_enabled=(bool)
       super(bool)
       if bool
-        @sprite.src_rect.y = @height * State::NORMAL
+        @sprite.src_rect.y = @height * State::DEFAULT
       else
         @sprite.src_rect.y = @height * State::DISABLED
       end
@@ -219,7 +219,7 @@ module MUI
 
     def on_mouse_out(x:, y:)
       if @is_enabled
-        @sprite.src_rect.y = @height * State::NORMAL
+        @sprite.src_rect.y = @height * State::DEFAULT
       end
       super(x: x, y: y)
     end
@@ -237,7 +237,7 @@ module MUI
           @sprite.src_rect.y = @height * State::MOUSE_OVER if Input::MOUSELEFT == button
           super(button: button, x: x, y: y)
         else
-          @sprite.src_rect.y = @height * State::NORMAL
+          @sprite.src_rect.y = @height * State::DEFAULT
         end
       end
     end

@@ -5,7 +5,7 @@ module MUI
     attr_accessor :alignment
     attr_reader :font
     attr_accessor :background_color
-    attr_reader :is_multiline
+    attr_accessor :is_multiline
 
     def initialize(x:, y:, width:, height:, text: "#{self.class}", is_multiline: false)
       super(x: x, y: y, width: width, height: height)
@@ -34,8 +34,8 @@ module MUI
         if is_resized
           @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
           @bitmap = nil
-          @out_ranges = []
           if @is_multiline
+            @out_ranges = []
             @bitmap = Bitmap.create(@out_ranges, @text, @font, width_or_nil, height_or_nil)
           else
             @bitmap = Bitmap.new(width_or_nil, height_or_nil)
@@ -48,6 +48,7 @@ module MUI
         @bitmap = nil
 
         if @is_multiline
+          @out_ranges = []
           @bitmap = Bitmap.create(@out_ranges, @text, @font, width_or_nil, height_or_nil)
           width_or_nil ||= @bitmap.width
           height_or_nil ||= @bitmap.height
@@ -64,7 +65,6 @@ module MUI
       @bitmap.font = @font
       render
       @sprite.bitmap = @bitmap
-      @sprite.src_rect.set(0, 0, @width, @height)
 
       return true
     end
@@ -75,6 +75,17 @@ module MUI
 
     def vertical_alignment
       return @alignment & 0b1100
+    end
+
+    def text=(string)
+      @text = string
+      @out_ranges = []
+      if @is_multiline
+        @bitmap.dispose if nil != @bitmap && !@bitmap.disposed?
+        @bitmap = nil
+        @bitmap = Bitmap.create(@out_ranges, @text, @font, @width, @height)
+        @sprite.bitmap = @bitmap if nil != @sprite
+      end
     end
 
     def font=(font)
