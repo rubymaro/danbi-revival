@@ -13,9 +13,9 @@ module MUI
       @@skin_caches ||= Hash.new
 
       # 이미지를 3x3 분할로 쪼개기
-      src = RPG::Cache.mui("button.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: State::Length, column_count: 1,
-        offset_x: 0, offset_y: 0,
+        offset_x: 120, offset_y: 0,
         rects: [
           Rect.new(0, 0, 64, 32),
           Rect.new(0, 32, 64, 32),
@@ -40,16 +40,16 @@ module MUI
         ]
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
-      @@skin_caches[:default_3x3] ||= Array.new(State::Length)
-      @@skin_caches[:default_3x3][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
-      @@skin_caches[:default_3x3][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
-      @@skin_caches[:default_3x3][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
-      @@skin_caches[:default_3x3][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
+      @@skin_caches[:white_skin_button_4x3] ||= Array.new(State::Length)
+      @@skin_caches[:white_skin_button_4x3][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
+      @@skin_caches[:white_skin_button_4x3][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
+      @@skin_caches[:white_skin_button_4x3][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
+      @@skin_caches[:white_skin_button_4x3][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
 
       # 이미지를 쪼개지 않음
-      src = RPG::Cache.mui("button.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: State::Length, column_count: 1,
-        offset_x: 0, offset_y: 0,
+        offset_x: 120, offset_y: 0,
         rects: [
           Rect.new(0, 0, 64, 32),
           Rect.new(0, 32, 64, 32),
@@ -71,28 +71,28 @@ module MUI
       @@skin_caches[:one_image][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
 
       # closing button
-      src = RPG::Cache.mui("window.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: State::Length, column_count: 1,
         offset_x: 100, offset_y: 0,
         rects: [
-          Rect.new(0, 0, 12, 10),
-          Rect.new(0, 10, 12, 10),
-          Rect.new(0, 10, 12, 10),
-          Rect.new(0, 0, 12, 10),
+          Rect.new(0, 0, 12, 12),
+          Rect.new(0, 12, 12, 12),
+          Rect.new(0, 12, 12, 12),
+          Rect.new(0, 0, 12, 12),
         ]
       )
       grid_per_button = BitmapGrid.new(row_count: 1, column_count: 1,
         offset_x: 0, offset_y: 0,
         rects: [
-          Rect.new(0, 0, 12, 10),
+          Rect.new(0, 0, 12, 12),
         ]
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
-      @@skin_caches[:x_button] ||= Array.new(State::Length)
-      @@skin_caches[:x_button][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
-      @@skin_caches[:x_button][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
-      @@skin_caches[:x_button][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
-      @@skin_caches[:x_button][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
+      @@skin_caches[:white_skin_x_button] ||= Array.new(State::Length)
+      @@skin_caches[:white_skin_x_button][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
+      @@skin_caches[:white_skin_x_button][State::MOUSE_OVER] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::MOUSE_OVER][0]))
+      @@skin_caches[:white_skin_x_button][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
+      @@skin_caches[:white_skin_x_button][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
     end
     
     class << self
@@ -108,7 +108,7 @@ module MUI
     attr_accessor :font
 
     def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:, text: nil)
-      raise "등록되지 않은 key(#{key}) 입니다." if !@@skin_caches.key?(skin_key)
+      raise "등록되지 않은 skin_key(#{skin_key}) 입니다." if !@@skin_caches.key?(skin_key)
       @skins = @@skin_caches[skin_key]
       raise "해당 skin_key `#{skin_key}'은 #{self}과 호환되지 않습니다." if @skins[0].piece_row_count != piece_row_count || @skins[0].piece_column_count != piece_column_count
       
@@ -195,7 +195,7 @@ module MUI
 
     def dispose
       super
-      @sprite_text.bitmap.dispose
+      @sprite_text.bitmap.dispose if nil != @sprite_text.bitmap
       @sprite_text.bitmap = nil
       @sprite_text.dispose 
       @sprite_text = nil

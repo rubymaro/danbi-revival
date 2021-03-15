@@ -9,7 +9,8 @@ module MUI
       MAPPING_INPUT_CONSTANTS[MOUSELEFT] = Input::MOUSELEFT
       MAPPING_INPUT_CONSTANTS[MOUSEMIDDLE] = Input::MOUSEMIDDLE
       MAPPING_INPUT_CONSTANTS[MOUSERIGHT] = Input::MOUSERIGHT
-      VALUES = [MOUSELEFT, MOUSEMIDDLE, MOUSERIGHT]
+
+      Values = [MOUSELEFT, MOUSEMIDDLE, MOUSERIGHT]
     end
 
     def self.init
@@ -17,30 +18,30 @@ module MUI
       @@skin_caches ||= Hash.new
 
       # 이미지를 4x3 분할로 쪼개기
-      src = RPG::Cache.mui("window.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: 4, column_count: 3,
         offset_x: 0, offset_y: 0,
         rects: [
           Rect.new(0, 0, 10, 32),
-          Rect.new(10, 0, 10, 32),
+          Rect.new(10, 0, 1, 32),
           Rect.new(90, 0, 10, 32),
   
           Rect.new(0, 32, 10, 10),
-          Rect.new(10, 32, 10, 10),
+          Rect.new(10, 32, 1, 10),
           Rect.new(90, 32, 10, 10),
   
-          Rect.new(0, 45, 10, 10),
-          Rect.new(10, 45, 10, 10),
-          Rect.new(90, 45, 10, 10),
+          Rect.new(0, 42, 10, 1),
+          Rect.new(10, 42, 1, 1),
+          Rect.new(90, 42, 10, 1),
 
           Rect.new(0, 90, 10, 10),
-          Rect.new(10, 90, 10, 10),
+          Rect.new(10, 90, 1, 10),
           Rect.new(90, 90, 10, 10)
         ])
-      @@skin_caches[:default_4x3] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
+      @@skin_caches[:white_skin_window_4x3] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
 
       # 이미지를 3x3 분할로 쪼개기
-      src = RPG::Cache.mui("window.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: 3, column_count: 3,
         offset_x: 0, offset_y: 0,
         rects: [
@@ -56,7 +57,27 @@ module MUI
           Rect.new(10, 90, 10, 10),
           Rect.new(90, 90, 10, 10)
         ])
-      @@skin_caches[:default_3x3] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
+      @@skin_caches[:white_skin_window_3x3] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
+
+      # 이미지를 3x3 분할로 쪼개기
+      src = RPG::Cache.mui("glass_skin.png")
+      grid = BitmapGrid.new(row_count: 3, column_count: 3,
+        offset_x: 0, offset_y: 0,
+        rects: [
+          Rect.new(0, 0, 11, 11),
+          Rect.new(11, 0, 1, 11),
+          Rect.new(53, 0, 11, 11),
+  
+          Rect.new(0, 11, 11, 5),
+          Rect.new(11, 11, 1, 5),
+          Rect.new(53, 11, 11, 5),
+
+          Rect.new(0, 53, 11, 11),
+          Rect.new(11, 53, 1, 11),
+          Rect.new(53, 53, 11, 11)
+        ])
+      @@skin_caches[:glass_skin_window_3x3] ||= SkinCache.new(grid.row_count, grid.column_count, grid.create_splitted_bitmaps(bitmap_src: src))
+
 
       # 이미지를 쪼개지 않음
       src = RPG::Cache.mui("doggy.png")
@@ -89,8 +110,8 @@ module MUI
 
   public
     def initialize(x:, y:, width:, height:, skin_key:, piece_row_count:, piece_column_count:)
-      @x = x
-      @y = y
+      @x = (x == :center ? Graphics.width - width >> 1 : x)
+      @y = (y == :center ? Graphics.height - height >> 1 : y)
       @width = nil
       @height = nil
 
@@ -121,24 +142,22 @@ module MUI
       @label_title.font.bold = false
       @label_title.font.color = Colors::GRAY96.dup
       @label_title.alignment = AlignmentFlags::VERTICAL_CENTER | AlignmentFlags::HORIZONTAL_CENTER
-      if is_draggable?
-        @label_title.handler_mouse_dragging = ->(button, dx, dy) do
-          if Input::MOUSELEFT == button
-            @x += dx
-            @y += dy
-            adjust_position
-          end
+      @label_title.handler_mouse_dragging = ->(control, button, dx, dy) do
+        if is_draggable? && Input::MOUSELEFT == button
+          @x += dx
+          @y += dy
+          adjust_position
         end
       end
       @label_title.add_to_window_frame(window: self)
 
-      @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 10, skin_key: :x_button)
+      @button_close = ButtonWithSinglePiece.new(x: 0, y: 0, width: 12, height: 12, skin_key: :white_skin_x_button)
       @button_close.handler_mouse_down = if is_disposable?
-        ->(button, x, y) do
+        ->(control, button, x, y) do
           dispose if Input::MOUSELEFT == button
         end
       else
-        ->(button, x, y) do
+        ->(control, button, x, y) do
           hide if Input::MOUSELEFT == button
         end
       end
@@ -155,13 +174,21 @@ module MUI
       @sprite_frame.bitmap = Bitmap.new(@viewport_frame.rect.width, @viewport_frame.rect.height)
     end
     
-    def x=(integer)
-      @x = integer
+    def x=(integer_or_symbol)
+      @x = if :center == integer_or_symbol
+        Graphics.width - width >> 1
+      else
+        integer_or_symbol
+      end
       adjust_position
     end
 
-    def y=(integer)
-      @y = integer
+    def y=(integer_or_symbol)
+      @y = if :center == integer_or_symbol
+        Graphics.height - height >> 1
+      else
+        integer_or_symbol
+      end
       adjust_position
     end
 
@@ -182,7 +209,7 @@ module MUI
       @viewport_frame.rect.height = frame_height
       create_bitmap_frame
       render_frame
-      @label_title.resize(width: frame_width, height: title_height)
+      @label_title.resize(width: frame_width, height: relative_content_y)
 
       return true
     end
@@ -240,7 +267,7 @@ module MUI
       new_mouse_button_flags |= MouseButtonFlags::MOUSEMIDDLE if Input.press?(Input::MOUSEMIDDLE)
       new_mouse_button_flags |= MouseButtonFlags::MOUSERIGHT if Input.press?(Input::MOUSERIGHT)
 
-      for flag in MouseButtonFlags::VALUES
+      for flag in MouseButtonFlags::Values
         if ((@mouse_button_flags ^ new_mouse_button_flags) & flag) != 0
           if (new_mouse_button_flags & flag) != 0
             @mouse_x = Input.mouse_x
@@ -258,7 +285,7 @@ module MUI
       end
       @mouse_button_flags = new_mouse_button_flags
     end
- 
+
     def on_disposing
       for control in @controls
         control.dispose
@@ -315,15 +342,17 @@ module MUI
         return
       end
 
-      case button
-      when Input::MOUSELEFT
-        @x += dx
-        @y += dy
-        adjust_position
-      when Input::MOUSEMIDDLE
-      when Input::MOUSERIGHT
-      else
-        raise "invalid mouse button"
+      if is_draggable?
+        case button
+        when Input::MOUSELEFT
+          @x += dx
+          @y += dy
+          adjust_position
+        when Input::MOUSEMIDDLE
+        when Input::MOUSERIGHT
+        else
+          raise "invalid mouse button"
+        end
       end
     end
 
@@ -344,10 +373,6 @@ module MUI
     end
 
     def render_frame
-      raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
-    end
-
-    def title_height
       raise "추상 메서드 #{caller[0][/`.*'/][1..-2]} 를 구현하세요."
     end
 

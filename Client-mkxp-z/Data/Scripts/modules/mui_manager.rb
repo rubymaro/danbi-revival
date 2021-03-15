@@ -10,7 +10,6 @@ require 'mui/window_with_3x3_pieces.rb'
 
 require 'mui/windows/window_select_server.rb'
 require 'mui/windows/window_login.rb'
-require 'mui/windows/window_test.rb'
 
 require 'mui/control.rb'
 

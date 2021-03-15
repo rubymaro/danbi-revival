@@ -8,7 +8,7 @@ module MUI
     end
 
   public
-    def initialize(x:, y:, width:, height:, skin_key: :default_3x3)
+    def initialize(x:, y:, width:, height:, skin_key: :white_skin_button_4x3)
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 3, piece_column_count: 3)
     end
 

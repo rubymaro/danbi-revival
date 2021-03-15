@@ -8,7 +8,7 @@ module MUI
     end
 
   public
-    def initialize(x:, y:, width:, height:, skin_key: :default_3x3)
+    def initialize(x:, y:, width:, height:, skin_key: :white_skin_window_3x3)
       super(x: x, y: y, width: width, height: height, skin_key: skin_key, piece_row_count: 3, piece_column_count: 3)
       resize(width: width, height: height)
       adjust_position
@@ -26,7 +26,7 @@ module MUI
       is_resized = super(width: width, height: height)
       if is_resized
         @button_close.x = frame_width - @button_close.width - @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::RIGHT].width
-        @button_close.y = (title_height - @button_close.height).abs / 2
+        @button_close.y = (relative_content_y - @button_close.height).abs / 2
       end
 
       return is_resized
@@ -60,10 +60,6 @@ module MUI
       bitmap.blt(0, y, lower_left, lower_left.rect)
       bitmap.stretch_blt(Rect.new(lower_left.width, y, @width, lower_mid.height), lower_mid, lower_mid.rect)
       bitmap.blt(lower_left.width + @width, y, lower_right, lower_right.rect)
-    end
-
-    def title_height
-      return @skin.bitmap_pieces[PieceIndices::UPPER][PieceIndices::LEFT].height
     end
 
     def relative_content_x

@@ -11,7 +11,7 @@ module MUI
       super(x: x, y: y, width: width, height: height)
       @text = text
       @is_multiline = is_multiline
-      @font = Font.new("NanumGothic")
+      @font = Font.new
       @font.color = Colors::BLACK.dup
       @background_color = Colors::TRANSPARENT.dup
       @alignment = AlignmentFlags::UPPER | AlignmentFlags::LEFT

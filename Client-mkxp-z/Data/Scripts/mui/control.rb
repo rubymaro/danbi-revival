@@ -119,39 +119,39 @@ module MUI
     def dispose
       @sprite.bitmap.dispose
       @sprite.bitmap = nil
-      @sprite.dispose 
+      @sprite.dispose
       @sprite = nil
       @bitmap = nil
     end
 
     def on_got_focus
       @is_focusing = true
-      @handler_got_focus.call if nil != @handler_got_focus
+      @handler_got_focus.call(self) if nil != @handler_got_focus
     end
 
     def on_lost_focus
       @is_focusing = false
-      @handler_lost_focus.call if nil != @handler_lost_focus
+      @handler_lost_focus.call(self) if nil != @handler_lost_focus
     end
 
     def on_mouse_over(x:, y:)
-      @handler_mouse_over.call(x, y) if nil != @handler_mouse_over
+      @handler_mouse_over.call(self, x, y) if nil != @handler_mouse_over
     end
 
     def on_mouse_out(x:, y:)
-      @handler_mouse_out.call(x, y) if nil != @handler_mouse_out
+      @handler_mouse_out.call(self, x, y) if nil != @handler_mouse_out
     end
 
     def on_mouse_down(button:, x:, y:)
-      @handler_mouse_down.call(button, x, y) if nil != @handler_mouse_down
+      @handler_mouse_down.call(self, button, x, y) if nil != @handler_mouse_down
     end
 
     def on_mouse_up(button:, x:, y:)
-      @handler_mouse_up.call(button, x, y) if nil != @handler_mouse_up
+      @handler_mouse_up.call(self, button, x, y) if nil != @handler_mouse_up
     end
 
     def on_mouse_dragging(button:, dx:, dy:)
-      @handler_mouse_dragging.call(button, dx, dy) if nil != @handler_mouse_dragging
+      @handler_mouse_dragging.call(self, button, dx, dy) if nil != @handler_mouse_dragging
     end
 
   protected

@@ -4,6 +4,8 @@
 #  This processing is executed after module and class definition is finished.
 #==============================================================================
 
+require 'socket'
+
 require 'config.rb'
 require 'preload.rb'
 

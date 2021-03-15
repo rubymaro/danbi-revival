@@ -14,7 +14,7 @@ module MUI
     def resize(width:, height:)
       is_resized = super(width: width, height: height)
       if is_resized
-        close_button_offset = (title_height - @button_close.height).abs / 2
+        close_button_offset = (relative_content_y - @button_close.height).abs / 2
         @button_close.x = frame_width - @button_close.width - close_button_offset
         @button_close.y = close_button_offset
       end
@@ -36,16 +36,12 @@ module MUI
       @sprite_frame.bitmap.stretch_blt(Rect.new(0, 0, @width, @height), one_image, one_image.rect)
     end
 
-    def title_height
-      return 24
-    end
-
     def relative_content_x
       return 0
     end
 
     def relative_content_y
-      return 0
+      return 24
     end
   end
 end

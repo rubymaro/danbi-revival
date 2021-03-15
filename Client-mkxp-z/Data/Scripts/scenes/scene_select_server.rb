@@ -11,16 +11,19 @@ module Scene
       play_title_music
       @window_select_server = MUIManager.get_window_cache(:select_server)
       @window_select_server.show
-      @window_login = MUI::Window_Login.new(x: 200, y: 200, width: 400, height: 300, skin_key: :default_single)
-      @window_login.show
+      #@window_login = MUI::Window_Login.new
+      #@window_login.show
     end
     #--------------------------------------------------------------------------
     # * Create Background
     #--------------------------------------------------------------------------
     def create_background
       @sprite = Sprite.new
-      @sprite.opacity = 16
-      @sprite.bitmap = RPG::Cache.title($data_system.title_name)
+      @sprite.bitmap = RPG::Cache.title($data_system.title_name).dup
+      10.times do
+        @sprite.bitmap.blur
+      end
+      @sprite.opacity = 160
     end
     #--------------------------------------------------------------------------
     # * Play Title Screen Music

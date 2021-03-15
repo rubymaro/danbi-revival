@@ -22,9 +22,9 @@ module MUI
       @@skin_caches ||= Hash.new
 
       # 이미지를 3x3 분할로 쪼개기
-      src = RPG::Cache.mui("textbox.png")
+      src = RPG::Cache.mui("white_skin.png")
       grid = BitmapGrid.new(row_count: State::Length, column_count: 1,
-        offset_x: 0, offset_y: 0,
+        offset_x: 184, offset_y: 0,
         rects: [
           Rect.new(0, 0, 64, 32),
           Rect.new(0, 32, 64, 32),
@@ -48,10 +48,10 @@ module MUI
         ]
       )
       bitmap_buttons = grid.create_splitted_bitmaps(bitmap_src: src)
-      @@skin_caches[:default_3x3] ||= Array.new(State::Length)
-      @@skin_caches[:default_3x3][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
-      @@skin_caches[:default_3x3][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
-      @@skin_caches[:default_3x3][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
+      @@skin_caches[:white_skin_textbox_3x3] ||= Array.new(State::Length)
+      @@skin_caches[:white_skin_textbox_3x3][State::DEFAULT] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DEFAULT][0]))
+      @@skin_caches[:white_skin_textbox_3x3][State::PRESSED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::PRESSED][0]))
+      @@skin_caches[:white_skin_textbox_3x3][State::DISABLED] ||= SkinCache.new(grid_per_button.row_count, grid_per_button.column_count, grid_per_button.create_splitted_bitmaps(bitmap_src: bitmap_buttons[State::DISABLED][0]))
     end
 
   public
@@ -59,7 +59,7 @@ module MUI
     attr_reader :text
 
     def initialize(x:, y:, width:, height:, skin_key:)
-      raise "등록되지 않은 key(#{key}) 입니다." if !@@skin_caches.key?(skin_key)
+      raise "등록되지 않은 skin_key(#{skin_key}) 입니다." if !@@skin_caches.key?(skin_key)
       @skins = @@skin_caches[skin_key]
 
       super(x: x, y: y, width: width, height: height)
