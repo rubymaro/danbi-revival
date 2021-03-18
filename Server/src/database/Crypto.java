@@ -18,7 +18,7 @@ public class Crypto {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             byte[] keyBytes = new byte[16];
             byte[] b = key.getBytes(StandardCharsets.UTF_8);
-            final int len = Math.max(b.length, keyBytes.length);
+            final int len = Math.min(b.length, keyBytes.length);
 
             System.arraycopy(b, 0, keyBytes, 0, len);
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");

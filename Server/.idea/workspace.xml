@@ -7,7 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47a6a513-8090-4ad8-9cdb-bab7ddc71bee" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/config.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/config.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/main.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/main.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/mui/control.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/mui/control.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/mui/windows/window_select_server.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/mui/windows/window_select_server.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/scenes/scene_base.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/scenes/scene_base.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/scenes/scene_select_server.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client-mkxp-z/Data/Scripts/scenes/scene_select_server.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/network.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/network/network.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/Data/script/network/socket.rb" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/Data/script/network/socket.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/Crypto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/Crypto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Guild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Guild.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Party.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/packet/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/packet/Packet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

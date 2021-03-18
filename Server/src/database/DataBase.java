@@ -12,10 +12,10 @@ public class DataBase {
 	private static final Logger logger = Logger.getLogger(DataBase.class.getName());
 	private static Connection connection;
 
-	public static void connect(final String host, final String id, final String pass) throws Exception {
+	public static void connect(final String host, final String id, final String password) throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
-			connection = DriverManager.getConnection(host, id, pass);
+			connection = DriverManager.getConnection(host, id, password);
 			logger.info("데이터베이스 연결 완료.");
 		} catch (SQLException sqex) {
 			logger.warning(sqex.getMessage());
@@ -34,7 +34,7 @@ public class DataBase {
 	}
 	
 	public static void insertUser(final String id,
-								  final String pass,
+								  final String password,
 								  final String name,
 								  final String mail,
 								  final String image,
@@ -49,7 +49,7 @@ public class DataBase {
 			sb = new StringBuilder(1024);
 			sb.append("INSERT `user` SET ")
 					.append(queryFormat("id", id)).append(',')
-					.append(queryFormat("pass", pass)).append(',')
+					.append(queryFormat("password", password)).append(',')
 					.append(queryFormat("name", name)).append(',')
 					.append(queryFormat("mail", mail)).append(',')
 					.append(queryFormat("image", image)).append(',')

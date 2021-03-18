@@ -32,9 +32,9 @@ public class Functions {
     public static class EnemyFunction {
         public void chipmunkSkill(Enemy enemy) {
             if (enemy.getTarget() instanceof User) {
-                User u = (User) enemy.getTarget();
+                User user = (User) enemy.getTarget();
                 if (enemy.getRandom().nextInt(100) < 1) {
-                    u.jump(u.getDirection(), 0);
+                    user.jump(user.getDirection(), 0);
                 }
             }
         }

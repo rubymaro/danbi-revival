@@ -11,8 +11,6 @@ module Scene
       play_title_music
       @window_select_server = MUIManager.get_window_cache(:select_server)
       @window_select_server.show
-      #@window_login = MUI::Window_Login.new
-      #@window_login.show
     end
     #--------------------------------------------------------------------------
     # * Create Background

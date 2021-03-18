@@ -80,9 +80,9 @@ public class Guild {
         if (mMembersVector.contains(userNo)) {
             return false;
         }
-        User newMember = User.get(userNo);
+        User newMember = User.getOrNullByNo(userNo);
         for (Integer member : mMembersVector) {
-            User guildMember = User.get(member);
+            User guildMember = User.getOrNullByNo(member);
             guildMember.getCtx().writeAndFlush(Packet.setGuildMember(newMember));
             newMember.getCtx().writeAndFlush(Packet.setGuildMember(guildMember));
         }
@@ -98,12 +98,12 @@ public class Guild {
             return false;
         }
         for (Integer member : mMembersVector) {
-            User guildMember = User.get(member);
+            User guildMember = User.getOrNullByNo(member);
             if (guildMember != null) {
                 guildMember.getCtx().writeAndFlush(Packet.removeGuildMember(userNo));
             }
         }
-        User exitUser = User.get(userNo);
+        User exitUser = User.getOrNullByNo(userNo);
         if (exitUser != null) {
             exitUser.setGuild(0);
         } else {
@@ -116,7 +116,7 @@ public class Guild {
 
     public void breakUp() {
         for (Integer member : mMembersVector) {
-            User guildMember = User.get(member);
+            User guildMember = User.getOrNullByNo(member);
             guildMember.setGuild(0);
         }
         mMembersVector.clear();

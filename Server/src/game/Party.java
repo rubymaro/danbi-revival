@@ -19,9 +19,9 @@ public class Party {
         if (mMembersVector.contains(userNo)) {
             return false;
         }
-        User newMember = User.get(userNo);
+        User newMember = User.getOrNullByNo(userNo);
         for (Integer member : mMembersVector) {
-            User partyMember = User.get(member);
+            User partyMember = User.getOrNullByNo(member);
             partyMember.getCtx().writeAndFlush(Packet.setPartyMember(newMember));
             newMember.getCtx().writeAndFlush(Packet.setPartyMember(partyMember));
         }
@@ -37,17 +37,17 @@ public class Party {
             return false;
         }
         for (Integer member : mMembersVector) {
-            User partyMember = User.get(member);
+            User partyMember = User.getOrNullByNo(member);
             partyMember.getCtx().writeAndFlush(Packet.removePartyMember(userNo));
         }
-        User.get(userNo).setPartyNo(0);
+        User.getOrNullByNo(userNo).setPartyNo(0);
         mMembersVector.removeElement(userNo);
         return true;
     }
 
     public void breakUp() {
         for (Integer member : mMembersVector) {
-            User partyMember = User.get(member);
+            User partyMember = User.getOrNullByNo(member);
             partyMember.setPartyNo(0);
         }
         mMembersVector.clear();

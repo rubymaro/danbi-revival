@@ -21,7 +21,7 @@ public class User extends Character {
 	private ChannelHandlerContext mCtx;
 	// 유저 정보
 	private String mId;
-	private String mPass;
+	private String mPassword;
 	private String mMail;
 	private int mGuildNo;
 	private int mJob;
@@ -69,17 +69,14 @@ public class User extends Character {
 		return true;
 	}
 
-	public static User get(ChannelHandlerContext ctx) {
-		if (!usersHashtable.containsKey(ctx)) {
-			return null;
-		}
+	public static User getOrNullByContext(ChannelHandlerContext ctx) {
 		return usersHashtable.get(ctx);
 	}
 
-	public static User get(int userNo) {
-		for (User u : usersHashtable.values()) {
-			if (u.getNo() == userNo) {
-				return u;
+	public static User getOrNullByNo(int userNo) {
+		for (User user : usersHashtable.values()) {
+			if (user.getNo() == userNo) {
+				return user;
 			}
 		}
 		return null;
@@ -90,12 +87,12 @@ public class User extends Character {
 	}
 
 	public static boolean remove(ChannelHandlerContext ctx) {
-		if (!usersHashtable.containsKey(ctx)) {
-			return false;
+		if (usersHashtable.containsKey(ctx)) {
+			usersHashtable.get(ctx).exitGracefully();
+			usersHashtable.remove(ctx);
+			return true;
 		}
-		usersHashtable.get(ctx).exitGracefully();
-		usersHashtable.remove(ctx);
-		return true;
+		return false;
 	}
 
 	public User(ChannelHandlerContext ctx, ResultSet rs) {
@@ -103,7 +100,7 @@ public class User extends Character {
 			mCtx = ctx;
 			mNo = rs.getInt("no");
 			mId = rs.getString("id");
-			mPass = rs.getString("pass");
+			mPassword = rs.getString("password");
 			mName = rs.getString("name");
 			mTitle = rs.getInt("title");
 			mGuildNo = rs.getInt("guild");
@@ -143,8 +140,8 @@ public class User extends Character {
 		return mId;
 	}
 	
-	public String getPass() {
-		return mPass;
+	public String getPassword() {
+		return mPassword;
 	}
 
 	// 타이틀
@@ -840,7 +837,7 @@ public class User extends Character {
 		try {
 			ResultSet rs = DataBase.executeQuery("SELECT * FROM `user` WHERE `guild` = '" + mGuildNo + "';");
 			while (rs.next()) {
-				User member = User.get(rs.getInt("no"));
+				User member = User.getOrNullByNo(rs.getInt("no"));
 				if (member == null) {
 					mCtx.writeAndFlush(Packet.setGuildMember(rs.getInt("no"), rs.getString("name"), rs.getString("image"),
 							rs.getInt("level"), rs.getInt("job"), rs.getInt("hp"), rs.getInt("hp")));
@@ -1340,7 +1337,7 @@ public class User extends Character {
 
 	// 거래 요청
 	public boolean requestTrade(int partnerNo) {
-		User partner = User.get(partnerNo);
+		User partner = User.getOrNullByNo(partnerNo);
 		// 거래 중이라면 반환
 		if (nowTrading()) {
 			return false;
@@ -1360,7 +1357,7 @@ public class User extends Character {
 
 	// 거래 수락 및 거절
 	public void responseTrade(int type, int partnerNo) {
-		User partner = User.get(partnerNo);
+		User partner = User.getOrNullByNo(partnerNo);
 		// 파트너가 없으면 반환
 		if (partner == null) {
 			return;
@@ -1394,7 +1391,7 @@ public class User extends Character {
 			return;
 		}
 		// 거래 종료 대기 중이라면 반환
-		if (mbAcceptTrade || User.get(mTradePartner).mbAcceptTrade) {
+		if (mbAcceptTrade || User.getOrNullByNo(mTradePartner).mbAcceptTrade) {
 			return;
 		}
 		Item item = findItemByIndex(index);
@@ -1427,7 +1424,7 @@ public class User extends Character {
 		loseItemByIndex(index, amount);
 		// 거래 아이템 로드
 		mCtx.writeAndFlush(Packet.loadTradeItem(tradeItem));
-		User.get(mTradePartner).getCtx().writeAndFlush(Packet.loadTradeItem(tradeItem));
+		User.getOrNullByNo(mTradePartner).getCtx().writeAndFlush(Packet.loadTradeItem(tradeItem));
 	}
 
 	// 거래 아이템 내리기
@@ -1437,7 +1434,7 @@ public class User extends Character {
 			return;
 		}
 		// 거래 종료 대기 중이라면 반환
-		if (mbAcceptTrade || User.get(mTradePartner).mbAcceptTrade) {
+		if (mbAcceptTrade || User.getOrNullByNo(mTradePartner).mbAcceptTrade) {
 			return;
 		}
 		// 아이템이 없으면 반환
@@ -1456,7 +1453,7 @@ public class User extends Character {
 		mTradeItemsHashtable.remove(index);
 		// 거래 아이템 삭제
 		mCtx.writeAndFlush(Packet.dropTradeItem(mNo, index));
-		User.get(mTradePartner).getCtx().writeAndFlush(Packet.dropTradeItem(mNo, index));
+		User.getOrNullByNo(mTradePartner).getCtx().writeAndFlush(Packet.dropTradeItem(mNo, index));
 	}
 
 	// 거래 골드 변경
@@ -1466,7 +1463,7 @@ public class User extends Character {
 			return;
 		}
 		// 거래 종료 대기 중이라면 반환
-		if (mbAcceptTrade || User.get(mTradePartner).mbAcceptTrade) {
+		if (mbAcceptTrade || User.getOrNullByNo(mTradePartner).mbAcceptTrade) {
 			return;
 		}
 		// 가진 골드와 거래중인 골드의 합보다 많으면 반환
@@ -1478,7 +1475,7 @@ public class User extends Character {
 		mTradeGold = value;
 		// 골드 변경하렴
 		mCtx.writeAndFlush(Packet.changeTradeGold(mNo, mTradeGold));
-		User.get(mTradePartner).getCtx().writeAndFlush(Packet.changeTradeGold(mNo, mTradeGold));
+		User.getOrNullByNo(mTradePartner).getCtx().writeAndFlush(Packet.changeTradeGold(mNo, mTradeGold));
 	}
 
 	// 거래 종료 대기
@@ -1487,7 +1484,7 @@ public class User extends Character {
 		if (!nowTrading()) {
 			return;
 		}
-		User partner = User.get(mTradePartner);
+		User partner = User.getOrNullByNo(mTradePartner);
 		// 상대방도 거래 종료 대기 중이라면
 		if (partner.mbAcceptTrade) {
 			finishTrade();
@@ -1504,7 +1501,7 @@ public class User extends Character {
 		if (!nowTrading()) {
 			return;
 		}
-		User partner = User.get(mTradePartner);
+		User partner = User.getOrNullByNo(mTradePartner);
 		// 아이템 및 골드 획득
 		for (Item i : partner.mTradeItemsHashtable.values()) {
 			ItemData iData = GameData.getItems().get(i.getNo());
@@ -1553,7 +1550,7 @@ public class User extends Character {
 		}
 		gainGold(mTradeGold);
 		// 파트너 아이템 및 골드 돌려받기
-		User partner = User.get(mTradePartner);
+		User partner = User.getOrNullByNo(mTradePartner);
 		for (Item i : partner.mTradeItemsHashtable.values()) {
 			ItemData iData = GameData.getItems().get(i.getNo());
 			if (iData.getType() == Type.Item.ITEM) {
@@ -1583,7 +1580,7 @@ public class User extends Character {
 			return false;
 		}
 		// 거래 상대 없다면
-		if (User.get(mTradePartner) == null) {
+		if (User.getOrNullByNo(mTradePartner) == null) {
 			cancelTrade();
 			return false;
 		}
@@ -1651,8 +1648,8 @@ public class User extends Character {
 		if (Party.get(mPartyNo).getMembers().size() >= 4) {
 			return;
 		}
-		User other = User.get(otherNo);
-		User master = User.get(mPartyNo);
+		User other = User.getOrNullByNo(otherNo);
+		User master = User.getOrNullByNo(mPartyNo);
 		// 파티 마스터가 없다면 반환
 		if (master == null) {
 			return;
@@ -1768,8 +1765,8 @@ public class User extends Character {
 		if (Guild.get(mGuildNo).getMembers().size() >= 40) {
 			return;
 		}
-		User other = User.get(otherNo);
-		User master = User.get(Guild.get(mGuildNo).getMaster());
+		User other = User.getOrNullByNo(otherNo);
+		User master = User.getOrNullByNo(Guild.get(mGuildNo).getMaster());
 		// 마스터가 없다면 반환
 		if (master == null) {
 			return;
@@ -1922,9 +1919,9 @@ public class User extends Character {
 			e.loseHp(attackDamage);
 		} else if (target.getClass().getName().equals("game.User")) {
 			// 타겟이 유저인 경우
-			User u = (User) target;
-			u.displayDamage(attackDamage, isFatal);
-			u.loseHp(attackDamage);
+			User user = (User) target;
+			user.displayDamage(attackDamage, isFatal);
+			user.loseHp(attackDamage);
 		}
 	}
 
@@ -1939,8 +1936,8 @@ public class User extends Character {
 					isCmdExecuted = false;
 					break;
 				}
-				for (User u : usersHashtable.values()) {
-					u.getCtx().writeAndFlush(Packet.chatAll(mNo, "[공지] " + strMessage.replaceFirst("/공지 ", ""), 255, 38, 19));
+				for (User user : usersHashtable.values()) {
+					user.getCtx().writeAndFlush(Packet.chatAll(mNo, "[공지] " + strMessage.replaceFirst("/공지 ", ""), 255, 38, 19));
 				}
 				break;
 
@@ -1999,8 +1996,8 @@ public class User extends Character {
 			return;
 		}
 		Vector<User> mapUsers = Map.getMap(mMap).getField(mSeed).getUsers();
-		for (User u : mapUsers) {
-			u.getCtx().writeAndFlush(Packet.chatNormal(mNo, mName + " : " + strMessage));
+		for (User user : mapUsers) {
+			user.getCtx().writeAndFlush(Packet.chatNormal(mNo, mName + " : " + strMessage));
 		}
 		startShowingBalloon();
 	}
@@ -2024,9 +2021,9 @@ public class User extends Character {
 			return;
 		}
 		// 닉네임으로 타겟 유저 검색
-		for (User u : usersHashtable.values()) {
-			if (u.getName().equals(strTargetName)) {
-				u_target = u;
+		for (User user : usersHashtable.values()) {
+			if (user.getName().equals(strTargetName)) {
+				u_target = user;
 				break;
 			}
 		}
@@ -2048,9 +2045,9 @@ public class User extends Character {
  		if (!nowJoinParty()) {
 			return;
 		}
- 		for (int members : Party.get(mPartyNo).getMembers()) {
- 			User u = User.get(members);
- 			u.getCtx().writeAndFlush(Packet.chatParty("[파티] " + mName + " : " + strMessage, 3, 201, 169, 32, 32, 32));
+ 		for (int member : Party.get(mPartyNo).getMembers()) {
+ 			User user = User.getOrNullByNo(member);
+ 			user.getCtx().writeAndFlush(Packet.chatParty("[파티] " + mName + " : " + strMessage, 3, 201, 169, 32, 32, 32));
  		}
  	}
  
@@ -2062,9 +2059,9 @@ public class User extends Character {
  		if (!nowJoinGuild()) {
 			return;
 		}
- 		for (int members : Guild.get(mGuildNo).getMembers()) {
- 			User u = User.get(members);
- 			u.getCtx().writeAndFlush(Packet.chatGuild("[길드] " + mName + " : " + strMessage, 247, 202, 24, 32, 32, 32));
+ 		for (int member : Guild.get(mGuildNo).getMembers()) {
+ 			User user = User.getOrNullByNo(member);
+ 			user.getCtx().writeAndFlush(Packet.chatGuild("[길드] " + mName + " : " + strMessage, 247, 202, 24, 32, 32, 32));
  		}
  	}
 
@@ -2073,8 +2070,8 @@ public class User extends Character {
 		if (chatCommand(strMessage)) {
 			return;
 		}
-		for (User u : usersHashtable.values()) {
-			u.getCtx().writeAndFlush(Packet.chatAll(mNo, "[전체] " + mName + " : " + strMessage, 255, 255, 255, 219, 10, 91));
+		for (User user : usersHashtable.values()) {
+			user.getCtx().writeAndFlush(Packet.chatAll(mNo, "[전체] " + mName + " : " + strMessage, 255, 255, 255, 219, 10, 91));
 		}
 		startShowingBalloon();
 	}
@@ -2113,8 +2110,8 @@ public class User extends Character {
 
     public void endShowingBalloon(int no) {
         Vector<User> mapUsers = Map.getMap(mMap).getField(mSeed).getUsers();
-        for (User u : mapUsers) {
-			u.getCtx().writeAndFlush(Packet.removeChattingBalloon(no));
+        for (User user : mapUsers) {
+			user.getCtx().writeAndFlush(Packet.removeChattingBalloon(no));
 		}
 		mbBalloonShowing = false;
     }

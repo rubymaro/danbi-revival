@@ -24,6 +24,7 @@ class Socket
   def self.send(data)
     return if not @isConnected
     json_data = JSON.encode(data)
+    
     msg = "\0" * (json_data.size + 8)
     msg[0] = [json_data.size >> 24 & 0xff].pack('U*')
     msg[1] = [json_data.size >> 16 & 0xff].pack('U*')
@@ -33,6 +34,11 @@ class Socket
       msg[4+i] = json_data[i]
     end
     msg += "\n"
+
+    p "data #{data}"
+    p "json_data #{json_data}"
+    p "msg #{msg}"
+
     Network.send(msg)
   end
   

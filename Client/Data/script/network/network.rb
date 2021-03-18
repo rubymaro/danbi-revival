@@ -116,6 +116,7 @@ class Network
   end
   
   def self.send(msg, flags = 0)
+    p msg
     ret = @send.call(@client_socket, msg, msg.size, flags)
     raise_error if ret == -1
     return ret

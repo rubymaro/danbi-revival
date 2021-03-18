@@ -137,50 +137,50 @@ public class Field {
     }
 
     // 맵에 유저 들어옴
-    public void addUser(User u) {
+    public void addUser(User user) {
         // 맵 이동 패킷
-        u.getCtx().writeAndFlush(Packet.moveMap(u));
+        user.getCtx().writeAndFlush(Packet.moveMap(user));
         // 캐릭터를 생성하자
         for (User other : mUsers) {
-            other.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.USER, u));
-            u.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.USER, other));
+            other.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.USER, user));
+            user.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.USER, other));
         }
         // 살아있는 에너미를 보내자
         for (Enemy other : getAliveEnemies()) {
-            u.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.ENEMY, other));
+            user.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.ENEMY, other));
         }
         // 모든 NPC를 보내자
         for (Npc other : mNpcs.values()) {
-            u.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.NPC, other));
+            user.getCtx().writeAndFlush(Packet.createCharacter(Type.Character.NPC, other));
         }
         // 떨어진 아이템을 보내자
         for (DropItem item : mDropItems) {
-            u.getCtx().writeAndFlush(Packet.loadDropItem(item));
+            user.getCtx().writeAndFlush(Packet.loadDropItem(item));
         }
         // 떨어진 골드를 보내자
         for (DropGold gold : mDropGolds) {
-            u.getCtx().writeAndFlush(Packet.loadDropGold(gold));
+            user.getCtx().writeAndFlush(Packet.loadDropGold(gold));
         }
-        mUsers.addElement(u);
+        mUsers.addElement(user);
     }
 
     // 맵에서 나감
-    public void removeUser(User u) {
+    public void removeUser(User user) {
         // 유저 지우고
         for (User other : mUsers) {
-            if (other.equals(u)) {
+            if (other.equals(user)) {
                 continue;
             }
-            other.getCtx().writeAndFlush(Packet.removeCharacter(Type.Character.USER, u.getNo()));
+            other.getCtx().writeAndFlush(Packet.removeCharacter(Type.Character.USER, user.getNo()));
         }
         // 해당 유저를 타겟으로 한 에너미는 새 타겟을 찾자
         for (Enemy enemy : getAliveEnemies()) {
-            if (enemy.getTarget() != null && enemy.getTarget().equals(u)) {
-                enemy.findTarget(u);
+            if (enemy.getTarget() != null && enemy.getTarget().equals(user)) {
+                enemy.findTarget(user);
             }
         }
         // 유저 목록에서 삭제
-        mUsers.removeElement(u);
+        mUsers.removeElement(user);
     }
 
     // 모든 유저를 반환

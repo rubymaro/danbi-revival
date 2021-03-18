@@ -33,8 +33,8 @@ public class Server {
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-			for (User u : User.getAll().values()) {
-				u.exitGracefully();
+			for (User user : User.getAll().values()) {
+				user.exitGracefully();
 			}
 			logger.info("서버를 종료합니다.");
 			}

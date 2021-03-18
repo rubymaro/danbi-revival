@@ -216,18 +216,18 @@ public class Enemy extends Character {
     private void die() {
         // 타겟이 유저인 경우
         if (mTarget != null && mTarget.getClass().getName().equals("game.User")) {
-            User u = (User) mTarget;
+            User user = (User) mTarget;
             // 파티가 있다면 경험치 분배
-            if (u.getPartyNo() > 0) {
-                int partyExp = mExp / Party.get(u.getPartyNo()).getMembers().size();
-                for (int memberNo : Party.get(u.getPartyNo()).getMembers()) {
-                    User member = User.get(memberNo);
-                    if (member.getMap() == u.getMap()) {
+            if (user.getPartyNo() > 0) {
+                int partyExp = mExp / Party.get(user.getPartyNo()).getMembers().size();
+                for (int memberNo : Party.get(user.getPartyNo()).getMembers()) {
+                    User member = User.getOrNullByNo(memberNo);
+                    if (member.getMap() == user.getMap()) {
                         member.gainExp(partyExp);
                     }
                 }
             } else {
-                u.gainExp(mExp);
+                user.gainExp(mExp);
             }
             // 골드 드랍
             if (mGold > 0) {
@@ -326,9 +326,9 @@ public class Enemy extends Character {
         }
         if (target.getClass().getName().equals("game.User")) {
             // 타겟이 유저인 경우
-            User u = (User) target;
-            u.loseHp(attackDamage);
-            u.displayDamage(attackDamage, isFatal);
+            User user = (User) target;
+            user.loseHp(attackDamage);
+            user.displayDamage(attackDamage, isFatal);
         } else if (target.getClass().getName().equals("game.Enemy")) {
             // 타겟이 에너미인 경우
             Enemy e = (Enemy) target;

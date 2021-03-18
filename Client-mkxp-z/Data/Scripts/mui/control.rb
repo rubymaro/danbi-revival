@@ -17,7 +17,7 @@ module MUI
     attr_reader :is_visible
     attr_reader :is_enabled
     attr_reader :is_focusing
-
+    attr_accessor :index
     attr_accessor :state_mouse_over
 
     attr_accessor :handler_got_focus
@@ -39,6 +39,7 @@ module MUI
       @is_visible = true
       @is_enabled = true
       @is_focusing = false
+      @index = nil
       @state_mouse_over = false
       @is_added = false
     end

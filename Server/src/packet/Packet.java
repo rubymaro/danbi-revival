@@ -12,7 +12,7 @@ import database.GameData;
 
 @SuppressWarnings("unchecked")
 public final class Packet {
-	// success(0), id/pass error(1), sql error(2)
+	// success(0), id/password error(1), sql error(2)
 	public static JSONObject loginMessage(int type) {
 		JSONObject packet = new JSONObject();
 
@@ -93,9 +93,9 @@ public final class Packet {
 		packet.put("d", c.getDirection());
 
 		if (characterType == Type.Character.USER) {
-			User u = (User) c;
-			packet.put("guild", Guild.get(u.getGuild()) != null ? Guild.get(u.getGuild()).getName() : "길드 없음");
-			packet.put("title", u.getTitle());
+			User user = (User) c;
+			packet.put("guild", Guild.get(user.getGuild()) != null ? Guild.get(user.getGuild()).getName() : "길드 없음");
+			packet.put("title", user.getTitle());
 		}
 
 		return packet;
@@ -276,13 +276,13 @@ public final class Packet {
 		return packet;
 	}
 
-	public static JSONObject moveMap(User u) {
+	public static JSONObject moveMap(User user) {
 		JSONObject packet = new JSONObject();
 
 		packet.put("header", STCHeader.MOVE_MAP.getValue());
-		packet.put("map", u.getMap());
-		packet.put("x", u.getX());
-		packet.put("y", u.getY());
+		packet.put("map", user.getMap());
+		packet.put("x", user.getX());
+		packet.put("y", user.getY());
 
 		return packet;
 	}

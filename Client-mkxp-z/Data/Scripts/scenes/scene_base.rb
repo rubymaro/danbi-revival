@@ -47,6 +47,7 @@ module Scene
       Graphics.update
       Input.update
       MUIManager.update
+      $network.update if $network.has_socket?
     end
     #--------------------------------------------------------------------------
     # * Pre-Termination Processing

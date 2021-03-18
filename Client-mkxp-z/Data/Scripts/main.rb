@@ -9,6 +9,11 @@ require 'socket'
 require 'config.rb'
 require 'preload.rb'
 
+require 'network/cts_header.rb'
+require 'network/network.rb'
+require 'network/packet_handler.rb'
+require 'network/stc_header.rb'
+
 require 'rgss/bitmap.rb'
 
 require 'modules/alignment_flags.rb'
@@ -24,6 +29,7 @@ require 'scenes/scene_select_server.rb'
 require 'games/game_system.rb'
 
 rgss_main {
+  $network ||= Network.new
   DataManager.init
   MUIManager.init
   SceneManager.run
