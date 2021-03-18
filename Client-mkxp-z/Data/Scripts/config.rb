@@ -4,7 +4,7 @@ module Config
   FULLSCREEN_LAUNCHING = true
   FILENAME_CURSOR_ICON = "cursor.png"
 
-  RECV_PACKET_MAX_LENGTH = 4#1024
+  RECV_PACKET_MAX_LENGTH = 1024
   
   ServerInfo = Struct.new(:ip, :port, :name)
   SERVER_INFOS = [

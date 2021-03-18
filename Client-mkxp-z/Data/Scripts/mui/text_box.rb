@@ -165,14 +165,14 @@ module MUI
             if @text.length > 0
               @text.chop!
               @char_widths.pop
-              puts @text
+              #puts @text
               render_text
             end
           elsif @delay_backspace >= @@backspace_trigger_delay + @@backspace_rate
             if @text.length > 0
               @text.chop!
               @char_widths.pop
-              puts @text
+              #puts @text
               render_text
             end
             @delay_backspace = @@backspace_trigger_delay
@@ -184,7 +184,8 @@ module MUI
             for i in 0...str.length
               char = str[i]
               @char_widths.push(@char_widths.last + Bitmap.text_size(char, @font).width)
-              puts @text += char
+              @text += char
+              #puts @text
             end
             render_text
           end

@@ -1,7 +1,7 @@
 module MUI
-  class Window_Login < WindowWithSinglePiece
+  class Window_Login < WindowWith4x3Pieces
     def initialize
-      super(x: :center, y: :center, width: 400, height: 300, skin_key: :default_single)
+      super(x: :center, y: :center, width: 320, height: 240)
 
       @label_title.text = "로그인"
       @label_title.font.size = 20
@@ -17,7 +17,13 @@ module MUI
       @button_login.text = "접속"
       @button_login.handler_mouse_up = ->(control, button, x, y) do
         if Input::MOUSELEFT == button
-          $network.send({'header' => CTSHeader::LOGIN, 'id' => "1", 'password' => "12"})
+          id = @textbox_id.text.strip
+          pw = @textbox_pw.text.strip
+          if id.length > 0 && pw.length > 0
+            $network.send({'header' => CTSHeader::LOGIN, 'id' => id, 'password' => pw})
+          else
+            p "빈칸을 채우세요"
+          end
         end
       end
       @button_login.add_to_window_content(window: self)
@@ -29,6 +35,10 @@ module MUI
 
     def is_disposable?
       return true
+    end
+
+    def is_draggable?
+      return false
     end
   end
 end

@@ -30,33 +30,34 @@ class Network
 
   def update
     begin
-      is_matched = false
       chunk = @tcp_socket.read_nonblock(Config::RECV_PACKET_MAX_LENGTH)
-      for i in 0...chunk.length
-        case chunk[i]
-        when '{'
-          @number_of_solo_brace += 1
-        when '}'
-          @number_of_solo_brace -= 1
-          is_matched = (0 == @number_of_solo_brace)
-          if is_matched
-            @buffer << chunk[0..i]
-            puts "[R ecv](#{@buffer.length}) " << @buffer
-            PacketHandler.process(HTTPLite::JSON.parse(@buffer))
-            if i + 1 < chunk.length
-              @buffer = chunk[i + 1..-1]
-            else
+      while chunk.length > 0
+        is_json_matched = false
+        for i in 0...chunk.length
+          case chunk[i]
+          when '{'
+            @number_of_solo_brace += 1
+          when '}'
+            @number_of_solo_brace -= 1
+            is_json_matched = (0 == @number_of_solo_brace)
+            if is_json_matched
+              @buffer << chunk[0..i]
+              puts "[R ecv](#{@buffer.length}) " << @buffer
+              PacketHandler.process(HTTPLite::JSON.parse(@buffer))
               @buffer = ""
+              chunk = chunk[i + 1..-1]
+              break
             end
           end
         end
-      end
-      if !is_matched
-        @buffer << chunk
+        if !is_json_matched
+          @buffer << chunk
+          chunk = ""
+        end
       end
 
     rescue IO::WaitReadable
-      #putc '.'
+      putc '.'
     end
   end
 
