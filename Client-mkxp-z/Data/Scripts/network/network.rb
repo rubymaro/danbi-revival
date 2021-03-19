@@ -1,20 +1,25 @@
 class Network
   def initialize
     @tcp_socket = nil
-    @number_of_solo_brace = 0
+    @number_of_solo_curlybrace = 0
     @buffer = ""
   end
 
   def connect(server_info)
-    disconnect
-    @tcp_socket = TCPSocket.new(server_info.ip, server_info.port)
+    begin
+      @tcp_socket = TCPSocket.new(server_info.ip, server_info.port)
+      return true
+    rescue Errno::ECONNREFUSED
+      p "#{server_info.name}가 열리지 않았습니다."
+    end
+    return false
   end
 
   def disconnect
     if nil != @tcp_socket
       @tcp_socket.close
       @tcp_socket = nil
-      @number_of_solo_brace = 0
+      @number_of_solo_curlybrace = 0
       @buffer = ""
     end
   end
@@ -36,10 +41,10 @@ class Network
         for i in 0...chunk.length
           case chunk[i]
           when '{'
-            @number_of_solo_brace += 1
+            @number_of_solo_curlybrace += 1
           when '}'
-            @number_of_solo_brace -= 1
-            is_json_matched = (0 == @number_of_solo_brace)
+            @number_of_solo_curlybrace -= 1
+            is_json_matched = (0 == @number_of_solo_curlybrace)
             if is_json_matched
               @buffer << chunk[0..i]
               puts "[R ecv](#{@buffer.length}) " << @buffer

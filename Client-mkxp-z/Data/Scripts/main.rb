@@ -24,7 +24,7 @@ require 'modules/scene_manager.rb'
 require 'modules/mui_manager.rb'
 
 require 'scenes/scene_base.rb'
-require 'scenes/scene_select_server.rb'
+require 'scenes/scene_intro.rb'
 
 require 'games/game_system.rb'
 

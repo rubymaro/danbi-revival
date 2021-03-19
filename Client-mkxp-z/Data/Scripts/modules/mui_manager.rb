@@ -34,6 +34,7 @@ module MUIManager
     @created_windows = []
     @window_caches = {
       :select_server => MUI::Window_SelectServer.new,
+      :login => MUI::Window_Login.new,
     }
   end
 

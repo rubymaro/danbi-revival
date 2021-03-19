@@ -15,33 +15,21 @@ import database.GameData;
 import game.*;
 import config.Config;
 
-public class Server {
+public final class Server {
 	private static final Logger logger = Logger.getLogger(Server.class.getName());
+	private static final int TICK = 100;
 
-	private final int mPort;
-	
     public static void main(final String[] args) throws InterruptedException {
-		new Server(args).run();
-    }
-	
-	public Server(final String[] args) {
-		if (args.length > 0) {
-			mPort = Integer.parseInt(args[0]);
+		int port;
+    	if (args.length > 0) {
+			port = Integer.parseInt(args[0]);
 		} else {
-			mPort = Integer.parseInt(Config.getInstance().getProperty("Server.port"));
+			port = Integer.parseInt(Config.getInstance().getProperty("Server.port"));
 		}
+		run(port);
+    }
 
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-			for (User user : User.getAll().values()) {
-				user.exitGracefully();
-			}
-			logger.info("서버를 종료합니다.");
-			}
-		});
-	}
-	
-	public void run() throws InterruptedException {
+	private static void run(final int port) throws InterruptedException {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -53,18 +41,19 @@ public class Server {
             	.option(ChannelOption.SO_BACKLOG, 128)
             	.childOption(ChannelOption.SO_KEEPALIVE, true);
             
-            logger.info("서버를 시작합니다. (" + mPort + ")");
+            logger.info("서버를 시작합니다. (" + port + ")");
 
-            ChannelFuture f = bootStrap.bind(mPort).sync();
+            ChannelFuture f = bootStrap.bind(port).sync();
 			final Properties properties = Config.getInstance();
             DataBase.connect(String.format("jdbc:mysql://%s/%s?characterEncoding=utf8", properties.getProperty("Database.host"), properties.getProperty("Database.database")),
 			     properties.getProperty("Database.username"),
 			     properties.getProperty("Database.password"));
+
 			GameData.loadSettings();
             Map.loadMap();
 
 			while (Handler.isRunning) {
-				Thread.sleep(100);
+				Thread.sleep(TICK);
 				for (User user : User.getAll().values()) {
 					user.update();
 				}
@@ -85,5 +74,14 @@ public class Server {
             bossGroup.terminationFuture().sync();
             workerGroup.terminationFuture().sync();
         }
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				for (User user : User.getAll().values()) {
+					user.exitGracefully();
+				}
+				logger.info("서버를 종료합니다.");
+			}
+		});
 	}
 }

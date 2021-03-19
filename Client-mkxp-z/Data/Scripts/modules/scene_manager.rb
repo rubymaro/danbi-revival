@@ -24,7 +24,7 @@ module SceneManager
     # * Get First Scene Class
     #--------------------------------------------------------------------------
     def self.first_scene_class
-      Scene::SelectServer
+      Scene::Intro
     end
     #--------------------------------------------------------------------------
     # * Get Current Scene

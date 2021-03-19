@@ -59,8 +59,6 @@ module Scene
     #--------------------------------------------------------------------------
     def terminate
       Graphics.freeze
-      dispose_all_windows
-      dispose_main_viewport
     end
     #--------------------------------------------------------------------------
     # * Execute Transition

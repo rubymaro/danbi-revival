@@ -14,7 +14,7 @@ module MUI
       @textbox_pw.add_to_window_content(window: self)
 
       @button_login = ButtonWith3x3Pieces.new(x: 64, y: 150, width: 200, height: 32)
-      @button_login.text = "접속"
+      @button_login.text = "로그인"
       @button_login.handler_mouse_up = ->(control, button, x, y) do
         if Input::MOUSELEFT == button
           id = @textbox_id.text.strip
@@ -27,10 +27,15 @@ module MUI
         end
       end
       @button_login.add_to_window_content(window: self)
+
+      @button_join = ButtonWith3x3Pieces.new(x: 64, y: 182, width: 200, height: 32)
+      @button_join.text = "회원가입"
+      @button_join.z = 1
+      @button_join.add_to_window_content(window: self)
     end
 
     def has_close_button?
-      return true
+      return false
     end
 
     def is_disposable?
