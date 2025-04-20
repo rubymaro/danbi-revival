@@ -6,11 +6,22 @@
 #define NETWORK_DLL_API __declspec(dllimport)
 #endif
 
-extern "C" NETWORK_DLL_API
-int InitializeNetwork(
-	const wchar_t* const lpListenSocketIpV4,
-	const unsigned short listenSocketTcpPort,
-	const int maxBacklog,
-	const unsigned int uPeriod,
-	const bool bTcpNoDelay
-);
+namespace DanbiNetworkSelect
+{
+	enum class eInitMode
+	{
+		INIT_BEFORE,
+		INIT_SUCCESS,
+		INIT_FAILED,
+	};
+
+	extern "C" NETWORK_DLL_API
+	eInitMode Initialize(
+		const wchar_t* const lpListenSocketIpV4,
+		const unsigned short listenSocketTcpPort,
+		const unsigned long nonBlockingMode,
+		const int maxBacklog,
+		const unsigned int uPeriod,
+		const bool bTcpNoDelay
+	);
+}
