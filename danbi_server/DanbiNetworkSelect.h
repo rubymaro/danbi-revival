@@ -24,4 +24,7 @@ namespace DanbiNetworkSelect
 		const unsigned int uPeriod,
 		const bool bTcpNoDelay
 	);
+
+	extern "C" NETWORK_DLL_API
+	void Finalize(void);
 }

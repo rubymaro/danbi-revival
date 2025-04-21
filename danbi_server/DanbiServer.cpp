@@ -12,5 +12,7 @@ int wmain()
 		return 1;
 	}
 
+	DanbiNetworkSelect::Finalize();
+
 	return 0;
 }
