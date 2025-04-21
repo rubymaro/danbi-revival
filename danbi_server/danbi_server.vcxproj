@@ -134,7 +134,7 @@
     <ClCompile Include="DanbiServer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Network.h" />
+    <ClInclude Include="DanbiNetworkSelect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
