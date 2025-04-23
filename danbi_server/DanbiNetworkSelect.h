@@ -27,4 +27,8 @@ namespace DanbiNetworkSelect
 
 	extern "C" NETWORK_DLL_API
 	void Finalize(void);
+
+	extern int gTcpNoDelay;
+	extern size_t gRecvRingBufferCapacity;
+	extern size_t gSendRingBufferCapacity;
 }

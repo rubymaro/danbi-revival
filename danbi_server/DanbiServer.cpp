@@ -2,6 +2,8 @@
 
 #pragma comment(lib,"./DanbiNetworkSelect.lib")
 
+int RunServer(void);
+
 int wmain()
 {
 	DanbiNetworkSelect::eInitMode initMode;
@@ -12,7 +14,14 @@ int wmain()
 		return 1;
 	}
 
+	RunServer();
+
 	DanbiNetworkSelect::Finalize();
 
+	return 0;
+}
+
+int RunServer(void)
+{
 	return 0;
 }
