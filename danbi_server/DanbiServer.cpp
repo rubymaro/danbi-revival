@@ -1,29 +1,26 @@
 #include "DanbiServer.h"
 
-namespace DanbiServer
+int DanbiServer::Run(DanbiNetworkSelect::Instance* const pInstance)
 {
-	int Run(DanbiNetworkSelect::Instance* const pInstance)
+	for (;;)
 	{
-		for (;;)
-		{
-			DanbiNetworkSelect::Update(pInstance);
-		}
-
-		return 0;
+		DanbiNetworkSelect::Update(pInstance);
 	}
 
-	bool OnClientJoined(const SESSION_ID sessionId)
-	{
-		return true;
-	}
+	return 0;
+}
 
-	void OnClientLeaved(const SESSION_ID sessionId)
-	{
+bool DanbiServer::OnClientJoined(const SESSION_ID sessionId)
+{
+	return true;
+}
 
-	}
+void DanbiServer::OnClientLeaved(const SESSION_ID sessionId)
+{
 
-	void OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
-	{
+}
 
-	}
+void DanbiServer::OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
+{
+
 }
