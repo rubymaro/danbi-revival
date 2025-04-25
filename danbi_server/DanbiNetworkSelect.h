@@ -10,10 +10,10 @@
 
 namespace DanbiNetworkSelect
 {
-	struct Model;
+	struct Instance;
 
 	extern "C" EXPORT_NETWORK_DLL_API
-	Model* CreateOrNull(
+	Instance* CreateOrNull(
 		const wchar_t* const lpListenSocketIpV4,
 		const unsigned short listenSocketTcpPort,
 		const unsigned long nonBlockingMode,
@@ -28,8 +28,8 @@ namespace DanbiNetworkSelect
 	);
 
 	extern "C" EXPORT_NETWORK_DLL_API
-	void Finalize(Model* const pModel);
+	void Finalize(Instance* const pInstance);
 
 	extern "C" EXPORT_NETWORK_DLL_API
-	void Update(Model* const pModel);
+	void Update(Instance* const pInstance);
 }
