@@ -12,8 +12,6 @@ int wmain()
 		DanbiServer::Run(pInstanceOrNull);
 
 		DanbiNetworkSelect::Finalize(pInstanceOrNull);
-
-		free(pInstanceOrNull);
 	}
 
 	return 0;
