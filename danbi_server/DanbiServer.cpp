@@ -13,16 +13,14 @@ int wmain()
 	DanbiNetworkSelect::Instance* pInstanceOrNull;
 
 	pInstanceOrNull = DanbiNetworkSelect::CreateOrNull(L"0.0.0.0", 9000, 1, 65535, 1, true, 2048, 1024, OnClientJoined, OnClientLeaved, OnMessageRecieved);
-	if (pInstanceOrNull == nullptr)
+	if (pInstanceOrNull != nullptr)
 	{
-		return 1;
+		RunServer(pInstanceOrNull);
+
+		DanbiNetworkSelect::Finalize(pInstanceOrNull);
+
+		delete pInstanceOrNull;
 	}
-
-	RunServer(pInstanceOrNull);
-
-	DanbiNetworkSelect::Finalize(pInstanceOrNull);
-
-	delete pInstanceOrNull;
 
 	return 0;
 }
