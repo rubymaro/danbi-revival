@@ -132,10 +132,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DanbiServer.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DanbiNetworkSelect.h" />
+    <ClInclude Include="DanbiServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

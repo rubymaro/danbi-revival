@@ -28,8 +28,8 @@ namespace DanbiNetworkSelect
 	);
 
 	extern "C" EXPORT_NETWORK_DLL_API
-	void Finalize(Instance* const pInstance);
+	void Finalize(Instance* const pModel);
 
 	extern "C" EXPORT_NETWORK_DLL_API
-	void Update(Instance* const pInstance);
+	void Update(Instance* const pModel);
 }

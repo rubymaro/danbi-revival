@@ -1,51 +1,29 @@
-#include "DanbiNetworkSelect.h"
-#include "Types.h"
+#include "DanbiServer.h"
 
-#pragma comment(lib,"./DanbiNetworkSelect.lib")
-
-int RunServer(DanbiNetworkSelect::Instance* const pInstance);
-bool OnClientJoined(const SESSION_ID sessionId);
-void OnClientLeaved(const SESSION_ID sessionId);
-void OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData);
-
-int wmain()
+namespace DanbiServer
 {
-	DanbiNetworkSelect::Instance* pInstanceOrNull;
-
-	pInstanceOrNull = DanbiNetworkSelect::CreateOrNull(L"0.0.0.0", 9000, 1, 65535, 1, true, 2048, 1024, OnClientJoined, OnClientLeaved, OnMessageRecieved);
-	if (pInstanceOrNull != nullptr)
+	int Run(DanbiNetworkSelect::Instance* const pInstance)
 	{
-		RunServer(pInstanceOrNull);
+		for (;;)
+		{
+			DanbiNetworkSelect::Update(pInstance);
+		}
 
-		DanbiNetworkSelect::Finalize(pInstanceOrNull);
-
-		delete pInstanceOrNull;
+		return 0;
 	}
 
-	return 0;
-}
-
-int RunServer(DanbiNetworkSelect::Instance* const pInstance)
-{
-	for (;;)
+	bool OnClientJoined(const SESSION_ID sessionId)
 	{
-		DanbiNetworkSelect::Update(pInstance);
+		return true;
 	}
 
-	return 0;
-}
+	void OnClientLeaved(const SESSION_ID sessionId)
+	{
 
-bool OnClientJoined(const SESSION_ID sessionId)
-{
-	return true;
-}
+	}
 
-void OnClientLeaved(const SESSION_ID sessionId)
-{
+	void OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
+	{
 
-}
-
-void OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
-{
-
+	}
 }
