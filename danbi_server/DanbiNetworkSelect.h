@@ -25,6 +25,8 @@ namespace DanbiNetworkSelect
 		const int maxBacklog,
 		const unsigned int uPeriod,
 		const bool bTcpNoDelay,
+		const size_t sendRingBufferCapacity,
+		const size_t recvRingBufferCapacity,
 		bool (*pOnClientJoined)(const SESSION_ID sessionId),
 		void (*pOnClientLeaved)(const SESSION_ID sessionId),
 		void (*pOnMessageRecieved)(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
@@ -34,6 +36,6 @@ namespace DanbiNetworkSelect
 	void Finalize(void);
 
 	extern int gTcpNoDelay;
-	extern size_t gRecvRingBufferCapacity;
 	extern size_t gSendRingBufferCapacity;
+	extern size_t gRecvRingBufferCapacity;
 }
