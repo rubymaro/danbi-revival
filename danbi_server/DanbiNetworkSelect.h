@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Types.h"
+
 #ifdef _WINDLL
 #define NETWORK_DLL_API __declspec(dllexport)
 #else
@@ -22,7 +24,10 @@ namespace DanbiNetworkSelect
 		const unsigned long nonBlockingMode,
 		const int maxBacklog,
 		const unsigned int uPeriod,
-		const bool bTcpNoDelay
+		const bool bTcpNoDelay,
+		bool (*pOnClientJoined)(const SESSION_ID sessionId),
+		void (*pOnClientLeaved)(const SESSION_ID sessionId),
+		void (*pOnMessageRecieved)(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
 	);
 
 	extern "C" NETWORK_DLL_API

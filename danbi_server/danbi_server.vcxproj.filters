@@ -18,6 +18,9 @@
     <ClCompile Include="DanbiServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Types.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DanbiNetworkSelect.h">

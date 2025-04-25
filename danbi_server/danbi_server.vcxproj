@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DanbiServer.cpp" />
+    <ClCompile Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DanbiNetworkSelect.h" />
