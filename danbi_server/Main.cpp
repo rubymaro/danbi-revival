@@ -19,7 +19,7 @@ int wmain()
 	{
 		DanbiServer::Run(pInstanceOrNull);
 
-		DanbiNetworkSelect::Finalize(pInstanceOrNull);
+		DanbiNetworkSelect::Destroy(&pInstanceOrNull);
 	}
 
 	return 0;
