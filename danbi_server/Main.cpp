@@ -12,7 +12,7 @@ int wmain()
 		2048, 1024,
 		DanbiServer::OnClientJoined,
 		DanbiServer::OnClientLeaved,
-		DanbiServer::OnMessageRecieved
+		DanbiServer::OnMessageReceived
 	);
 
 	if (pInstanceOrNull != nullptr)

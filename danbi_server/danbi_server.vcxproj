@@ -138,6 +138,8 @@
   <ItemGroup>
     <ClInclude Include="DanbiNetworkSelect.h" />
     <ClInclude Include="DanbiServer.h" />
+    <ClInclude Include="RTASSERT.h" />
+    <ClInclude Include="SerializedBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

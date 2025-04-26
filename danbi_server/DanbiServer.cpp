@@ -20,7 +20,7 @@ void DanbiServer::OnClientLeaved(const SESSION_ID sessionId)
 
 }
 
-void DanbiServer::OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData)
+bool DanbiServer::OnMessageReceived(const SESSION_ID sessionId, const MESSAGE_TYPE type, SerializedBuffer& msg)
 {
-
+	return true;
 }

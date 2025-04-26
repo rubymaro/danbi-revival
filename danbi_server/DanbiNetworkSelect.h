@@ -8,6 +8,8 @@
 #define EXPORT_NETWORK_DLL_API __declspec(dllimport)
 #endif
 
+class SerializedBuffer;
+
 namespace DanbiNetworkSelect
 {
 	struct Instance;
@@ -20,11 +22,11 @@ namespace DanbiNetworkSelect
 		const int maxBacklog,
 		const unsigned int uPeriod,
 		const bool bTcpNoDelay,
-		const size_t sendRingBufferCapacity,
-		const size_t recvRingBufferCapacity,
+		const uint32_t sendRingBufferCapacity,
+		const uint32_t recvRingBufferCapacity,
 		bool (*pOnClientJoined)(const SESSION_ID sessionId),
 		void (*pOnClientLeaved)(const SESSION_ID sessionId),
-		void (*pOnMessageRecieved)(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pMessage)
+		bool (*pOnMessageReceived)(const SESSION_ID sessionId, const MESSAGE_TYPE type, SerializedBuffer& msg)
 	);
 
 	extern "C" EXPORT_NETWORK_DLL_API

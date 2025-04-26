@@ -32,5 +32,11 @@
     <ClInclude Include="DanbiServer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="SerializedBuffer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RTASSERT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

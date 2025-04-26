@@ -10,5 +10,5 @@ namespace DanbiServer
 	int Run(DanbiNetworkSelect::Instance* const pInstance);
 	bool OnClientJoined(const SESSION_ID sessionId);
 	void OnClientLeaved(const SESSION_ID sessionId);
-	void OnMessageRecieved(const SESSION_ID sessionId, const uint32_t cbRecv, const char* const pData);
+	bool OnMessageReceived(const SESSION_ID sessionId, const MESSAGE_TYPE type, SerializedBuffer& msg);
 }
