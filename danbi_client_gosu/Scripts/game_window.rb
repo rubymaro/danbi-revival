@@ -5,10 +5,10 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    SceneManager.scene().update()
+    SceneManager.scene.update
   end
 
   def draw
-    SceneManager.scene().draw()
+    SceneManager.scene.draw
   end
 end
