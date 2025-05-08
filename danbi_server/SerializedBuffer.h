@@ -6,7 +6,6 @@ class SerializedBuffer final
 {
 	enum
 	{
-		DEFAULT_CAPACITY = 1400,
 		MAX_RESIZE_COUNT = 2,
 	};
 
@@ -18,14 +17,13 @@ public:
 		CannotRead = 2,
 	};
 
-	inline SerializedBuffer(void);
 	inline SerializedBuffer(const size_t capacity);
 	inline SerializedBuffer(const SerializedBuffer& other);
-	inline SerializedBuffer(SerializedBuffer&& other) = delete;
+	inline SerializedBuffer(SerializedBuffer&&) = delete;
 	inline ~SerializedBuffer(void);
 
 	inline SerializedBuffer& operator=(const SerializedBuffer& other);
-	inline SerializedBuffer&& operator=(SerializedBuffer&& other) = delete;
+	inline SerializedBuffer&& operator=(SerializedBuffer&&) = delete;
 
 	inline SerializedBuffer& operator<<(const char chValue);
 	inline SerializedBuffer& operator<<(const unsigned char uchValue);
@@ -78,11 +76,6 @@ private:
 };
 
 // SerializedBuffer definitions
-
-SerializedBuffer::SerializedBuffer(void)
-	: SerializedBuffer(DEFAULT_CAPACITY)
-{
-}
 
 SerializedBuffer::SerializedBuffer(const size_t capacity)
 	: mpaBuffer(nullptr)

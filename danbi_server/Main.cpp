@@ -10,6 +10,7 @@ int wmain()
 		L"0.0.0.0", 9000,
 		1, 65535, 1, true,
 		2048, 1024,
+		1400,
 		DanbiServer::OnClientJoined,
 		DanbiServer::OnClientLeaved,
 		DanbiServer::OnMessageReceived

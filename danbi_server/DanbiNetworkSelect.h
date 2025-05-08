@@ -24,6 +24,7 @@ namespace DanbiNetworkSelect
 		const bool bTcpNoDelay,
 		const uint32_t sendRingBufferCapacity,
 		const uint32_t recvRingBufferCapacity,
+		const size_t serializedBufferMessageCapacity,
 		bool (*pOnClientJoined)(const SESSION_ID sessionId),
 		void (*pOnClientLeaved)(const SESSION_ID sessionId),
 		bool (*pOnMessageReceived)(const SESSION_ID sessionId, const MESSAGE_TYPE type, SerializedBuffer& msg)
