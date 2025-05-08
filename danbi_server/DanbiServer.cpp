@@ -29,5 +29,6 @@ void DanbiServer::OnClientLeaved(const SESSION_ID sessionId)
 bool DanbiServer::OnMessageReceived(const SESSION_ID sessionId, const MESSAGE_TYPE type, SerializedBuffer& msg)
 {
 	wprintf(L"[%s:%5u] sessionId = %llu\ttype = %hu\tmsg.size=%zu\n", TEXT(__FUNCTION__), GetCurrentThreadId(), sessionId, type, msg.Size());
+
 	return true;
 }
