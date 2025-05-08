@@ -3,13 +3,13 @@ if __FILE__ == $0
 
   require "gosu"
 
-  require_relative "config.rb"
-  require_relative "game_window.rb"
+  require_relative "Config.rb"
+  require_relative "GameWindow.rb"
 
-  require_relative "modules/scene_manager.rb"
+  require_relative "managers/SceneManager.rb"
   
-  require_relative "scenes/scene_base.rb"
-  require_relative "scenes/scene_title.rb"
+  require_relative "scenes/Scene_Base.rb"
+  require_relative "scenes/Scene_Title.rb"
 
   SceneManager.run
 
