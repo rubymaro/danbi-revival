@@ -6,12 +6,17 @@ if __FILE__ == $0
   require_relative "Config.rb"
   require_relative "GameWindow.rb"
 
-  require_relative "Managers/SceneManager.rb"
+  require_relative "MUI3/MUI3_Manager.rb"
+  require_relative "MUI3/Components/MUI3_Component.rb"
+  require_relative "MUI3/Components/MUI3_Form.rb"
+
+  require_relative "MUI3/Outputs/MUI3_Form_Login.rb"
   
+  require_relative "Scenes/Scene_Manager.rb"
   require_relative "Scenes/Scene_Base.rb"
   require_relative "Scenes/Scene_Title.rb"
 
-  SceneManager.run
+  Scene::Manager.run
 
   $game_window = GameWindow.new
   $game_window.show
