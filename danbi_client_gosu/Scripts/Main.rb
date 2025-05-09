@@ -6,10 +6,10 @@ if __FILE__ == $0
   require_relative "Config.rb"
   require_relative "GameWindow.rb"
 
-  require_relative "managers/SceneManager.rb"
+  require_relative "Managers/SceneManager.rb"
   
-  require_relative "scenes/Scene_Base.rb"
-  require_relative "scenes/Scene_Title.rb"
+  require_relative "Scenes/Scene_Base.rb"
+  require_relative "Scenes/Scene_Title.rb"
 
   SceneManager.run
 
