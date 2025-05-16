@@ -1,7 +1,7 @@
 class MUI3::Form < MUI3::Component
-  def initialize(x:, y:, width:, height:)
+  def initialize(x:, y:, width:, height:, style: MUI3::Style::WhiteForm)
     super(x: x, y: y, width: width, height: height)
-    @skin = MUI3::Style::WhiteForm.create(width: width, height: height)
+    @skin = style.create(width: width, height: height)
   end
 
   def update
