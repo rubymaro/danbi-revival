@@ -9,10 +9,12 @@ class MUI3::Component
     @width = width
     @height = height
     @z = 0
+    @pressed = false
   end
 
   def update
-
+    @mouse_x = $game_window.mouse_x.to_i
+    @mouse_y = $game_window.mouse_y.to_i
   end
 
   def draw
@@ -25,5 +27,9 @@ class MUI3::Component
     
     @children << component
     component.parent = self
+  end
+
+  def mouse_on?
+    return @mouse_x >= @x && @mouse_x < @x + @width && @mouse_y >= @y && @mouse_y < @y + @height
   end
 end
