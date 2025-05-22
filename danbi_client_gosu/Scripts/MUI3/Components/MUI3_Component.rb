@@ -1,4 +1,6 @@
 class MUI3::Component
+  attr_accessor :parent
+
   def initialize(x:, y:, width:, height:)
     @parent = nil
     @children = []
@@ -17,8 +19,10 @@ class MUI3::Component
     @mouse_y = $game_window.mouse_y.to_i
   end
 
-  def draw
-    raise NotImplementedError, "You must implement the draw method"
+  def draw(parent_x, parent_y)
+    for child in @children
+      child.draw(parent_x + @x, parent_y + @y)
+    end
   end
 
   def add_child(component:)

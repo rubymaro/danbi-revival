@@ -7,11 +7,15 @@ module MUI3
     end
 
     def self.update
-      @components.each(&:update)
+      for component in @components
+        component.update()
+      end
     end
 
     def self.draw
-      @components.each(&:draw)
+      for component in @components
+        component.draw(0, 0)
+      end
     end
   end
 end
