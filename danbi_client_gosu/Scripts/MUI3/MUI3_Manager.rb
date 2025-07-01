@@ -8,13 +8,13 @@ module MUI3
 
     def self.update
       for component in @components
-        component.update()
+        component.update
       end
     end
 
     def self.draw
       for component in @components
-        component.draw(0, 0)
+        component.draw(x: 0, y: 0)
       end
     end
   end

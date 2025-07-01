@@ -7,7 +7,7 @@ class MUI3::Form < MUI3::Component
   end
 
   def update
-    super()
+    super
 
     if $game_window.mouse_left_triggered? && mouse_on?
       @pressed = true
@@ -31,8 +31,8 @@ class MUI3::Form < MUI3::Component
     end
   end
 
-  def draw(parent_x, parent_y)
-    @style_bg.draw(x: parent_x + @x, y: parent_y + @y)
-    super(parent_x, parent_y)
+  def draw(x:, y:)
+    @style_bg.draw(x: x + @x, y: y + @y)
+    super(x: x, y: y)
   end
 end

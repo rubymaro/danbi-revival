@@ -7,10 +7,10 @@ class MUI3::Text < MUI3::Component
   end
 
   def update
-    super()
+    super
   end
 
-  def draw(parent_x, parent_y)
-    @font.draw_text(@text, parent_x + @x, parent_y + @y, 0, 1.0, 1.0, Gosu::Color::BLACK)
+  def draw(x:, y:)
+    @font.draw_text(@text, x + @x, y + @y, 0, 1.0, 1.0, Gosu::Color::BLACK)
   end
 end

@@ -19,9 +19,9 @@ class MUI3::Component
     @mouse_y = $game_window.mouse_y.to_i
   end
 
-  def draw(parent_x, parent_y)
+  def draw(x:, y:)
     for child in @children
-      child.draw(parent_x + @x, parent_y + @y)
+      child.draw(x: x + @x, y: y + @y)
     end
   end
 
