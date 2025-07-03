@@ -8,9 +8,9 @@
             "type": "rdbg",
             "name": "Debug current file with rdbg",
             "request": "launch",
-            "script": "${file}",
+            "script": "${workspaceFolder}/Scripts/Main.rb",
             "args": [],
-            "askParameters": true
+            "askParameters": false
         },
         {
             "type": "rdbg",
