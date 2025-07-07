@@ -14,6 +14,6 @@ class Scene::Base
   end
 
   def return_scene
-    Scene::Manager.return
+    $scene_manager.return
   end
 end

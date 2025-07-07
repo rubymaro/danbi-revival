@@ -1,9 +1,9 @@
 class MUI3::Component
-  attr_accessor :parent
-  attr_accessor :x
-  attr_accessor :y
-  attr_accessor :width
-  attr_accessor :height
+  attr_accessor(:parent)
+  attr_accessor(:x)
+  attr_accessor(:y)
+  attr_accessor(:width)
+  attr_accessor(:height)
 
   def initialize(x:, y:, width:, height:)
     @parent = nil
@@ -19,8 +19,6 @@ class MUI3::Component
   end
 
   def update
-    @mouse_x = $game_window.mouse_x.to_i
-    @mouse_y = $game_window.mouse_y.to_i
   end
 
   def draw(x:, y:)
@@ -38,6 +36,6 @@ class MUI3::Component
   end
 
   def mouse_on?
-    return @mouse_x >= @x && @mouse_x < @x + @width && @mouse_y >= @y && @mouse_y < @y + @height
+    return $mui_manager.mouse_x >= @x && $mui_manager.mouse_x < @x + @width && $mui_manager.mouse_y >= @y && $mui_manager.mouse_y < @y + @height
   end
 end

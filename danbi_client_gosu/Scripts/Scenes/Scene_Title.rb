@@ -5,15 +5,13 @@ class Scene::Title < Scene::Base
     @title_scale_y = Config::WINDOW_HEIGHT / @image_title.height.to_f
     
     @form_login = MUI3::Form::Login.new
-    MUI3::Manager.add(component: @form_login)
+    $mui_manager.add(component: @form_login)
   end
 
   def update
-    MUI3::Manager.update
   end
 
   def draw
     @image_title.draw(0, 0, 0, @title_scale_x, @title_scale_y)
-    MUI3::Manager.draw
   end
 end

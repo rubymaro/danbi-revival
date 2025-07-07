@@ -1,6 +1,4 @@
 if __FILE__ == $0
-  $LOAD_PATH.unshift(File.expand_path("../", __dir__))
-
   require "gosu"
   require "chunky_png"
 
@@ -15,8 +13,5 @@ if __FILE__ == $0
   require_relative "Scenes/Scene_Base.rb"
   require_relative "Scenes/Scene_Title.rb"
 
-  Scene::Manager.run
-
-  $game_window = GameWindow.new
-  $game_window.show
+  GameWindow.new.show
 end

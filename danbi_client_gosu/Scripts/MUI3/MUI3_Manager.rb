@@ -1,21 +1,42 @@
 module MUI3
-  module Manager
-    @components = []
+  class Manager
+    attr_accessor(:mouse_x)
+    attr_accessor(:mouse_y)
+    
+    def initialize(gosu_window:)
+      @gosu_window = gosu_window
+      @components = []
+      @mouse_left_triggered = false
+    end
 
-    def self.add(component:)
+    def add(component:)
       @components << component
     end
 
-    def self.update
+    def update
+      @mouse_x = @gosu_window.mouse_x.to_i
+      @mouse_y = @gosu_window.mouse_y.to_i
       for component in @components
         component.update
       end
     end
 
-    def self.draw
+    def draw
       for component in @components
         component.draw(x: 0, y: 0)
       end
+    end
+
+    def mouse_left_triggered?
+      if Gosu.button_down?(Gosu::MS_LEFT)
+        if !@mouse_left_triggered
+          @mouse_left_triggered = true
+          return true
+        end
+      else
+        @mouse_left_triggered = false
+      end
+      return false
     end
   end
 end

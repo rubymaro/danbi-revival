@@ -7,22 +7,22 @@ class MUI3::Form < MUI3::Component
   def update
     super
 
-    if $game_window.mouse_left_triggered? && mouse_on?
+    if $mui_manager.mouse_left_triggered? && mouse_on?
       @pressed = true
     elsif !Gosu.button_down?(Gosu::MS_LEFT)
       @pressed = false
     end
 
     if @pressed
-      @last_mouse_x ||= @mouse_x
-      @last_mouse_y ||= @mouse_y
+      @last_mouse_x ||= $mui_manager.mouse_x
+      @last_mouse_y ||= $mui_manager.mouse_y
 
-      dx = @mouse_x - @last_mouse_x
-      dy = @mouse_y - @last_mouse_y
+      dx = $mui_manager.mouse_x - @last_mouse_x
+      dy = $mui_manager.mouse_y - @last_mouse_y
       @x += dx
       @y += dy
-      @last_mouse_x = @mouse_x
-      @last_mouse_y = @mouse_y
+      @last_mouse_x = $mui_manager.mouse_x
+      @last_mouse_y = $mui_manager.mouse_y
     else
       @last_mouse_x = nil
       @last_mouse_y = nil
