@@ -1,5 +1,9 @@
 class MUI3::Component
   attr_accessor :parent
+  attr_accessor :x
+  attr_accessor :y
+  attr_accessor :width
+  attr_accessor :height
 
   def initialize(x:, y:, width:, height:)
     @parent = nil

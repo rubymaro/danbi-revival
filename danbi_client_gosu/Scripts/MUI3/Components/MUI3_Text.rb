@@ -1,9 +1,8 @@
 class MUI3::Text < MUI3::Component
-  def initialize(x:, y:, text:, font_size:)
-    @font = Gosu::Font.new(font_size, name: "Malgun Gothic")
-    width = @font.text_width(text)
+  def initialize(x:, y:, width:, font_size:, text: "MUI3::Text")
     super(x: x, y: y, width: width, height: font_size)
     @text = text
+    @image_text = Gosu::Image.from_text(@text, @height, {:width => @width, :font => "Malgun Gothic"})
   end
 
   def update
@@ -11,6 +10,6 @@ class MUI3::Text < MUI3::Component
   end
 
   def draw(x:, y:)
-    @font.draw_text(@text, x + @x, y + @y, 0, 1.0, 1.0, Gosu::Color::BLACK)
+    @image_text.draw(x + @x, y + @y, 0, 1, 1, Gosu::Color::BLACK)
   end
 end
