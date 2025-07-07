@@ -1,8 +1,8 @@
 class MUI3::Text < MUI3::Component
-  def initialize(x:, y:, text:)
-    @font = Gosu::Font.new(20, name: "NanumGothic")
+  def initialize(x:, y:, text:, font_size:)
+    @font = Gosu::Font.new(font_size, name: "Malgun Gothic")
     width = @font.text_width(text)
-    super(x: x, y: y, width: width, height: 20)
+    super(x: x, y: y, width: width, height: font_size)
     @text = text
   end
 

@@ -2,8 +2,6 @@ class MUI3::Form < MUI3::Component
   def initialize(x:, y:, width:, height:, style: MUI3::Style::WhiteForm)
     super(x: x, y: y, width: width, height: height)
     @style_bg = style.create(width: width, height: height)
-    @text = MUI3::Text.new(x: 0, y: 0, text: "안녕? Hello world")
-    add_child(component: @text)
   end
 
   def update
