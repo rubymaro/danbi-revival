@@ -1,5 +1,6 @@
 module MUI3
   class Manager
+    attr_reader(:gosu_window)
     attr_accessor(:mouse_x)
     attr_accessor(:mouse_y)
     
