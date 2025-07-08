@@ -11,7 +11,7 @@ require_relative "Forms/Test.rb"
 
 WIDTH, HEIGHT = 1600, 900
 
-class DanbiUIEditorWindow < Gosu::Window
+class EditorWindow < Gosu::Window
   def initialize
     super(WIDTH, HEIGHT)
     self.caption = "Danbi UI Editor"
@@ -29,4 +29,4 @@ class DanbiUIEditorWindow < Gosu::Window
   end
 end
 
-DanbiUIEditorWindow.new.show
+EditorWindow.new.show if __FILE__ == $0
