@@ -33,11 +33,11 @@ class MUI3::Component
     for child in @children
       child.update
     end
-    @real_x = @parent.nil? ? @x : @parent.real_x + @x
-    @real_y = @parent.nil? ? @y : @parent.real_y + @y
   end
 
   def draw
+    @real_x = @parent.nil? ? @x : @parent.real_x + @x
+    @real_y = @parent.nil? ? @y : @parent.real_y + @y
     for child in @children
       child.draw
     end
