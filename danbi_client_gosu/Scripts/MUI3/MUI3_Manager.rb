@@ -24,7 +24,7 @@ module MUI3
 
     def draw
       for component in @components
-        component.draw(x: 0, y: 0)
+        component.draw
       end
     end
 

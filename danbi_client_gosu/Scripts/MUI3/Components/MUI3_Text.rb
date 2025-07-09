@@ -14,7 +14,8 @@ class MUI3::Text < MUI3::Component
     super
   end
 
-  def draw(x:, y:)
-    @image_text.draw(x + @x, y + @y, @z, 1, 1, @font_color)
+  def draw
+    @image_text.draw(@real_x, @real_y, @z, 1, 1, @font_color)
+    super
   end
 end

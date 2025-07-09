@@ -5,11 +5,7 @@ class MUI3::Form::Login < MUI3::Form
     @text = MUI3::Text.new(x: 20, y: 20, width: @width, font_size: 20, text: "로그인")
     add_child(component: @text)
 
-    @button = MUI3::Button.new(
-      x: 20, y: 60, width: @width - 40, height: 40,
-      text: "로그인",
-      style: MUI3::Style::BasicButton
-    )
+    @button = MUI3::Button.new(x: 20, y: 60, width: @width - 40, height: 40, text: "로그인", style: MUI3::Style::BasicButton)
     add_child(component: @button)
   end
 end
