@@ -23,11 +23,6 @@ class MUI3::Button < MUI3::Component
   end
 
   def draw
-    if @mouse_on
-      @state_styles[MOUSE_OVER].draw
-    else
-      @state_styles[DEFAULT].draw
-    end
     super
   end
 end
