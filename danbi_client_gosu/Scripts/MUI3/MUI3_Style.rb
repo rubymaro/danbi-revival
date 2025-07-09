@@ -1,7 +1,6 @@
 class MUI3::Style
   WHITE_IMAGE_PATH = "Graphics/MUI3/white_style.png"
 
-  ONE_PIECE_COUNT = 1
   NINE_PIECE_COUNT = 9
 
   UPPER_LEFT = 0
@@ -18,7 +17,6 @@ class MUI3::Style
     def self.create(width:, height:)
       image = Gosu::Image.new(WHITE_IMAGE_PATH)
       image_pieces = Array.new(NINE_PIECE_COUNT)
-      
       image_pieces[UPPER_LEFT]   = image.subimage(0, 0, 10, 32)
       image_pieces[UPPER_MID]    = image.subimage(10, 0, 10, 32)
       image_pieces[UPPER_RIGHT]  = image.subimage(90, 0, 10, 32)
@@ -28,9 +26,32 @@ class MUI3::Style
       image_pieces[LOWER_LEFT]   = image.subimage(0, 90, 10, 10)
       image_pieces[LOWER_MID]    = image.subimage(10, 90, 10, 10)
       image_pieces[LOWER_RIGHT]  = image.subimage(90, 90, 10, 10)
-
       style = MUI3::Style.new(width: width, height: height, image_pieces: image_pieces)
+      return style
+    end
+  end
 
+  module BasicButton
+    DEFAULT = 0
+    MOUSE_OVER = 1
+    MOUSE_PRESSED = 2
+    DISABLED = 3
+    
+    def self.create(width:, height:, index:)
+      offset_x = 120
+      offset_y = index * 32
+      image = Gosu::Image.new(WHITE_IMAGE_PATH)
+      image_pieces = Array.new(NINE_PIECE_COUNT)
+      image_pieces[UPPER_LEFT]   = image.subimage(offset_x, offset_y, 4, 4)
+      image_pieces[UPPER_MID]    = image.subimage(offset_x + 4, offset_y, 4, 4)
+      image_pieces[UPPER_RIGHT]  = image.subimage(offset_x + 60, offset_y, 4, 4)
+      image_pieces[CENTER_LEFT]  = image.subimage(offset_x, offset_y + 4, 4, 4)
+      image_pieces[CENTER_MID]   = image.subimage(offset_x + 4, offset_y + 4, 4, 4)
+      image_pieces[CENTER_RIGHT] = image.subimage(offset_x + 60, offset_y + 4, 4, 4)
+      image_pieces[LOWER_LEFT]   = image.subimage(offset_x, offset_y + 28, 4, 4)
+      image_pieces[LOWER_MID]    = image.subimage(offset_x + 4, offset_y + 28, 4, 4)
+      image_pieces[LOWER_RIGHT]  = image.subimage(offset_x + 60, offset_y + 28, 4, 4)
+      style = MUI3::Style.new(width: width, height: height, image_pieces: image_pieces)
       return style
     end
   end
