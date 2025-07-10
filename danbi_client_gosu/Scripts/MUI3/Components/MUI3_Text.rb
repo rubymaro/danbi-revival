@@ -1,6 +1,4 @@
 class MUI3::Text < MUI3::Component
-  attr_reader(:font_height)
-
   def initialize(x:, y:, width: nil, text: "MUI3::Text#{self.object_id}",
     font_name: "Malgun Gothic", font_height: 20, font_color: Gosu::Color::BLACK, align: :left)
     @gosu_image_text = Gosu::Image.from_text(text, font_height, {:width => width, :font => font_name, :align => align})
