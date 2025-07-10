@@ -1,7 +1,7 @@
 require "gosu"
 require "chunky_png"
 
-require_relative "Extensions/Gosu_ImageEx.rb"
+require_relative "Extensions/Gosu_ImageUtil.rb"
 
 require_relative "Config.rb"
 require_relative "GameWindow.rb"
