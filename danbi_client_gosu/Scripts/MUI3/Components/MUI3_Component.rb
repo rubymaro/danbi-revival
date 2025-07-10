@@ -23,12 +23,6 @@ class MUI3::Component
     @pressed = false
   end
 
-  def draw
-    for child in @children
-      child.draw
-    end
-  end
-
   def add_child(component:)
     raise ArgumentError, "component must be an instance of MUI3::Component" unless component.is_a?(MUI3::Component)
     raise ArgumentError, "component must not be nil" if component.nil?
@@ -50,6 +44,11 @@ class MUI3::Component
     post_update
   end
 
+  def draw_all
+    draw
+    post_draw
+  end
+
   protected def pre_update
     @mouse_on = mouse_on?
     if @mouse_on && $mui_manager.mouse_left_triggered?
@@ -68,6 +67,16 @@ class MUI3::Component
     @real_y = @parent.nil? ? @y : @parent.real_y + @y
     for child in @children
       child.update_all
+    end
+  end
+
+  protected def draw
+    raise NotImplementedError, "You must implement the draw method in your subclass #{self.class.name}"
+  end
+
+  protected def post_draw
+    for child in @children
+      child.draw_all
     end
   end
 end

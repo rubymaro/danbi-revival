@@ -22,6 +22,5 @@ class MUI3::Button < MUI3::Component
   end
 
   def draw
-    super
   end
 end

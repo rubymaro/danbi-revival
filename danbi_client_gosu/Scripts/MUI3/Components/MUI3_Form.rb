@@ -23,7 +23,5 @@ class MUI3::Form < MUI3::Component
   end
 
   def draw
-    @image_bg.draw
-    super
   end
 end

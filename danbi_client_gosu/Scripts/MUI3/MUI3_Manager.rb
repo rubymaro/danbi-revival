@@ -24,7 +24,7 @@ module MUI3
 
     def draw
       for component in @components
-        component.draw
+        component.draw_all
       end
     end
 
