@@ -8,8 +8,9 @@ class MUI3::Button < MUI3::Component
     super(x: x, y: y, width: width, height: height)
     @text = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
-    @image_buttonset.subimage!(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_buttonset)
+    @text_caption = MUI3::Text.new(x: 0, y: 0, text: text)
+    add_child(component: @text_caption)
   end
 
   def update
