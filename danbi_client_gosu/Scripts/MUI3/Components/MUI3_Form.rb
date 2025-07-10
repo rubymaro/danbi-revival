@@ -1,5 +1,5 @@
 class MUI3::Form < MUI3::Component
-  def initialize(x:, y:, width:, height:, style: MUI3::Style::WhiteForm)
+  def initialize(x:, y:, width:, height:, style: MUI3::Image::WhiteForm)
     super(x: x, y: y, width: width, height: height)
     @style_bg = style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @style_bg)

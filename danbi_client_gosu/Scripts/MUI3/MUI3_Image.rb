@@ -1,11 +1,11 @@
-class MUI3::Style < MUI3::Component
-  def initialize(x:, y:, width:, height:, image:)
+class MUI3::Image < MUI3::Component
+  def initialize(x:, y:, width:, height:, gosu_image:)
     super(x: x, y: y, width: width, height: height)
-    @image = image
+    @gosu_image = gosu_image
   end
 
   def draw
-    @image.draw(@real_x, @real_y, 0)
+    @gosu_image.draw(@real_x, @real_y, @z)
     super
   end
 
@@ -26,7 +26,7 @@ class MUI3::Style < MUI3::Component
         image_src.subimage(90, 90, 10, 10)
       ]
       image_output = Gosu::ImageUtil.create_combined_image(image_pieces, width, height)
-      style = MUI3::Style.new(x: x, y: y, width: width, height: height, image: image_output)
+      style = MUI3::Image.new(x: x, y: y, width: width, height: height, gosu_image: image_output)
       return style
     end
   end
@@ -48,7 +48,7 @@ class MUI3::Style < MUI3::Component
         image_src.subimage(offset_x + 60, offset_y + 28, 4, 4)
       ]
       image_output = Gosu::ImageUtil.create_combined_image(image_pieces, width, height)
-      style = MUI3::Style.new(x: x, y: y, width: width, height: height, image: image_output)
+      style = MUI3::Image.new(x: x, y: y, width: width, height: height, gosu_image: image_output)
       return style
     end
   end
