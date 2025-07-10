@@ -9,7 +9,7 @@ class MUI3::Button < MUI3::Component
     @text = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_buttonset)
-    @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :center)
+    @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :center, font_color: Gosu::Color::WHITE)
     @text_caption.y += (@height - @text_caption.height) / 2
     add_child(component: @text_caption)
   end
