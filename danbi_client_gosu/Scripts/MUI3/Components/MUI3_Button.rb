@@ -14,7 +14,6 @@ class MUI3::Button < MUI3::Component
   end
 
   def update
-    super
     if @mouse_on
       @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height)
     else

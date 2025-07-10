@@ -11,7 +11,6 @@ class MUI3::Text < MUI3::Component
   end
 
   def update
-    super
   end
 
   def draw

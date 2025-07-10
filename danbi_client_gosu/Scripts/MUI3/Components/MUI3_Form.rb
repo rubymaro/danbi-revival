@@ -6,7 +6,6 @@ class MUI3::Form < MUI3::Component
   end
 
   def update
-    super
     if @pressed
       @last_mouse_x ||= $mui_manager.mouse_x
       @last_mouse_y ||= $mui_manager.mouse_y

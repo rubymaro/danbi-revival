@@ -8,6 +8,10 @@ class MUI3::Image < MUI3::Component
     subimage!(x: x, y: y, width: width, height: height)
   end
 
+  def update
+    
+  end
+
   def draw
     @gosu_subimage.draw(@real_x, @real_y, @z)
     super

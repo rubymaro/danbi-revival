@@ -23,18 +23,6 @@ class MUI3::Component
     @pressed = false
   end
 
-  def update
-    @mouse_on = mouse_on?
-    if @mouse_on && $mui_manager.mouse_left_triggered?
-      @pressed = true
-    elsif !Gosu.button_down?(Gosu::MS_LEFT)
-      @pressed = false
-    end
-    for child in @children
-      child.update
-    end
-  end
-
   def draw
     @real_x = @parent.nil? ? @x : @parent.real_x + @x
     @real_y = @parent.nil? ? @y : @parent.real_y + @y
@@ -56,5 +44,30 @@ class MUI3::Component
       $mui_manager.mouse_x < @real_x + @width &&
       $mui_manager.mouse_y >= @real_y &&
       $mui_manager.mouse_y < @real_y + @height
+  end
+
+  def update_all
+    pre_update
+    update
+    post_update
+  end
+
+  protected def pre_update
+    @mouse_on = mouse_on?
+    if @mouse_on && $mui_manager.mouse_left_triggered?
+      @pressed = true
+    elsif !Gosu.button_down?(Gosu::MS_LEFT)
+      @pressed = false
+    end
+  end
+
+  protected def update
+    raise NotImplementedError, "You must implement the update method in your subclass #{self.class.name}"
+  end
+
+  protected def post_update
+    for child in @children
+      child.update_all
+    end
   end
 end

@@ -18,7 +18,7 @@ module MUI3
       @mouse_x = @gosu_window.mouse_x.to_i
       @mouse_y = @gosu_window.mouse_y.to_i
       for component in @components
-        component.update
+        component.update_all
       end
     end
 
