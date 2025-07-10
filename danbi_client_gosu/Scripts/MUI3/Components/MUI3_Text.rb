@@ -1,16 +1,14 @@
 class MUI3::Text < MUI3::Component
-  attr_reader(:font)
+  attr_reader(:font_height)
 
-  def initialize(x:, y:, width: nil, height: nil, text: "MUI3::Text#{self.object_id}",
+  def initialize(x:, y:, width: nil, text: "MUI3::Text#{self.object_id}",
     font_name: "Malgun Gothic", font_height: 20, font_color: Gosu::Color::BLACK, align: :left)
-    @font = Gosu::Font.new(font_height, {:name => font_name})
-    width = @font.text_width(text) if width.nil?
-    height = font_height if height.nil?
+    @gosu_image_text = Gosu::Image.from_text(text, font_height, {:width => width, :font => font_name, :align => align})
     @align = align
     @text = text
     @font_color = font_color
-    @gosu_image_text = Gosu::Image.from_text(@text, @font.height, {:width => width, :font => @font.name, :align => @align})
-    super(x: x, y: y, width: width, height: @gosu_image_text.height)
+    @font_height = font_height
+    super(x: x, y: y, width: @gosu_image_text.width, height: @gosu_image_text.height)
   end
 
   def update

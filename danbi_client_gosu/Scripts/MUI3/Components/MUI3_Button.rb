@@ -9,8 +9,8 @@ class MUI3::Button < MUI3::Component
     @text = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_buttonset)
-    @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, height: height, align: :center)
-    @text_caption.y += (@image_buttonset.height - @text_caption.font.height) / 2
+    @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :center)
+    @text_caption.y += (@image_buttonset.height - @text_caption.font_height) / 2
     add_child(component: @text_caption)
   end
 
