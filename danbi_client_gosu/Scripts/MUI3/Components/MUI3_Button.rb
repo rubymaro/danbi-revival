@@ -4,7 +4,7 @@ class MUI3::Button < MUI3::Component
   MOUSE_PRESSED = 2
   DISABLED = 3
 
-  def initialize(x:, y:, width:, height:, text:, image_style: MUI3::Image::BasicButton)
+  def initialize(x:, y:, width:, height:, text:, image_style: MUI3::Image::BasicButtonSet)
     super(x: x, y: y, width: width, height: height)
     @text = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)

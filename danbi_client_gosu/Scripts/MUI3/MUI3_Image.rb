@@ -31,9 +31,8 @@ class MUI3::Image < MUI3::Component
     end
   end
 
-  module BasicButton
-    def self.create(x:, y:, width:, height:)
-      state = 4
+  module BasicButtonSet
+    def self.create(x:, y:, width:, height:, state: 4)
       image_buttonset = Gosu::Image.from_blob(width, height * state)
       image_src = Gosu::Image.new(WHITE_IMAGE_PATH)
       offset_x = 120
