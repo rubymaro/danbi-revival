@@ -24,8 +24,6 @@ class MUI3::Component
   end
 
   def draw
-    @real_x = @parent.nil? ? @x : @parent.real_x + @x
-    @real_y = @parent.nil? ? @y : @parent.real_y + @y
     for child in @children
       child.draw
     end
@@ -66,6 +64,8 @@ class MUI3::Component
   end
 
   protected def post_update
+    @real_x = @parent.nil? ? @x : @parent.real_x + @x
+    @real_y = @parent.nil? ? @y : @parent.real_y + @y
     for child in @children
       child.update_all
     end
