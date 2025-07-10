@@ -19,8 +19,10 @@ class MUI3::Component
     @z = 0
     @real_x = 0
     @real_y = 0
+    @last_mouse_on = false
     @mouse_on = false
     @pressed = false
+    @event_handlers = { :mouse_over => [], :mouse_out => [] }
   end
 
   def add_child(component:)
@@ -29,6 +31,13 @@ class MUI3::Component
     
     @children << component
     component.parent = self
+  end
+
+  def register_event_handler(type:, proc:)
+    raise ArgumentError, "type must be a Symbol" unless type.is_a?(Symbol)
+    raise ArgumentError, "proc must be a Proc" unless proc.is_a?(Proc)
+    @event_handlers[type] ||= []
+    @event_handlers[type] << proc
   end
 
   def mouse_on?
@@ -51,6 +60,14 @@ class MUI3::Component
 
   protected def pre_update
     @mouse_on = mouse_on?
+    if @last_mouse_on != @mouse_on
+      if @mouse_on == true
+        @event_handlers[:mouse_over].each { |handler| handler.call(self) } 
+      else
+        @event_handlers[:mouse_out].each { |handler| handler.call(self) }
+      end
+      @last_mouse_on = @mouse_on
+    end
     if @mouse_on && $mui_manager.mouse_left_triggered?
       @pressed = true
     elsif !Gosu.button_down?(Gosu::MS_LEFT)

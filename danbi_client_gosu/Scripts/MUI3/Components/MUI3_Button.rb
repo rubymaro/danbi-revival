@@ -12,14 +12,11 @@ class MUI3::Button < MUI3::Component
     @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :center, font_color: Gosu::Color::WHITE)
     @text_caption.y += (@height - @text_caption.height) / 2
     add_child(component: @text_caption)
+    register_event_handler(type: :mouse_over, proc: proc { @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height) })
+    register_event_handler(type: :mouse_out, proc: proc { @image_buttonset.subimage!(x: 0, y: @height * DEFAULT, width: @width, height: @height) })
   end
 
   def update
-    if @mouse_on
-      @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height)
-    else
-      @image_buttonset.subimage!(x: 0, y: @height * DEFAULT, width: @width, height: @height)
-    end
   end
 
   def draw
