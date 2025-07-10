@@ -4,18 +4,11 @@ class MUI3::Button < MUI3::Component
   MOUSE_PRESSED = 2
   DISABLED = 3
 
-  def initialize(x:, y:, width:, height:, text:, style: MUI3::Image::BasicButton)
+  def initialize(x:, y:, width:, height:, text:, image_style: MUI3::Image::BasicButton)
     super(x: x, y: y, width: width, height: height)
     @text = text
-    @state_styles = [
-      style.create(x: 0, y: 0, width: width, height: height, index: DEFAULT),
-      style.create(x: 0, y: 0, width: width, height: height, index: MOUSE_OVER),
-      style.create(x: 0, y: 0, width: width, height: height, index: MOUSE_PRESSED),
-      style.create(x: 0, y: 0, width: width, height: height, index: DISABLED)
-    ]
-    for style in @state_styles
-      add_child(component: style)
-    end
+    @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
+    add_child(component: @image_buttonset)
   end
 
   def update

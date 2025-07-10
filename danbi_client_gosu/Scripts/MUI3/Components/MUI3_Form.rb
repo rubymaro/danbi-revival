@@ -1,8 +1,8 @@
 class MUI3::Form < MUI3::Component
-  def initialize(x:, y:, width:, height:, style: MUI3::Image::WhiteForm)
+  def initialize(x:, y:, width:, height:, image_style: MUI3::Image::WhiteForm)
     super(x: x, y: y, width: width, height: height)
-    @style_bg = style.create(x: 0, y: 0, width: width, height: height)
-    add_child(component: @style_bg)
+    @image_bg = image_style.create(x: 0, y: 0, width: width, height: height)
+    add_child(component: @image_bg)
   end
 
   def update
@@ -24,7 +24,7 @@ class MUI3::Form < MUI3::Component
   end
 
   def draw
-    @style_bg.draw
+    @image_bg.draw
     super
   end
 end
