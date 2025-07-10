@@ -36,7 +36,7 @@ class MUI3::Image < MUI3::Component
         image_src.subimage(10, 90, 10, 10),
         image_src.subimage(90, 90, 10, 10)
       ]
-      image_output = Gosu::ImageUtil.create_combined_image(image_pieces, width, height)
+      image_output = Gosu::ImageUtil.create_combined_image(src_images: image_pieces, width: width, height: height)
       image = MUI3::Image.new(x: x, y: y, width: width, height: height, gosu_image: image_output)
       return image
     end
@@ -60,7 +60,7 @@ class MUI3::Image < MUI3::Component
           image_src.subimage(offset_x + 4, offset_y + 28, 4, 4),
           image_src.subimage(offset_x + 60, offset_y + 28, 4, 4)
         ]
-        image_output = Gosu::ImageUtil.create_combined_image(image_pieces, width, height)
+        image_output = Gosu::ImageUtil.create_combined_image(src_images: image_pieces, width: width, height: height)
         image_buttonset.insert(image_output, 0, index * height)
       end
       image = MUI3::Image.new(x: x, y: y, width: width, height: height, gosu_image: image_buttonset)
