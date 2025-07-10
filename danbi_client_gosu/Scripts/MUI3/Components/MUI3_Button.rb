@@ -8,11 +8,17 @@ class MUI3::Button < MUI3::Component
     super(x: x, y: y, width: width, height: height)
     @text = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
+    @image_buttonset.subimage!(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_buttonset)
   end
 
   def update
     super
+    if @mouse_on
+      @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height)
+    else
+      @image_buttonset.subimage!(x: 0, y: @height * DEFAULT, width: @width, height: @height)
+    end
   end
 
   def draw

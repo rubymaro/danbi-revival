@@ -1,12 +1,20 @@
 class MUI3::Image < MUI3::Component
+  attr_reader(:gosu_image)
+  attr_reader(:gosu_subimage)
+
   def initialize(x:, y:, width:, height:, gosu_image:)
     super(x: x, y: y, width: width, height: height)
     @gosu_image = gosu_image
+    subimage!(x: x, y: y, width: width, height: height)
   end
 
   def draw
-    @gosu_image.draw(@real_x, @real_y, @z)
+    @gosu_subimage.draw(@real_x, @real_y, @z)
     super
+  end
+
+  def subimage!(x:, y:, width:, height:)
+    @gosu_subimage = @gosu_image.subimage(x, y, width, height)
   end
 
   WHITE_IMAGE_PATH = "Graphics/MUI3/white_style.png"
@@ -32,11 +40,11 @@ class MUI3::Image < MUI3::Component
   end
 
   module BasicButtonSet
-    def self.create(x:, y:, width:, height:, state: 4)
-      image_buttonset = Gosu::Image.from_blob(width, height * state)
+    def self.create(x:, y:, width:, height:, state_count: 4)
+      image_buttonset = Gosu::Image.from_blob(width, height * state_count)
       image_src = Gosu::Image.new(WHITE_IMAGE_PATH)
       offset_x = 120
-      for index in 0...state
+      for index in 0...state_count
         offset_y = index * 32
         image_pieces = [
           image_src.subimage(offset_x, offset_y, 4, 4),
