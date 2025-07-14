@@ -80,7 +80,7 @@ class MUI3::Component
     topmost = $mui_manager.over_topmost
     return if topmost.nil?
 
-    is_mouse_over = (topmost == self)# && mouse_in_rect?
+    is_mouse_over = (topmost == self)
     if @mouse_over != is_mouse_over
       @mouse_over = is_mouse_over
       if is_mouse_over == true
