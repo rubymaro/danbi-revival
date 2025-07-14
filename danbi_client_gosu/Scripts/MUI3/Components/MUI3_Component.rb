@@ -69,13 +69,13 @@ class MUI3::Component
       @mouse_on = mouse_on
     end
 
-    if $mui_manager.mouse_left_triggered? && mouse_on
+    if $mui_manager.mouse_left_triggered? && @mouse_on
       @dragged = true
     elsif !Gosu.button_down?(Gosu::MS_LEFT)
       @dragged = false
     end
 
-    pressed = mouse_on && Gosu.button_down?(Gosu::MS_LEFT)
+    pressed = @mouse_on && Gosu.button_down?(Gosu::MS_LEFT)
     if @pressed != pressed
       if pressed == true
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
