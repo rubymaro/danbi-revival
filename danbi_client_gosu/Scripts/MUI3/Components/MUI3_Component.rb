@@ -20,9 +20,10 @@ class MUI3::Component
     @real_x = 0
     @real_y = 0
     @last_mouse_on = false
+    @last_pressed = false
     @mouse_on = false
     @pressed = false
-    @event_handlers = { :mouse_over => [], :mouse_out => [] }
+    @event_handlers = { :mouse_over => [], :mouse_out => [], :mouse_down => [], :mouse_up => [] }
   end
 
   def add_child(component:)
@@ -68,10 +69,15 @@ class MUI3::Component
       end
       @last_mouse_on = @mouse_on
     end
-    if @mouse_on && $mui_manager.mouse_left_triggered?
-      @pressed = true
-    elsif !Gosu.button_down?(Gosu::MS_LEFT)
-      @pressed = false
+    
+    @pressed = @mouse_on && Gosu.button_down?(Gosu::MS_LEFT)
+    if @last_pressed != @pressed
+      if @pressed == true
+        @event_handlers[:mouse_down].each { |handler| handler.call(self) }
+      else
+        @event_handlers[:mouse_up].each { |handler| handler.call(self) }
+      end
+      @last_pressed = @pressed
     end
   end
 
