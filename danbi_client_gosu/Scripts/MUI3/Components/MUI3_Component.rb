@@ -19,8 +19,6 @@ class MUI3::Component
     @z = 0
     @real_x = 0
     @real_y = 0
-    @last_mouse_on = false
-    @last_pressed = false
     @mouse_on = false
     @pressed = false
     @dragged = false
@@ -61,30 +59,30 @@ class MUI3::Component
   end
 
   protected def pre_update
-    @mouse_on = mouse_on?
-    if @last_mouse_on != @mouse_on
-      if @mouse_on == true
+    mouse_on = mouse_on?
+    if mouse_on != mouse_on
+      if mouse_on == true
         @event_handlers[:mouse_over].each { |handler| handler.call(self) } 
       else
         @event_handlers[:mouse_out].each { |handler| handler.call(self) }
       end
-      @last_mouse_on = @mouse_on
+      mouse_on = mouse_on
     end
 
-    if $mui_manager.mouse_left_triggered? && @mouse_on
+    if $mui_manager.mouse_left_triggered? && mouse_on
       @dragged = true
     elsif !Gosu.button_down?(Gosu::MS_LEFT)
       @dragged = false
     end
 
-    @pressed = @mouse_on && Gosu.button_down?(Gosu::MS_LEFT)
-    if @last_pressed != @pressed
-      if @pressed == true
+    pressed = mouse_on && Gosu.button_down?(Gosu::MS_LEFT)
+    if @pressed != pressed
+      if pressed == true
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
       else
         @event_handlers[:mouse_up].each { |handler| handler.call(self) }
       end
-      @last_pressed = @pressed
+      @pressed = pressed
     end
   end
 
