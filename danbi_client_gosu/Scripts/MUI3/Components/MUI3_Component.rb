@@ -21,7 +21,10 @@ class MUI3::Component
     @real_y = 0
     @mouse_on = false
     @pressed = false
-    @event_handlers = { :mouse_over => [], :mouse_out => [], :mouse_down => [], :mouse_up => [] }
+    @event_handlers = {}
+    [:mouse_over, :mouse_out, :mouse_down, :mouse_up].each do |event_type|
+      @event_handlers[event_type] = []
+    end 
   end
 
   def add_child(component:)
@@ -35,7 +38,6 @@ class MUI3::Component
   def register_event_handler(type:, proc:)
     raise ArgumentError, "type must be a Symbol" unless type.is_a?(Symbol)
     raise ArgumentError, "proc must be a Proc" unless proc.is_a?(Proc)
-    @event_handlers[type] ||= []
     @event_handlers[type] << proc
   end
 
