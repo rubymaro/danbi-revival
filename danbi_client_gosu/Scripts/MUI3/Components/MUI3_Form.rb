@@ -9,7 +9,7 @@ class MUI3::Form < MUI3::Component
   end
 
   def update
-    if $mui_manager.mouse_left_triggered? && @mouse_on
+    if $mui_manager.mouse_left_triggered? && @mouse_over
       @dragged = true
     elsif !Gosu.button_down?(Gosu::MS_LEFT)
       @dragged = false

@@ -6,6 +6,9 @@ class Scene::Title < Scene::Base
     
     @form_login = MUI3::Form::Login.new
     $mui_manager.add(component: @form_login)
+
+    #@form_login2 = MUI3::Form::Login.new(x: 300)
+    #$mui_manager.add(component: @form_login2)
   end
 
   def update
