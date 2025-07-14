@@ -60,13 +60,13 @@ class MUI3::Component
 
   protected def pre_update
     mouse_on = mouse_on?
-    if mouse_on != mouse_on
+    if @mouse_on != mouse_on
       if mouse_on == true
         @event_handlers[:mouse_over].each { |handler| handler.call(self) } 
       else
         @event_handlers[:mouse_out].each { |handler| handler.call(self) }
       end
-      mouse_on = mouse_on
+      @mouse_on = mouse_on
     end
 
     if $mui_manager.mouse_left_triggered? && mouse_on
