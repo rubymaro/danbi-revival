@@ -5,7 +5,7 @@ class MUI3::Image < MUI3::Component
   def initialize(x:, y:, width:, height:, gosu_image:)
     super(x: x, y: y, width: width, height: height)
     @gosu_image = gosu_image
-    subimage!(x: x, y: y, width: width, height: height)
+    subimage!(ox: 0, oy: 0, width: width, height: height)
   end
 
   def update
@@ -16,8 +16,8 @@ class MUI3::Image < MUI3::Component
     @gosu_subimage.draw(@real_x, @real_y, @z)
   end
 
-  def subimage!(x:, y:, width:, height:)
-    @gosu_subimage = @gosu_image.subimage(x, y, width, height)
+  def subimage!(ox:, oy:, width:, height:)
+    @gosu_subimage = @gosu_image.subimage(ox, oy, width, height)
   end
 
   WHITE_IMAGE_PATH = "Graphics/MUI3/white_style.png"

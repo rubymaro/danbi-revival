@@ -13,16 +13,16 @@ class MUI3::Button < MUI3::Component
     @text_caption.y += (@height - @text_caption.height) / 2
     add_child(component: @text_caption)
     proc_mouse_over = proc {
-      @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height)
+      @image_buttonset.subimage!(ox: 0, oy: @height * MOUSE_OVER, width: @width, height: @height)
     }
     proc_mouse_out = proc {
-      @image_buttonset.subimage!(x: 0, y: @height * DEFAULT, width: @width, height: @height)
+      @image_buttonset.subimage!(ox: 0, oy: @height * DEFAULT, width: @width, height: @height)
     }
     proc_mouse_down = proc {
-      @image_buttonset.subimage!(x: 0, y: @height * MOUSE_PRESSED, width: @width, height: @height)
+      @image_buttonset.subimage!(ox: 0, oy: @height * MOUSE_PRESSED, width: @width, height: @height)
     }
     proc_mouse_up = proc {
-      @image_buttonset.subimage!(x: 0, y: @height * MOUSE_OVER, width: @width, height: @height)
+      @image_buttonset.subimage!(ox: 0, oy: @height * MOUSE_OVER, width: @width, height: @height)
     }
     register_event_handler(type: :mouse_over, proc: proc_mouse_over)
     register_event_handler(type: :mouse_out, proc: proc_mouse_out)
