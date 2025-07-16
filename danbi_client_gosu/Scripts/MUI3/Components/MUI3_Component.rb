@@ -105,6 +105,7 @@ class MUI3::Component
     end
 
     if is_mouse_over && $mui_manager.mouse_left_triggered?
+      @root.top_flag = true
       @dragged = true
     elsif !is_mouse_button_down
       @dragged = false
@@ -114,7 +115,6 @@ class MUI3::Component
       dx = $mui_manager.mouse_x - @last_mouse_x
       dy = $mui_manager.mouse_y - @last_mouse_y
       if dx != 0 || dy != 0
-        @top_flag = true
         @event_handlers[:mouse_drag].each { |handler| handler.call(self, dx: dx, dy: dy) }
       end
     end
