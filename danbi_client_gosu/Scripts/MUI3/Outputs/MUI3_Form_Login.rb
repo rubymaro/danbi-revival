@@ -7,5 +7,8 @@ class MUI3::Form::Login < MUI3::Form
 
     @button = MUI3::Button.new(x: 20, y: 60, width: @width - 40, height: 40, text: "로그인", image_style: MUI3::Image::BasicButtonSet)
     add_child(component: @button)
+
+    @inputbox = MUI3::InputBox.new(x: 20, y: 120, width: @width - 40, height: 30)
+    add_child(component: @inputbox)
   end
 end

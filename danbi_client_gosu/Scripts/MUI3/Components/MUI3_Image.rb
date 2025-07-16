@@ -67,4 +67,30 @@ class MUI3::Image < MUI3::Component
       return image
     end
   end
+
+  module InputBoxSet
+    def self.create(x:, y:, width:, height:, state_count: 3)
+      image_inputbox = Gosu::Image.from_blob(width, height * state_count)
+      image_src = Gosu::Image.new(WHITE_IMAGE_PATH)
+      offset_x = 184
+      for index in 0...state_count
+        offset_y = index * 32
+        image_pieces = [
+          image_src.subimage(offset_x, offset_y, 4, 4),
+          image_src.subimage(offset_x + 4, offset_y, 4, 4),
+          image_src.subimage(offset_x + 60, offset_y, 4, 4),
+          image_src.subimage(offset_x, offset_y + 4, 4, 4),
+          image_src.subimage(offset_x + 4, offset_y + 4, 4, 4),
+          image_src.subimage(offset_x + 60, offset_y + 4, 4, 4),
+          image_src.subimage(offset_x, offset_y + 28, 4, 4),
+          image_src.subimage(offset_x + 4, offset_y + 28, 4, 4),
+          image_src.subimage(offset_x + 60, offset_y + 28, 4, 4)
+        ]
+        image_output = Gosu::ImageUtil.create_combined_image(src_images: image_pieces, width: width, height: height)
+        image_inputbox.insert(image_output, 0, index * height)
+      end
+      image = MUI3::Image.new(x: x, y: y, width: width, height: height, gosu_image: image_inputbox)
+      return image
+    end
+  end
 end

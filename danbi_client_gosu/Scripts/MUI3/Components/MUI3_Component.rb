@@ -27,9 +27,10 @@ class MUI3::Component
     @mouse_over = false
     @pressed = false
     @dragged = false
+    @focused = false
     @top_flag = false
     @event_handlers = {}
-    [:mouse_over, :mouse_out, :mouse_down, :mouse_up, :mouse_drag].each do |event_type|
+    [:mouse_over, :mouse_out, :mouse_down, :mouse_up, :mouse_drag, :got_focus, :lost_focus].each do |event_type|
       @event_handlers[event_type] = []
     end 
   end
@@ -104,9 +105,12 @@ class MUI3::Component
       end
     end
 
+    # TODO: fix got_focus and lost_focus events 
     if is_mouse_over && $mui_manager.mouse_left_triggered?
       @root.top_flag = true
       @dragged = true
+      @focused = true
+      @event_handlers[:got_focus].each { |handler| handler.call(self) }
     elsif !is_mouse_button_down
       @dragged = false
     end

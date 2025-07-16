@@ -1,6 +1,5 @@
 module MUI3
   class Manager
-    attr_reader(:gosu_window)
     attr_accessor(:mouse_x)
     attr_accessor(:mouse_y)
     attr_accessor(:over_topmost)
@@ -10,6 +9,7 @@ module MUI3
       @components = []
       @mouse_left_triggered = false
       @over_topmost = nil
+      @input_box = nil
     end
 
     def add(component:)
@@ -52,6 +52,15 @@ module MUI3
         @mouse_left_triggered = false
       end
       return false
+    end
+
+    def set_input_box(input_box:)
+      @input_box = input_box
+      if @input_box.nil?
+        @gosu_window.text_input = nil
+      else
+        @gosu_window.text_input = @input_box.gosu_text_input
+      end
     end
   end
 end
