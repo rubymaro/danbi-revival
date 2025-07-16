@@ -82,7 +82,6 @@ class MUI3::Component
 
   protected def pre_update
     topmost = $mui_manager.over_topmost
-    return if topmost.nil?
 
     is_mouse_over = (topmost == self)
     if @mouse_over != is_mouse_over
@@ -99,7 +98,6 @@ class MUI3::Component
     if @pressed != is_pressed
       @pressed = is_pressed
       if is_pressed
-        @top_flag = true
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
       elsif !is_mouse_button_down
         @event_handlers[:mouse_up].each { |handler| handler.call(self) }
@@ -116,6 +114,7 @@ class MUI3::Component
       dx = $mui_manager.mouse_x - @last_mouse_x
       dy = $mui_manager.mouse_y - @last_mouse_y
       if dx != 0 || dy != 0
+        @top_flag = true
         @event_handlers[:mouse_drag].each { |handler| handler.call(self, dx: dx, dy: dy) }
       end
     end
