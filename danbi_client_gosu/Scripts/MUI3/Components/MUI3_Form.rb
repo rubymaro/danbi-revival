@@ -27,4 +27,8 @@ class MUI3::Form < MUI3::Component
 
   def draw
   end
+
+  def capturable?
+    return true
+  end
 end

@@ -35,4 +35,8 @@ class MUI3::Button < MUI3::Component
 
   def draw
   end
+
+  def capturable?
+    return true
+  end
 end

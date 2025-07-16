@@ -58,6 +58,7 @@ class MUI3::Component
   end
 
   def update_topmost_recursive
+    return if !capturable?
     return if !mouse_in_rect?
     $mui_manager.over_topmost = self
     for child in @children
@@ -121,5 +122,9 @@ class MUI3::Component
     for child in @children
       child.draw_all
     end
+  end
+
+  def capturable?
+    return false
   end
 end
