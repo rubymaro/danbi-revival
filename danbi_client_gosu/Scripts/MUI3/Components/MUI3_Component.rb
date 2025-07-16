@@ -85,18 +85,18 @@ class MUI3::Component
     if @mouse_over != is_mouse_over
       @mouse_over = is_mouse_over
       if is_mouse_over == true
-        @event_handlers[:mouse_over].each { |handler| handler.call(self) } 
+        @event_handlers[:mouse_over].each { |handler| handler.call(self) }
       else
         @event_handlers[:mouse_out].each { |handler| handler.call(self) }
       end
     end
 
-    is_pressed = @mouse_over && Gosu.button_down?(Gosu::MS_LEFT)
+    is_pressed = is_mouse_over && Gosu.button_down?(Gosu::MS_LEFT)
     if @pressed != is_pressed
       @pressed = is_pressed
       if is_pressed == true
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
-      else
+      elsif !Gosu.button_down?(Gosu::MS_LEFT)
         @event_handlers[:mouse_up].each { |handler| handler.call(self) }
       end
     end
