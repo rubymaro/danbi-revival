@@ -99,18 +99,30 @@ class MUI3::Component
     if @pressed != is_pressed
       @pressed = is_pressed
       if is_pressed
+        is_triggered = true
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
       elsif !is_mouse_button_down
         @event_handlers[:mouse_up].each { |handler| handler.call(self) }
       end
     end
 
-    # TODO: fix got_focus and lost_focus events 
-    if is_mouse_over && $mui_manager.mouse_left_triggered?
-      @root.top_flag = true
-      @dragged = true
-      @focused = true
-      @event_handlers[:got_focus].each { |handler| handler.call(self) }
+    triggered = $mui_manager.mouse_left_triggered?
+    if triggered
+      if is_mouse_over
+        @root.top_flag = true
+        @dragged = true
+        focused = true
+      else
+        focused = false
+      end
+      if @focused != focused
+        @focused = focused
+        if focused
+          @event_handlers[:got_focus].each { |handler| handler.call(self) }
+        else
+          @event_handlers[:lost_focus].each { |handler| handler.call(self) }
+        end
+      end
     elsif !is_mouse_button_down
       @dragged = false
     end

@@ -7,9 +7,9 @@ module MUI3
     def initialize(gosu_window:)
       @gosu_window = gosu_window
       @components = []
-      @mouse_left_triggered = false
       @over_topmost = nil
       @input_box = nil
+      @press_ticks = { Gosu::MS_LEFT => 0 }
     end
 
     def add(component:)
@@ -18,6 +18,11 @@ module MUI3
     end
 
     def update
+      if Gosu.button_down?(Gosu::MS_LEFT)
+        @press_ticks[Gosu::MS_LEFT] += 1
+      else
+        @press_ticks[Gosu::MS_LEFT] = 0
+      end
       @mouse_x = @gosu_window.mouse_x.to_i
       @mouse_y = @gosu_window.mouse_y.to_i
       @over_topmost = nil
@@ -43,15 +48,7 @@ module MUI3
     end
 
     def mouse_left_triggered?
-      if Gosu.button_down?(Gosu::MS_LEFT)
-        if !@mouse_left_triggered
-          @mouse_left_triggered = true
-          return true
-        end
-      else
-        @mouse_left_triggered = false
-      end
-      return false
+      return @press_ticks[Gosu::MS_LEFT] == 1
     end
 
     def set_input_box(input_box:)

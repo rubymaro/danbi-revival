@@ -8,9 +8,7 @@ class MUI3::InputBox < MUI3::Component
     @image_bg = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_bg)
     @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :left, font_color: Gosu::Color::BLACK)
-    #@text_caption.y += (@height - @text_caption.height) / 2
     add_child(component: @text_caption)
-
     proc_got_focus = proc {
       p "got_focus #{self.class.name}"
       $mui_manager.set_input_box(input_box: self)

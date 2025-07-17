@@ -11,7 +11,6 @@ class MUI3::Form < MUI3::Component
   end
 
   def update
-    
   end
 
   def draw
