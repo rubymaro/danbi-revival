@@ -10,11 +10,9 @@ class MUI3::InputBox < MUI3::Component
     @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :left, font_color: Gosu::Color::BLACK)
     add_child(component: @text_caption)
     proc_got_focus = proc {
-      p "got_focus #{self.class.name}"
       $mui_manager.set_input_box(input_box: self)
     }
     proc_lost_focus = proc {
-      p "lost_focus #{self.class.name}"
       $mui_manager.set_input_box(input_box: nil)
     }
     register_event_handler(type: :got_focus, proc: proc_got_focus)

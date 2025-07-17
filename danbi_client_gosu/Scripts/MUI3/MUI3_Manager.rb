@@ -10,10 +10,8 @@ module MUI3
       @gosu_window = gosu_window
       @components = []
       @over_topmost = nil
-      @input_box = nil
+      @active_input_box = nil
       @press_ticks = { Gosu::MS_LEFT => 0 }
-      @last_mouse_x = 0
-      @last_mouse_y = 0
     end
 
     def add(component:)
@@ -58,12 +56,8 @@ module MUI3
     end
 
     def set_input_box(input_box:)
-      @input_box = input_box
-      if @input_box.nil?
-        @gosu_window.text_input = nil
-      else
-        @gosu_window.text_input = @input_box.gosu_text_input
-      end
+      @active_input_box = input_box
+      @gosu_window.text_input = @active_input_box.nil? ? nil : @active_input_box.gosu_text_input
     end
   end
 end
