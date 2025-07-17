@@ -3,13 +3,17 @@ module MUI3
     attr_accessor(:mouse_x)
     attr_accessor(:mouse_y)
     attr_accessor(:over_topmost)
-    
+    attr_reader(:last_mouse_x)
+    attr_reader(:last_mouse_y)
+
     def initialize(gosu_window:)
       @gosu_window = gosu_window
       @components = []
       @over_topmost = nil
       @input_box = nil
       @press_ticks = { Gosu::MS_LEFT => 0 }
+      @last_mouse_x = 0
+      @last_mouse_y = 0
     end
 
     def add(component:)
@@ -39,6 +43,8 @@ module MUI3
           @components.delete_at(i)
         end
       end
+      @last_mouse_x = @mouse_x
+      @last_mouse_y = @mouse_y
     end
 
     def draw

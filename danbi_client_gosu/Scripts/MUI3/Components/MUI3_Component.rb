@@ -83,8 +83,11 @@ class MUI3::Component
 
   protected def pre_update
     topmost = $mui_manager.over_topmost
-
     is_mouse_over = (topmost == self)
+    is_mouse_pressed = Gosu.button_down?(Gosu::MS_LEFT)
+    is_component_pressed = is_mouse_over && is_mouse_pressed
+    is_mouse_triggered = $mui_manager.mouse_left_triggered?
+
     if @mouse_over != is_mouse_over
       @mouse_over = is_mouse_over
       if is_mouse_over
@@ -93,49 +96,43 @@ class MUI3::Component
         @event_handlers[:mouse_out].each { |handler| handler.call(self) }
       end
     end
-
-    is_mouse_button_down = Gosu.button_down?(Gosu::MS_LEFT)
-    is_pressed = is_mouse_over && is_mouse_button_down
-    if @pressed != is_pressed
-      @pressed = is_pressed
-      if is_pressed
-        is_triggered = true
+    
+    if @pressed != is_component_pressed
+      @pressed = is_component_pressed
+      if is_component_pressed
         @event_handlers[:mouse_down].each { |handler| handler.call(self) }
-      elsif !is_mouse_button_down
+      elsif !is_mouse_pressed
         @event_handlers[:mouse_up].each { |handler| handler.call(self) }
       end
     end
 
-    triggered = $mui_manager.mouse_left_triggered?
-    if triggered
+    if is_mouse_triggered
       if is_mouse_over
         @root.top_flag = true
         @dragged = true
-        focused = true
+        is_focused = true
       else
-        focused = false
+        is_focused = false
       end
-      if @focused != focused
-        @focused = focused
-        if focused
+      if @focused != is_focused
+        @focused = is_focused
+        if is_focused
           @event_handlers[:got_focus].each { |handler| handler.call(self) }
         else
           @event_handlers[:lost_focus].each { |handler| handler.call(self) }
         end
       end
-    elsif !is_mouse_button_down
+    elsif !is_mouse_pressed
       @dragged = false
     end
 
     if @dragged
-      dx = $mui_manager.mouse_x - @last_mouse_x
-      dy = $mui_manager.mouse_y - @last_mouse_y
+      dx = $mui_manager.mouse_x - $mui_manager.last_mouse_x
+      dy = $mui_manager.mouse_y - $mui_manager.last_mouse_y
       if dx != 0 || dy != 0
         @event_handlers[:mouse_drag].each { |handler| handler.call(self, dx: dx, dy: dy) }
       end
     end
-    @last_mouse_x = $mui_manager.mouse_x
-    @last_mouse_y = $mui_manager.mouse_y
   end
 
   protected def update
