@@ -6,4 +6,5 @@ module Config
   FRAME_RATE = 1000.0 / FRAME_COUNT
 
   GAME_TITLE = "Danbi Revival"
+  FONT_NAME = "Malgun Gothic"
 end

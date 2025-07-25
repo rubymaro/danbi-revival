@@ -11,7 +11,7 @@ class MUI3::InputBox < MUI3::Component
     @gosu_text_input = Gosu::TextInput.new
     @image_input_box_set = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_input_box_set)
-    @text = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :left, font_color: Gosu::Color::BLACK)
+    @text = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :right, font_color: Gosu::Color::BLACK)
     add_child(component: @text)
     proc_got_focus = proc {
       $mui_manager.set_input_box(input_box: self)
