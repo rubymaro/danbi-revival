@@ -2,7 +2,8 @@ class MUI3::InputBox < MUI3::Component
   DEFAULT = 0
   FOCUSED = 1
   DISABLED = 2
-
+  PADDING = 4
+  
   attr_reader(:gosu_text_input)
 
   def initialize(x:, y:, width:, height:, text: "", image_style: MUI3::Image::InputBoxSet)
@@ -10,7 +11,7 @@ class MUI3::InputBox < MUI3::Component
     @gosu_text_input = Gosu::TextInput.new
     @image_input_box_set = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_input_box_set)
-    @text = MUI3::Text.new(x: 4, y: 4, text: text, width: width - 8, align: :left, font_color: Gosu::Color::BLACK)
+    @text = MUI3::Text.new(x: PADDING, y: PADDING, text: text, width: width - PADDING * 2, align: :left, font_color: Gosu::Color::BLACK)
     add_child(component: @text)
     proc_got_focus = proc {
       $mui_manager.set_input_box(input_box: self)
