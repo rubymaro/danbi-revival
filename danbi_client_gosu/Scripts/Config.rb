@@ -7,4 +7,5 @@ module Config
 
   GAME_TITLE = "Danbi Revival"
   FONT_NAME = "Malgun Gothic"
+  FONT_HEIGHT = 20
 end
