@@ -28,6 +28,7 @@ class MUI3::InputBox < MUI3::Component
   def update
     if @text_input.text.length != @gosu_text_input.text.length
       @text_input.text = @gosu_text_input.text
+      @text_input.update_image_text
     end
   end
 

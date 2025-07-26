@@ -13,7 +13,10 @@ class MUI3::Text < MUI3::Component
   end
 
   def update
-    @gosu_image_text = Gosu::Image.from_text(text, @font_height, {:width => @width, :font => @font_name, :align => @align})
+  end
+
+  def update_image_text
+    @gosu_image_text = Gosu::Image.from_text(@text, @font_height, {:width => @width, :font => @font_name, :align => @align})
   end
 
   def draw
