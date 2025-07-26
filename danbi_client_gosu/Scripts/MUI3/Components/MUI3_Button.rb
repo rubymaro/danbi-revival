@@ -6,7 +6,7 @@ class MUI3::Button < MUI3::Component
 
   def initialize(x:, y:, width:, height:, text:, image_style: MUI3::Image::BasicButtonSet)
     super(x: x, y: y, width: width, height: height)
-    @text = text
+    @text_input = text
     @image_buttonset = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_buttonset)
     @text_caption = MUI3::Text.new(x: 0, y: 0, text: text, width: width, align: :center, font_color: Gosu::Color::WHITE)

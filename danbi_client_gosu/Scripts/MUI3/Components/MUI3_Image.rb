@@ -9,7 +9,6 @@ class MUI3::Image < MUI3::Component
   end
 
   def update
-
   end
 
   def draw

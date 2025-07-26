@@ -36,8 +36,8 @@ class MUI3::Component
   end
 
   def add_child(component:)
-    raise ArgumentError, "component must be an instance of MUI3::Component" unless component.is_a?(MUI3::Component)
     raise ArgumentError, "component must not be nil" if component.nil?
+    raise ArgumentError, "component must be an instance of MUI3::Component" unless component.is_a?(MUI3::Component)
     
     @children << component
     component.parent = self
