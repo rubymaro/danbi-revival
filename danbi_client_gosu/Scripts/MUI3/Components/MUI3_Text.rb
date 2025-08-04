@@ -8,6 +8,7 @@ class MUI3::Text < MUI3::Component
     @align = align
     @text = text
     @font_color = font_color
+    @min_char_width = [@gosu_font.text_width(".") - 1, 1].max
     super(x: x, y: y, width: width, height: font_height)
     update_image_text
   end
@@ -17,34 +18,35 @@ class MUI3::Text < MUI3::Component
 
   def update_image_text
     # TODO: optimize text rendering width by reducing text length
-    return if @text.empty?
-    @gosu_image_text = Gosu::Image.from_text(@text, @gosu_font.height, {:font => @gosu_font.name})
+    reduced_text = @text[-(@width / @min_char_width).to_i..-1] || @text
+    @gosu_image_text = Gosu::Image.from_text(reduced_text, @gosu_font.height, {:font => @gosu_font.name})
     if @gosu_image_text.width <= 0 || @gosu_image_text.height <= 0
-      @sub_gosu_image_text = @gosu_image_text
+      @gosu_subimage_text = @gosu_image_text
       return
     end
     
     case @align
     when :left
       if @gosu_image_text.width <= @width
-        @sub_gosu_image_text = @gosu_image_text.subimage(0, 0, [@width, @gosu_image_text.width].min, @gosu_font.height)
+        @gosu_subimage_text = @gosu_image_text.subimage(0, 0, [@width, @gosu_image_text.width].min, @gosu_font.height)
       else
-        @sub_gosu_image_text = @gosu_image_text.subimage([@gosu_image_text.width - @width, 0].max, 0, @width, @gosu_font.height)
+        @gosu_subimage_text = @gosu_image_text.subimage([@gosu_image_text.width - @width, 0].max, 0, @width, @gosu_font.height)
       end
+      
     when :right
-      @sub_gosu_image_text = @gosu_image_text.subimage([@gosu_image_text.width - @width, 0].max, 0, @width, @gosu_font.height)
+      @gosu_subimage_text = @gosu_image_text.subimage([@gosu_image_text.width - @width, 0].max, 0, @width, @gosu_font.height)
+
     when :center
-      if @gosu_image_text.width > @width
-        @sub_gosu_image_text = @gosu_image_text.subimage((@gosu_image_text.width - @width) / 2, 0, @width, @gosu_font.height)
+      if @gosu_image_text.width >= @width
+        @gosu_subimage_text = @gosu_image_text.subimage((@gosu_image_text.width - @width) / 2, 0, @width, @gosu_font.height)
       else
-        @gosu_image_text = Gosu::Image.from_text(@text, @gosu_font.height, {:width => @width, :font => @gosu_font.name, :align => @align})
-        @sub_gosu_image_text = @gosu_image_text
+        @gosu_image_text = Gosu::Image.from_text(reduced_text, @gosu_font.height, {:width => @width, :font => @gosu_font.name, :align => @align})
+        @gosu_subimage_text = @gosu_image_text
       end
     end
   end
 
   def draw
-    return if @sub_gosu_image_text.nil?
-    @sub_gosu_image_text.draw(@real_x, @real_y, @z, 1, 1, @font_color)
+    @gosu_subimage_text.draw(@real_x, @real_y, @z, 1, 1, @font_color)
   end
 end
