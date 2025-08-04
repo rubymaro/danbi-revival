@@ -19,7 +19,9 @@ class MUI3::Text < MUI3::Component
     @gosu_image_text = Gosu::Image.from_text(@text, @gosu_font.height, {:font => @gosu_font.name})
     if @gosu_image_text.width <= 0 || @gosu_image_text.height <= 0
       @sub_gosu_image_text = @gosu_image_text
+      return
     end
+    
     case @align
     when :left
       if @gosu_image_text.width <= @width
