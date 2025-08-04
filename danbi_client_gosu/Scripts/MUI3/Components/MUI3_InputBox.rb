@@ -11,7 +11,7 @@ class MUI3::InputBox < MUI3::Component
     @gosu_text_input = Gosu::TextInput.new
     @image_input_box_set = image_style.create(x: 0, y: 0, width: width, height: height)
     add_child(component: @image_input_box_set)
-    @text_input = MUI3::Text.new(x: PADDING, y: PADDING, text: text, width: width - PADDING * 2, align: :left, font_color: Gosu::Color::BLACK)
+    @text_input = MUI3::Text.new(x: PADDING, y: PADDING, text: text, width: width - PADDING * 2, align: :center, font_color: Gosu::Color::BLACK)
     add_child(component: @text_input)
     proc_got_focus = proc {
       $mui_manager.set_input_box(input_box: self)
@@ -26,10 +26,11 @@ class MUI3::InputBox < MUI3::Component
   end
 
   def update
-    if @text_input.text.length != @gosu_text_input.text.length
+    #if @text_input.text.length != @gosu_text_input.text.length
+      p @gosu_text_input.text
       @text_input.text = @gosu_text_input.text
       @text_input.update_image_text
-    end
+    #end
   end
 
   def draw
