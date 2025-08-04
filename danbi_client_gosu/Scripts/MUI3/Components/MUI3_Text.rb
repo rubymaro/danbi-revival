@@ -16,6 +16,8 @@ class MUI3::Text < MUI3::Component
   end
 
   def update_image_text
+    # TODO: optimize text rendering width by reducing text length
+    return if @text.empty?
     @gosu_image_text = Gosu::Image.from_text(@text, @gosu_font.height, {:font => @gosu_font.name})
     if @gosu_image_text.width <= 0 || @gosu_image_text.height <= 0
       @sub_gosu_image_text = @gosu_image_text
@@ -42,6 +44,7 @@ class MUI3::Text < MUI3::Component
   end
 
   def draw
+    return if @sub_gosu_image_text.nil?
     @sub_gosu_image_text.draw(@real_x, @real_y, @z, 1, 1, @font_color)
   end
 end
