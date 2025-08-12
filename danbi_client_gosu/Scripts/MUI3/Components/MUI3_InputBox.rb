@@ -18,7 +18,7 @@ class MUI3::InputBox < MUI3::Component
       @image_input_box_set.subimage!(ox: 0, oy: @height * FOCUSED, width: @width, height: @height)
     }
     proc_lost_focus = proc {
-      $mui_manager.set_input_box(input_box: nil)
+      $mui_manager.set_input_box(input_box: nil) if $mui_manager.active_input_box == self
       @image_input_box_set.subimage!(ox: 0, oy: @height * DEFAULT, width: @width, height: @height)
     }
     register_event_handler(type: :got_focus, proc: proc_got_focus)

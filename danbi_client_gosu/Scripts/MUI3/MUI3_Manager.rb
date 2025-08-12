@@ -5,6 +5,7 @@ module MUI3
     attr_accessor(:over_topmost)
     attr_reader(:last_mouse_x)
     attr_reader(:last_mouse_y)
+    attr_reader(:active_input_box)
 
     def initialize(gosu_window:)
       @gosu_window = gosu_window
